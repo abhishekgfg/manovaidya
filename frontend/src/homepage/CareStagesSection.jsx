@@ -86,6 +86,7 @@ const careStages = [
     image: womenImage,
     Icon: Sparkles,
     color: "pink",
+    link: "/women-health-care",
     description:
       "Empowering women through every phase of life with care and understanding",
     items: [
@@ -166,7 +167,7 @@ function CareStagesSection() {
         </div>
 
         <div className="mx-auto mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {careStages.map(({ title, description, image, Icon, color, items }) => {
+          {careStages.map(({ title, description, image, Icon, color, items, link }) => {
             const palette = colorClasses[color];
 
             return (
@@ -208,7 +209,7 @@ function CareStagesSection() {
                   </ul>
 
                   <a
-                    href="#consultation"
+                    href={link || "#consultation"}
                     className={`mt-auto inline-flex w-fit items-center gap-2 rounded-md px-3 py-2 text-[11.5px] font-black text-white shadow-[0_10px_18px_rgba(31,19,56,0.16)] transition ${palette.button}`}
                   >
                     Explore {title}

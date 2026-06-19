@@ -26,7 +26,7 @@ const navItems = [
   { label: "Conditions", href: "#conditions", hasMenu: true },
   { label: "Programs", href: "#programs", hasMenu: true },
   { label: "Resources", href: "#resources", hasMenu: true },
-  { label: "Our Approach", href: "#approach" },
+  { label: "Our Approach", href: "/about/approach" },
   { label: "Success Stories", href: "#stories" },
 ];
 
