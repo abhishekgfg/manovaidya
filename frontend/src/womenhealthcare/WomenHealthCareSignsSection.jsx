@@ -58,28 +58,30 @@ const signs = [
 
 function WomenHealthCareSignsSection() {
   return (
-    <section className="overflow-hidden bg-[#fbf9ff]">
-      <div className="grid grid-cols-1 lg:min-h-[240px] lg:grid-cols-[225px_minmax(760px,1fr)_405px] xl:grid-cols-[250px_minmax(820px,1fr)_460px]">
-        <div className="flex items-center px-5 py-7 sm:px-7 lg:px-6 lg:py-0">
+    <section className="overflow-hidden bg-[#fbf9ff] lg:pr-10">
+      <div className="grid grid-cols-1 md:grid-cols-[200px_minmax(0,1fr)] lg:min-h-[260px] lg:grid-cols-[190px_minmax(0,1fr)_270px] xl:min-h-[240px] xl:grid-cols-[200px_minmax(0,1fr)_330px] 2xl:grid-cols-[220px_minmax(0,1fr)_380px]">
+        <div className="flex items-center px-5 py-7 sm:px-7 md:px-6 md:py-8 lg:px-10 lg:py-0 xl:px-8">
           <div>
-            <h2 className="text-[23px] font-black leading-[1.08] text-[#2d2379] sm:text-[26px] lg:text-[24px] xl:text-[27px]">
+            <h2 className="text-[24px] font-black leading-[1.15] text-[#2d2379] sm:text-[26px] lg:text-[23px] xl:text-[24px] 2xl:text-[26px]">
               Common Signs
               <br />
-              You Shouldn&apos;t Ignore
+              You Shouldn&apos;t
+              <br />
+              Ignore
             </h2>
-            <span className="mt-7 block h-[3px] w-12 bg-[#4f36a0]" />
+            <span className="mt-5 block h-[2px] w-10 bg-[#4f36a0]" />
           </div>
         </div>
 
-        <div className="flex items-center px-5 pb-7 sm:px-7 lg:px-0 lg:py-7">
-          <div className="grid w-full grid-cols-1 gap-4 min-[520px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <div className="flex min-w-0 items-center px-5 pb-7 sm:px-7 md:px-0 md:py-8 lg:px-3 lg:py-6 xl:px-3">
+          <div className="grid w-full grid-cols-1 gap-2.5 min-[520px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {signs.map(({ text, Icon }) => (
               <article
                 key={text}
-                className="flex h-[78px] min-w-0 items-center gap-4 rounded-md bg-white px-5 shadow-[0_10px_28px_rgba(74,55,136,0.08)]"
+                className="flex min-h-[76px] min-w-0 items-center gap-2.5 rounded-md bg-white px-3 py-2.5 shadow-[0_8px_22px_rgba(74,55,136,0.07)] 2xl:min-h-[80px] 2xl:gap-3 2xl:px-4"
               >
-                <Icon className="h-[28px] w-[28px] shrink-0 text-[#5c48ad]" strokeWidth={2.1} />
-                <p className="min-w-0 whitespace-pre-line text-[10.5px] font-black leading-[1.3] text-[#312760] xl:text-[11.5px]">
+                <Icon className="h-[25px] w-[25px] shrink-0 text-[#5c48ad]" strokeWidth={2} />
+                <p className="min-w-0 flex-1 whitespace-pre-line break-words text-[11.5px] font-black leading-[1.3] text-[#312760] xl:text-[12px] 2xl:text-[12.5px]">
                   {text}
                 </p>
               </article>
@@ -87,15 +89,15 @@ function WomenHealthCareSignsSection() {
           </div>
         </div>
 
-        <div className="relative min-h-[240px] overflow-hidden lg:min-h-full">
+        <div className="relative min-h-[280px] overflow-hidden rounded-r-md sm:min-h-[340px] md:col-span-2 md:min-h-[360px] lg:col-span-1 lg:min-h-full">
           <img
             src={signsImage}
             alt="Woman reflecting in a calm indoor space"
-            className="absolute inset-y-0 left-0 h-full w-[158%] -translate-x-[18%] object-cover object-right"
+            className="absolute inset-0 h-full w-full object-cover object-[76%_center] sm:object-[72%_center] lg:object-[70%_center] xl:object-[68%_center]"
             loading="lazy"
           />
-          <div className="absolute inset-y-0 left-0 hidden w-36 bg-[linear-gradient(90deg,#fbf9ff_0%,rgba(251,249,255,0.86)_36%,rgba(251,249,255,0)_100%)] lg:block" />
-          <div className="absolute inset-x-0 top-0 h-14 bg-[linear-gradient(180deg,#fbf9ff_0%,rgba(251,249,255,0)_100%)] lg:hidden" />
+          <div className="absolute inset-y-0 left-0 hidden w-20 bg-[linear-gradient(90deg,#fbf9ff_0%,rgba(251,249,255,0.76)_38%,rgba(251,249,255,0)_100%)] lg:block" />
+          <div className="absolute inset-x-0 top-0 h-12 bg-[linear-gradient(180deg,#fbf9ff_0%,rgba(251,249,255,0)_100%)] lg:hidden" />
         </div>
       </div>
     </section>
