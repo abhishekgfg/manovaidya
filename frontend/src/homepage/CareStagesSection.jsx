@@ -54,6 +54,7 @@ const careStages = [
     image: adultImage,
     Icon: Brain,
     color: "sky",
+    link: "/adult-mental-wellness",
     description:
       "Compassionate care for stress, anxiety, emotional challenges and life balance",
     items: [

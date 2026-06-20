@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import MindBodyWellbeingPage from "./pages/MindBodyWellbeingPage";
 import SeniorMindCarePage from "./pages/SeniorMindCarePage";
 import WomenHealthCarePage from "./pages/WomenHealthCarePage";
+import AdultMentalWellnessPage from "./pages/AdultMentalWellnessPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/mind-body-wellbeing" element={<MindBodyWellbeingPage />} />
           <Route path="/senior-mind-memory-care" element={<SeniorMindCarePage />} />
           <Route path="/women-health-care" element={<WomenHealthCarePage />} />
+          <Route path="/adult-mental-wellness" element={<AdultMentalWellnessPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
