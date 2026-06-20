@@ -52,8 +52,9 @@ function WomenHealthCareSupportSection() {
       <div className="mx-auto grid max-w-[1440px] items-stretch gap-7 lg:grid-cols-[minmax(0,1fr)_390px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_430px]">
         <div className="flex min-w-0 flex-col justify-center py-2 lg:py-0">
           <div className="mb-5 text-center lg:mb-3">
-            <h2 className="text-[36px] font-bold leading-tight text-[#2f2479]">
-              How Manovaidya Supports Women
+            <h2 className="text-[36px] font-bold leading-tight">
+              <span className="text-[#18181b]">How Manovaidya Supports </span>
+              <span className="text-[#8b43ba]">Women</span>
             </h2>
             <p className="mt-1 font-bold text-[#51467d]">
               A personalized, compassionate and holistic approach to your mental well-being.

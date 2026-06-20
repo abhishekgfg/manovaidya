@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   ArrowRight,
   Brain,
@@ -17,9 +16,9 @@ const reasons = [
   { label: "Experienced &\nCompassionate Team", Icon: HeartHandshake },
   { label: "Confidential &\nJudgment-Free Care", Icon: ShieldCheck },
   { label: "Holistic Mind &\nBody Approach", Icon: Brain },
-  { label: "Women-Centred\nSafe Space", Icon: HeartPulse },
+  { label: "Personalised\nCare Plans", Icon: HeartPulse },
   { label: "Online & In-Person\nSupport Options", Icon: UsersRound },
-  { label: "Evidence-Based\nTreatments", Icon: ClipboardCheck },
+  { label: "Evidence-Informed\nTreatments", Icon: ClipboardCheck },
 ];
 
 const stats = [
@@ -31,50 +30,74 @@ const stats = [
 
 const faqs = [
   {
-    question: "What are the signs of stress or anxiety in women?",
-    answer: "Manovaidya highlights constant stress or overthinking, mood swings, sadness, low energy, sleep or appetite changes, difficulty concentrating, withdrawal and unexplained physical symptoms as common signs.",
+    question: "What is mind-body medicine?",
+    answer:
+      "Mind-body medicine looks at how stress, emotions, sleep, digestion, pain and lifestyle influence physical wellbeing, then supports them through an integrated care plan.",
   },
   {
-    question: "When should I seek help for my mental health?",
-    answer: "If symptoms continue, feel overwhelming or interfere with relationships, work, sleep or daily life, a structured Manovaidya consultation can help identify concerns and guide an appropriate care plan.",
+    question: "How does Ayurveda help in stress and fatigue?",
+    answer:
+      "Ayurveda considers sleep, digestion, daily routine, nutrition and individual constitution to create supportive lifestyle strategies for stress and fatigue.",
   },
   {
-    question: "How do I know if I have PMS or PMDD?",
-    answer: "Manovaidya supports hormonal concerns including PMS and PMDD through an in-depth assessment of symptom timing, mood changes, fatigue, irritability, lifestyle and individual history.",
+    question: "Can you help with sleep problems?",
+    answer:
+      "Yes, care may include assessing sleep patterns, stress, digestion and routine, followed by personalised sleep, relaxation and lifestyle guidance.",
   },
   {
-    question: "Is online counselling effective for women?",
-    answer: "Yes, many concerns can be assessed and followed up online through structured history-taking, personalized care plans, lifestyle guidance and regular progress reviews.",
+    question: "Do you treat chronic pain without medication?",
+    answer:
+      "We can support chronic pain through relaxation, stress management, gentle movement and lifestyle care, while medication decisions remain with your treating clinician.",
   },
   {
-    question: "How can I manage mood swings naturally?",
-    answer: "Manovaidya creates personalized plans using your symptoms, history, lifestyle, digestion, sleep and emotional patterns, with regular follow-ups to track progress and adjust strategies.",
+    question: "What lifestyle changes do you recommend?",
+    answer:
+      "Recommendations may include sleep routines, balanced meals, hydration, suitable movement, breathwork, stress regulation and healthier screen habits based on your needs.",
   },
   {
-    question: "Can therapy help with relationship issues?",
-    answer: "Yes, Manovaidya's supportive counselling and evidence-informed therapies can help with relationship stress, communication patterns, loneliness, breakups and family dynamics.",
+    question: "Can this help with acidity and gut issues?",
+    answer:
+      "Yes, the plan can address the gut-brain connection through food habits, digestion support, stress care, sleep and personalised lifestyle guidance.",
+  },
+  {
+    question: "Will I get a personalised care plan?",
+    answer:
+      "Yes, your plan is created around your symptoms, history, lifestyle, digestion, sleep, emotional patterns and individual goals.",
   },
   {
     question: "How long does it take to see improvement?",
-    answer: "It depends on the concern, duration, severity and consistency with the plan; some people notice early improvements, while deeper concerns need regular follow-up and sustained care.",
+    answer:
+      "It depends on the concern, duration, severity and consistency with the plan; some people notice early changes while deeper concerns need sustained care.",
   },
   {
-    question: "What therapies do you offer for women?",
-    answer: "Depending on individual needs, care may include CBT, ACT, mindfulness, supportive counselling, Ayurvedic support, lifestyle guidance and Manovaidya's integrated Neuro-Ayurveda approach.",
+    question: "Do you offer online consultations?",
+    answer:
+      "Yes, online consultations are available across India with structured history-taking, personalised planning, lifestyle guidance and regular progress reviews.",
   },
   {
-    question: "Is my information kept confidential?",
-    answer: "Manovaidya describes its care as confidential, safe and judgment-free; specific privacy practices and confidentiality limits can be clarified before consultation begins.",
+    question: "Are your therapies safe and natural?",
+    answer:
+      "Care combines evidence-informed and Ayurvedic approaches selected after assessment; recommendations are personalised and coordinated with existing medical care when needed.",
+  },
+  {
+    question: "Do you provide diet and nutrition guidance?",
+    answer:
+      "Yes, practical food and nutrition guidance may be included when relevant to digestion, energy, sleep, metabolism and overall wellbeing.",
+  },
+  {
+    question: "How do I book an appointment?",
+    answer:
+      "Use the Book Assessment or Talk to Our Expert option on this page, and the Manovaidya team will guide you through the next steps.",
   },
 ];
 
-function WomenHealthCareTrustSection() {
+function MindBodyFaqSection() {
   return (
     <section className="bg-white px-4 py-5 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-[1440px] overflow-hidden rounded-lg border border-[#edeaf6] bg-white shadow-[0_14px_40px_rgba(47,32,113,0.08)]">
         <div className="relative overflow-hidden bg-[linear-gradient(105deg,#28116f_0%,#39148a_38%,#77209d_74%,#f16a78_100%)] px-5 py-6 text-white sm:px-7 lg:px-9 lg:py-5">
           <h2 className="font-serif text-[24px] font-bold leading-tight lg:text-[28px]">
-            Why Women Choose Manovaidya
+            Why Choose Manovaidya for Mind-Body Care
           </h2>
 
           <div className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:mt-2 lg:grid-cols-6 lg:gap-0">
@@ -106,10 +129,10 @@ function WomenHealthCareTrustSection() {
             <div>
               <h3 className="font-serif text-[27px] font-bold">
                 <span className="text-[#18181b]">About Dr. </span>
-                <span className="text-[#8b43ba]">Ankush Garg</span>
+                <span className="text-[#8B43BA]">Ankush Garg</span>
               </h3>
               <p className="mt-2 text-[14px] font-medium leading-[1.6] text-[#4e476a] lg:text-[16px]">
-                Dr. Ankush Garg is a leading Autism, ADHD, Child Development & Mental Health
+                Dr. Ankush Garg is a leading Autism, ADHD, Child Development &amp; Mental Health
                 Specialist in India and the Founder of Manovaidya. He is the creator of the
                 Neuro-Ayurveda Development System, a structured approach that integrates modern
                 neuroscience with the timeless wisdom of Ayurveda to support mental wellness for
@@ -131,7 +154,7 @@ function WomenHealthCareTrustSection() {
                 key={value}
                 className="flex h-[142px] flex-col items-center justify-center rounded-md border border-[#e5e0ef] bg-white px-3 text-center shadow-[0_8px_22px_rgba(66,47,129,0.05)]"
               >
-                <strong className="text-[25px] font-black text-[#392188]">{value}</strong>
+                <strong className="text-[25px] font-black text-[#8B43BA]">{value}</strong>
                 <span className="mt-3 whitespace-pre-line text-[12.5px] font-bold leading-[1.45] text-[#3e3566]">
                   {label}
                 </span>
@@ -140,13 +163,16 @@ function WomenHealthCareTrustSection() {
           </div>
         </div>
 
-        <div id="women-faqs" className="px-5 py-5 lg:px-8 lg:py-6">
+        <div id="mind-body-faqs" className="px-5 py-5 lg:px-8 lg:py-6">
           <div className="flex items-center justify-between gap-4">
             <h3 className="font-serif text-[26px] font-bold">
               <span className="text-[#18181b]">Frequently Asked </span>
-              <span className="text-[#8b43ba]">Questions</span>
+              <span className="text-[#8B43BA]">Questions</span>
             </h3>
-            <a href="#women-faqs" className="inline-flex items-center gap-1 text-[14px] font-black text-[#3f278b]">
+            <a
+              href="#mind-body-faqs"
+              className="inline-flex items-center gap-1 text-[14px] font-black text-[#8B43BA]"
+            >
               View All FAQs <ArrowRight className="h-3 w-3" />
             </a>
           </div>
@@ -156,7 +182,7 @@ function WomenHealthCareTrustSection() {
               <details key={question} className="group border-b border-[#efecf6] py-2">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-[15px] font-bold text-[#3f3764] marker:content-none">
                   <span>{question}</span>
-                  <Plus className="h-3.5 w-3.5 shrink-0 text-[#442894] transition-transform group-open:rotate-45" />
+                  <Plus className="h-3.5 w-3.5 shrink-0 text-[#8B43BA] transition-transform group-open:rotate-45" />
                 </summary>
                 <p className="pt-2 text-[14px] leading-relaxed text-[#68617e]">{answer}</p>
               </details>
@@ -181,7 +207,7 @@ function WomenHealthCareTrustSection() {
                 We&apos;re Here to Help.
               </h3>
               <p className="mt-2 text-[14px] font-medium text-white/90">
-                Take the first step towards emotional wellness and a happier, healthier you.
+                Take the first step towards mind-body balance and a healthier, happier you.
               </p>
             </div>
 
@@ -206,4 +232,4 @@ function WomenHealthCareTrustSection() {
   );
 }
 
-export default WomenHealthCareTrustSection;
+export default MindBodyFaqSection;

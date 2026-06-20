@@ -59,16 +59,16 @@ function WomenHealthCareHeroSection() {
               Women Mental Health Concerns
             </span>
 
-            <h1 className="mt-3 text-[40px] font-bold leading-[1.08] text-[#21156a] sm:text-[56px] lg:text-[48px]">
-              Women Mental Health
+            <h1 className="mt-3 text-[40px] font-bold leading-[1.08] sm:text-[56px] lg:text-[48px]">
+              <span className="text-[#18181b]">Women Mental Health</span>
               <br />
-              Care in India
+              <span className="text-[#8b43ba]">Care in India</span>
             </h1>
 
-            <h2 className="mt-3 text-[21px] font-bold leading-[1.35] text-[#8B43BA] sm:text-[26px]">
-              Because Every Woman Deserves to Feel
+            <h2 className="mt-3 text-[21px] font-bold leading-[1.35] sm:text-[26px]">
+              <span className="text-[#18181b]">Because Every Woman Deserves to Feel</span>
               <br />
-              Heard, Supported &amp; Empowered.
+              <span className="text-[#8b43ba]">Heard, Supported &amp; Empowered.</span>
             </h2>
 
             <p className="mt-5 max-w-[545px] text-[16px] font-bold leading-[1.65] text-[#473f72] sm:text-[18px]">
@@ -107,19 +107,19 @@ function WomenHealthCareHeroSection() {
             ))}
           </div>
 
-          <div className="mt-6 grid rounded-[14px] bg-white/95 shadow-[0_12px_36px_rgba(40,28,82,0.14)] ring-1 ring-[#ebe6f6] backdrop-blur sm:grid-cols-2 lg:absolute lg:-bottom-3 lg:right-3 lg:mt-0 lg:w-[690px] lg:grid-cols-4">
+          <div className="mt-5 grid rounded-[12px] bg-white/95 shadow-[0_10px_30px_rgba(40,28,82,0.12)] ring-1 ring-[#ebe6f6] backdrop-blur sm:grid-cols-2 lg:absolute lg:-bottom-2 lg:right-3 lg:mt-0 lg:w-[620px] lg:grid-cols-4">
             {stats.map(({ value, label, Icon }, index) => (
               <div
                 key={value}
-                className={`flex min-h-[128px] flex-col items-center justify-center px-6 py-5 text-center ${
+                className={`flex min-h-[108px] flex-col items-center justify-center px-4 py-3 text-center ${
                   index > 0 ? "lg:border-l lg:border-[#e1ddeb]" : ""
                 }`}
               >
-                <Icon className="h-8 w-8 text-[#8B43BA]" strokeWidth={2.1} />
-                <strong className="mt-3 text-[26px] font-extrabold leading-tight text-[#8B43BA]">
+                <Icon className="h-7 w-7 text-[#8B43BA]" strokeWidth={2.1} />
+                <strong className="mt-2 text-[22px] font-extrabold leading-tight text-[#8B43BA]">
                   {value}
                 </strong>
-                <span className="mt-2 whitespace-pre-line text-[12px] font-extrabold leading-[1.35] text-[#3a3067]">
+                <span className="mt-1.5 whitespace-pre-line text-[11px] font-extrabold leading-[1.3] text-[#3a3067]">
                   {label}
                 </span>
               </div>

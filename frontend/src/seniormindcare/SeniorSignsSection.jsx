@@ -1,62 +1,32 @@
 import React from "react";
 import {
-  Activity,
   Brain,
-  CloudRain,
-  Flame,
+  CircleAlert,
+  Clock,
   HeartPulse,
-  Moon,
-  ShieldCheck,
+  LogOut,
+  MessageSquare,
+  Puzzle,
+  Search,
   Smile,
   Sparkles,
-  UserRound,
 } from "lucide-react";
-import signsImage from "../images/women-signs-reflection.png";
+import signsImage from "../images/senior-common-signs.png";
 
 const signs = [
-  {
-    text: "Constant stress\nor overthinking",
-    Icon: Brain,
-  },
-  {
-    text: "Mood swings or\nirritability",
-    Icon: Sparkles,
-  },
-  {
-    text: "Feeling sad or\nhopeless often",
-    Icon: ShieldCheck,
-  },
-  {
-    text: "Low energy &\nmotivation",
-    Icon: Flame,
-  },
-  {
-    text: "Changes in sleep\nor appetite",
-    Icon: Moon,
-  },
-  {
-    text: "Difficulty\nconcentrating",
-    Icon: UserRound,
-  },
-  {
-    text: "Feeling overwhelmed\nor emotionally drained",
-    Icon: CloudRain,
-  },
-  {
-    text: "Loss of interest in\nthings you enjoy",
-    Icon: Smile,
-  },
-  {
-    text: "Withdrawal from\nor activities",
-    Icon: HeartPulse,
-  },
-  {
-    text: "Physical symptoms\nwith no clear cause",
-    Icon: Activity,
-  },
+  { text: "Repeating the same\nquestions", Icon: Brain },
+  { text: "Forgetting recent\nconversations", Icon: Sparkles },
+  { text: "Losing things\nfrequently", Icon: Search },
+  { text: "Getting confused with\ntime or place", Icon: Clock },
+  { text: "Difficulty in planning\nor problem solving", Icon: Puzzle },
+  { text: "Withdrawal from social\nactivities", Icon: LogOut },
+  { text: "Changes in mood\nor behaviour", Icon: Smile },
+  { text: "Trouble finding\nthe right words", Icon: MessageSquare },
+  { text: "Poor judgment in daily\nsituations", Icon: CircleAlert },
+  { text: "Lack of interest in\nfavourite activities", Icon: HeartPulse },
 ];
 
-function WomenHealthCareSignsSection() {
+function SeniorSignsSection() {
   return (
     <section className="overflow-hidden bg-[#fbf9ff] lg:pr-10">
       <div className="grid grid-cols-1 md:grid-cols-[200px_minmax(0,1fr)] lg:min-h-[260px] lg:grid-cols-[190px_minmax(0,1fr)_270px] xl:min-h-[240px] xl:grid-cols-[200px_minmax(0,1fr)_330px] 2xl:grid-cols-[220px_minmax(0,1fr)_380px]">
@@ -64,9 +34,9 @@ function WomenHealthCareSignsSection() {
           <div>
             <h2 className="text-[28px] font-black leading-[1.15] sm:text-[30px] lg:text-[30px] xl:text-[32px] 2xl:text-[34px]">
               <span className="text-[#18181b]">Common Signs </span>
-              <span className="text-[#8b43ba]">You Shouldn&apos;t Ignore</span>
+              <span className="text-[#8B43BA]">You Shouldn&apos;t Ignore</span>
             </h2>
-            <span className="mt-3 block h-[2px] w-12 bg-[#4f36a0]" />
+            <span className="mt-3 block h-[2px] w-12 bg-[#8B43BA]" />
           </div>
         </div>
 
@@ -77,7 +47,7 @@ function WomenHealthCareSignsSection() {
                 key={text}
                 className="flex min-h-[84px] min-w-0 items-center gap-2.5 rounded-md bg-white px-3 py-3 shadow-[0_8px_22px_rgba(74,55,136,0.07)] 2xl:min-h-[88px] 2xl:gap-3 2xl:px-4"
               >
-                <Icon className="h-[25px] w-[25px] shrink-0 text-[#5c48ad]" strokeWidth={2} />
+                <Icon className="h-[25px] w-[25px] shrink-0 text-[#8B43BA]" strokeWidth={2} />
                 <p className="min-w-0 flex-1 whitespace-pre-line break-words text-[13px] font-black leading-[1.35] text-[#312760] xl:text-[13.5px] 2xl:text-[14px]">
                   {text}
                 </p>
@@ -89,8 +59,8 @@ function WomenHealthCareSignsSection() {
         <div className="relative min-h-[280px] overflow-hidden rounded-r-md sm:min-h-[340px] md:col-span-2 md:min-h-[360px] lg:col-span-1 lg:min-h-full">
           <img
             src={signsImage}
-            alt="Woman reflecting in a calm indoor space"
-            className="absolute inset-0 h-full w-full object-cover object-[76%_center] sm:object-[72%_center] lg:object-[70%_center] xl:object-[68%_center]"
+            alt="Senior man reflecting on changes in memory"
+            className="absolute inset-0 h-full w-full object-cover object-[78%_center] sm:object-[74%_center] lg:object-[72%_center] xl:object-[70%_center]"
             loading="lazy"
           />
           <div className="absolute inset-y-0 left-0 hidden w-20 bg-[linear-gradient(90deg,#fbf9ff_0%,rgba(251,249,255,0.76)_38%,rgba(251,249,255,0)_100%)] lg:block" />
@@ -101,4 +71,4 @@ function WomenHealthCareSignsSection() {
   );
 }
 
-export default WomenHealthCareSignsSection;
+export default SeniorSignsSection;

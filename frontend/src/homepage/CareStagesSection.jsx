@@ -70,6 +70,7 @@ const careStages = [
     image: seniorImage,
     Icon: ShieldCheck,
     color: "orange",
+    link: "/senior-mind-memory-care",
     description:
       "Supporting healthy ageing, memory, cognitive strength and emotional wellbeing",
     items: [
@@ -103,6 +104,7 @@ const careStages = [
     image: mindBodyImage,
     Icon: Leaf,
     color: "green",
+    link: "/mind-body-wellbeing",
     description:
       "Holistic support for physical symptoms linked with stress and emotional health",
     items: [

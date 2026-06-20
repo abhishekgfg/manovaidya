@@ -76,8 +76,9 @@ function WomenHealthCareConcernsSection() {
         <div className="text-center">
           <div className="flex items-center justify-center gap-3">
             <span className="hidden h-[2px] w-16 bg-[#4b318f]/55 sm:block" />
-            <h2 className="text-[26px] font-black leading-none text-[#2a257a] sm:text-[30px] lg:text-[34px]">
-              Concerns We Support
+            <h2 className="text-[26px] font-black leading-none sm:text-[30px] lg:text-[34px]">
+              <span className="text-[#18181b]">Concerns </span>
+              <span className="text-[#8b43ba]">We Support</span>
             </h2>
             <span className="hidden h-[2px] w-16 bg-[#4b318f]/55 sm:block" />
           </div>
