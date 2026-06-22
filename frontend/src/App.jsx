@@ -10,6 +10,8 @@ import MindBodyWellbeingPage from "./pages/MindBodyWellbeingPage";
 import SeniorMindCarePage from "./pages/SeniorMindCarePage";
 import WomenHealthCarePage from "./pages/WomenHealthCarePage";
 import AdultMentalWellnessPage from "./pages/AdultMentalWellnessPage";
+import TeenMentalWellnessPage from "./pages/TeenMentalWellnessPage";
+import ChildHealthCarePage from "./pages/ChildHealthCarePage";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           <Route path="/senior-mind-memory-care" element={<SeniorMindCarePage />} />
           <Route path="/women-health-care" element={<WomenHealthCarePage />} />
           <Route path="/adult-mental-wellness" element={<AdultMentalWellnessPage />} />
+          <Route path="/teen-mental-wellness" element={<TeenMentalWellnessPage />} />
+          <Route path="/child-health-care" element={<ChildHealthCarePage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

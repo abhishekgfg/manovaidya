@@ -22,6 +22,7 @@ const careStages = [
     image: childImage,
     Icon: HeartPulse,
     color: "violet",
+    link: "/child-health-care",
     description:
       "Supporting children's growth, development and emotional wellbeing",
     items: [
@@ -38,6 +39,7 @@ const careStages = [
     image: boyImage,
     Icon: UserRound,
     color: "emerald",
+    link: "/teen-mental-wellness",
     description:
       "Guiding teenagers towards emotional balance, confidence and a positive future",
     items: [

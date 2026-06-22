@@ -3,6 +3,7 @@ import AdultCommonSignsSection from "../adult/AdultCommonSignsSection";
 import AdultConditionsSection from "../adult/AdultConditionsSection";
 import AdultMentalWellnessHeroSection from "../adult/AdultMentalWellnessHeroSection";
 import AdultSupportSection from "../adult/AdultSupportSection";
+import AdultTrustFaqSection from "../adult/AdultTrustFaqSection";
 
 function AdultMentalWellnessPage() {
   return (
@@ -11,6 +12,7 @@ function AdultMentalWellnessPage() {
       <AdultConditionsSection />
       <AdultCommonSignsSection />
       <AdultSupportSection />
+      <AdultTrustFaqSection />
     </main>
   );
 }
