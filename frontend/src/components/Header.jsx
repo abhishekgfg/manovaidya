@@ -129,8 +129,28 @@ const navItems = [
   { label: "Conditions", href: "#conditions", hasMenu: true, megaMenu: conditionGroups },
   { label: "Programs", href: "#programs", hasMenu: true },
   { label: "Resources", href: "#resources", hasMenu: true },
-  { label: "Our Approach", href: "/about/approach" },
+  // { label: "Our Approach", href: "/about/approach" },
   { label: "Success Stories", href: "#stories" },
+];
+
+const timeSlots = [
+
+  "10:30 AM - 11:00 AM",
+  "11:00 AM - 11:30 AM",
+  "11:30 AM - 12:00 PM",
+  "12:00 PM - 12:30 PM",
+  "12:30 PM - 01:00 PM",
+  "01:00 PM - 01:30 PM",
+  "01:30 PM - 02:00 PM",
+  "02:00 PM - 02:30 PM",
+  "02:30 PM - 03:00 PM",
+  "03:00 PM - 03:30 PM",
+  "03:30 PM - 04:00 PM",
+  "04:00 PM - 04:30 PM",
+  "04:30 PM - 05:00 PM",
+  "05:00 PM - 05:30 PM",
+  "05:30 PM - 06:00 PM",
+
 ];
 
 function Header() {
@@ -139,6 +159,7 @@ function Header() {
   const [isConditionsOpen, setIsConditionsOpen] = React.useState(false);
   const [isAboutOpen, setIsAboutOpen] = React.useState(false);
   const [openConditionGroup, setOpenConditionGroup] = React.useState(null);
+  const [isConsultationModalOpen, setIsConsultationModalOpen] = React.useState(false);
   const conditionsCloseTimer = React.useRef(null);
 
   const conditionRoutes = conditionGroups.map((group) => group.href);
@@ -169,10 +190,9 @@ function Header() {
   };
 
   const desktopNavClass = (active) =>
-    `relative inline-flex items-center py-2 transition-colors duration-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-[72%] after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-[#7130a3] after:to-[#a34fd2] after:transition-transform after:duration-300 after:ease-out ${
-      active
-        ? "text-[#7b2cbf] after:scale-x-100"
-        : "text-[#211d2d] hover:text-[#7b2cbf] after:scale-x-0"
+    `relative inline-flex items-center py-2 transition-colors duration-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-[72%] after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-[#7130a3] after:to-[#a34fd2] after:transition-transform after:duration-300 after:ease-out ${active
+      ? "text-[#7b2cbf] after:scale-x-100"
+      : "text-[#211d2d] hover:text-[#7b2cbf] after:scale-x-0"
     }`;
 
   const closeMenu = () => {
@@ -246,9 +266,8 @@ function Header() {
                   >
                     {item.label}
                     <ChevronDown
-                      className={`ml-0.5 h-4 w-4 transition-transform ${
-                        isConditionsOpen ? "rotate-180" : ""
-                      }`}
+                      className={`ml-0.5 h-4 w-4 transition-transform ${isConditionsOpen ? "rotate-180" : ""
+                        }`}
                     />
                   </button>
 
@@ -256,11 +275,10 @@ function Header() {
                     id="desktop-conditions-menu"
                     onMouseEnter={openConditionsMenu}
                     onMouseLeave={scheduleConditionsClose}
-                    className={`fixed left-0 right-0 top-[70px] z-[80] border-t border-violet-100 bg-white shadow-[0_18px_42px_rgba(45,27,95,0.14)] transition duration-200 ${
-                      isConditionsOpen
-                        ? "visible translate-y-0 opacity-100"
-                        : "invisible -translate-y-1 opacity-0"
-                    }`}
+                    className={`fixed left-0 right-0 top-[70px] z-[80] border-t border-violet-100 bg-white shadow-[0_18px_42px_rgba(45,27,95,0.14)] transition duration-200 ${isConditionsOpen
+                      ? "visible translate-y-0 opacity-100"
+                      : "invisible -translate-y-1 opacity-0"
+                      }`}
                   >
                     <div className="mx-auto grid max-w-[1500px] grid-cols-[repeat(6,minmax(0,1fr))] gap-x-6 px-7 pb-9 pt-7 2xl:gap-x-8 2xl:px-9">
                       {item.megaMenu.map((group) => (
@@ -301,15 +319,15 @@ function Header() {
                   </Link>
                   <div className="invisible absolute left-0 top-full z-50 w-56 pt-3 opacity-0 transition duration-200 group-hover:visible group-hover:opacity-100">
                     <div className="rounded-xl border border-violet-100 bg-white p-2 shadow-[0_18px_42px_rgba(45,27,95,0.16)]">
-                    {item.submenu.map((subItem) => (
-                      <Link
-                        key={subItem.label}
-                        to={subItem.href}
-                        className="block rounded-lg px-4 py-3 text-[14px] font-black text-[#272047] transition hover:bg-violet-50 hover:text-[#8B43BA]"
-                      >
-                        {subItem.label}
-                      </Link>
-                    ))}
+                      {item.submenu.map((subItem) => (
+                        <Link
+                          key={subItem.label}
+                          to={subItem.href}
+                          className="block rounded-lg px-4 py-3 text-[14px] font-black text-[#272047] transition hover:bg-violet-50 hover:text-[#8B43BA]"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -335,13 +353,14 @@ function Header() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-3">
-            <a
-              href="#consultation"
+            <button
+              type="button"
+              onClick={() => setIsConsultationModalOpen(true)}
               className="hidden h-11 items-center gap-2 whitespace-nowrap rounded-md bg-[#8b43ba] px-5 text-[14px] font-black text-white shadow-[0_10px_18px_rgba(139,67,186,0.24)] transition hover:bg-[#7835a4] xl:inline-flex"
             >
               <CalendarDays className="h-4 w-4" />
               Book Consultation
-            </a>
+            </button>
 
             <button
               type="button"
@@ -366,9 +385,8 @@ function Header() {
       ) : null}
 
       <aside
-        className={`fixed right-0 top-0 z-[70] h-dvh w-[min(92vw,400px)] transform overflow-hidden rounded-l-2xl bg-white shadow-[-24px_0_60px_rgba(45,27,95,0.25)] transition-transform duration-300 xl:hidden ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed right-0 top-0 z-[70] h-dvh w-[min(92vw,400px)] transform overflow-hidden rounded-l-2xl bg-white shadow-[-24px_0_60px_rgba(45,27,95,0.25)] transition-transform duration-300 xl:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         aria-hidden={!isMenuOpen}
       >
         <div className="flex h-full flex-col">
@@ -430,9 +448,8 @@ function Header() {
               </button>
               <div
                 id="mobile-about-menu"
-                className={`gap-1 border-t border-violet-100 px-3 py-2 ${
-                  isAboutOpen ? "grid" : "hidden"
-                }`}
+                className={`gap-1 border-t border-violet-100 px-3 py-2 ${isAboutOpen ? "grid" : "hidden"
+                  }`}
               >
                 {navItems[1].submenu.map((subItem) => (
                   <Link
@@ -466,9 +483,8 @@ function Header() {
               </button>
               <div
                 id="mobile-conditions-menu"
-                className={`divide-y divide-violet-100 border-t border-violet-100 bg-white ${
-                  isConditionsOpen ? "block" : "hidden"
-                }`}
+                className={`divide-y divide-violet-100 border-t border-violet-100 bg-white ${isConditionsOpen ? "block" : "hidden"
+                  }`}
               >
                 {conditionGroups.map((group) => (
                   <div key={group.title} className="bg-white">
@@ -485,9 +501,8 @@ function Header() {
                       <span>{group.title}</span>
                       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-50 text-violet-600 transition group-hover:bg-white">
                         <ChevronDown
-                          className={`h-3.5 w-3.5 transition-transform ${
-                            openConditionGroup === group.title ? "rotate-180" : ""
-                          }`}
+                          className={`h-3.5 w-3.5 transition-transform ${openConditionGroup === group.title ? "rotate-180" : ""
+                            }`}
                           aria-hidden="true"
                         />
                       </span>
@@ -545,14 +560,17 @@ function Header() {
           </nav>
 
           <div className="shrink-0 border-t border-violet-100 bg-white p-4 shadow-[0_-10px_24px_rgba(45,27,95,0.06)] sm:p-5">
-            <a
-              href="#consultation"
-              className="flex h-12 items-center justify-center gap-2 rounded-md bg-violet-700 px-5 text-sm font-black text-white shadow-[0_12px_22px_rgba(93,46,202,0.25)] transition hover:bg-violet-800"
-              onClick={closeMenu}
+            <button
+              type="button"
+              className="flex w-full h-12 items-center justify-center gap-2 rounded-md bg-violet-700 px-5 text-sm font-black text-white shadow-[0_12px_22px_rgba(93,46,202,0.25)] transition hover:bg-violet-800"
+              onClick={() => {
+                closeMenu();
+                setIsConsultationModalOpen(true);
+              }}
             >
               <CalendarDays className="h-4 w-4" />
               Book Consultation
-            </a>
+            </button>
             <a
               href="tel:+919523435814"
               className="mt-3 flex h-12 items-center justify-center gap-2 rounded-md border border-violet-200 bg-white px-5 text-sm font-black text-violet-800 transition hover:bg-violet-50"
@@ -563,6 +581,63 @@ function Header() {
           </div>
         </div>
       </aside>
+
+      {isConsultationModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#120b2a]/45 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-[0_18px_42px_rgba(45,27,95,0.16)]">
+            <button
+              type="button"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-violet-50 text-violet-800 hover:bg-violet-100"
+              onClick={() => setIsConsultationModalOpen(false)}
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <h2 className="mb-4 text-2xl font-black text-[#272047]">Book Consultation</h2>
+            <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setIsConsultationModalOpen(false); alert("Form submitted successfully!"); }}>
+              <div>
+                <label className="block text-sm font-bold text-[#272047]">Name</label>
+                <input type="text" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-[#272047]">Phone</label>
+                <input type="tel" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-[#272047]">Consultation Mode</label>
+                <select defaultValue="" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required>
+                  <option value="" disabled>Select Mode</option>
+                  <option value="online">Online Consultation</option>
+                  <option value="clinic">Clinic Visit</option>
+                </select>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-[#272047]">Date</label>
+                  <input type="date" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-[#272047]">Time</label>
+                  <select defaultValue="" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required>
+                    <option value="" disabled>Select Time</option>
+                    {timeSlots.map((slot) => (
+                      <option key={slot} value={slot}>
+                        {slot}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-[#272047]">Message</label>
+                <textarea rows="2" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"></textarea>
+              </div>
+              <button type="submit" className="mt-2 w-full rounded-lg bg-[#8b43ba] px-4 py-2.5 text-[15px] font-black text-white shadow-[0_10px_18px_rgba(139,67,186,0.24)] transition hover:bg-[#7835a4] focus:outline-none focus:ring-2 focus:ring-[#8b43ba] focus:ring-offset-2">
+                Submit Request
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </React.Fragment>
   );
 }
