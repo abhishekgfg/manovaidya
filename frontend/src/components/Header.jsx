@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   CalendarDays,
   ChevronDown,
@@ -134,11 +134,46 @@ const navItems = [
 ];
 
 function Header() {
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isConditionsOpen, setIsConditionsOpen] = React.useState(false);
   const [isAboutOpen, setIsAboutOpen] = React.useState(false);
   const [openConditionGroup, setOpenConditionGroup] = React.useState(null);
   const conditionsCloseTimer = React.useRef(null);
+
+  const conditionRoutes = conditionGroups.map((group) => group.href);
+  const isNavItemActive = (item) => {
+    if (item.label === "Home") {
+      return location.pathname === "/" && !location.hash;
+    }
+
+    if (item.label === "About Us") {
+      return (
+        location.pathname.startsWith("/about") &&
+        location.pathname !== "/about/approach"
+      );
+    }
+
+    if (item.label === "Conditions") {
+      return (
+        location.hash === "#conditions" ||
+        conditionRoutes.includes(location.pathname)
+      );
+    }
+
+    if (item.href.startsWith("#")) {
+      return location.pathname === "/" && location.hash === item.href;
+    }
+
+    return location.pathname === item.href;
+  };
+
+  const desktopNavClass = (active) =>
+    `relative inline-flex items-center py-2 transition-colors duration-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-[72%] after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-[#7130a3] after:to-[#a34fd2] after:transition-transform after:duration-300 after:ease-out ${
+      active
+        ? "text-[#7b2cbf] after:scale-x-100"
+        : "text-[#211d2d] hover:text-[#7b2cbf] after:scale-x-0"
+    }`;
 
   const closeMenu = () => {
     window.clearTimeout(conditionsCloseTimer.current);
@@ -204,7 +239,7 @@ function Header() {
                 >
                   <button
                     type="button"
-                    className="inline-flex items-center text-violet-700"
+                    className={desktopNavClass(isNavItemActive(item))}
                     aria-expanded={isConditionsOpen}
                     aria-controls="desktop-conditions-menu"
                     onClick={() => setIsConditionsOpen((open) => !open)}
@@ -257,7 +292,10 @@ function Header() {
                 </div>
               ) : item.submenu ? (
                 <div key={item.label} className="group relative">
-                  <Link to={item.href} className="inline-flex items-center text-violet-700">
+                  <Link
+                    to={item.href}
+                    className={desktopNavClass(isNavItemActive(item))}
+                  >
                     {item.label}
                     <ChevronDown className="ml-0.5 h-4 w-4" />
                   </Link>
@@ -276,11 +314,19 @@ function Header() {
                   </div>
                 </div>
               ) : item.href.startsWith("/") ? (
-                <Link key={item.label} to={item.href} className="text-violet-700">
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className={desktopNavClass(isNavItemActive(item))}
+                >
                   {item.label}
                 </Link>
               ) : (
-                <a key={item.label} href={item.href} className="transition hover:text-violet-700">
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={desktopNavClass(isNavItemActive(item))}
+                >
                   {item.label}
                   {item.hasMenu ? <ChevronDown className="ml-0.5 inline h-4 w-4" /> : null}
                 </a>

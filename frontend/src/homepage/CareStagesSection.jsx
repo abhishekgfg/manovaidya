@@ -9,12 +9,12 @@ import {
   Sparkles,
   UserRound,
 } from "lucide-react";
-import childImage from "../images/child.png";
-import boyImage from "../images/boy.png";
-import adultImage from "../images/3.png";
-import seniorImage from "../images/4.png";
-import womenImage from "../images/5.png";
-import mindBodyImage from "../images/6a.png";
+import childImage from "../images/care-stage-child-generated.png";
+import boyImage from "../images/care-stage-teen-generated.png";
+import adultImage from "../images/care-stage-adult-generated.png";
+import seniorImage from "../images/care-stage-senior-generated.png";
+import womenImage from "../images/care-stage-women-generated.png";
+import mindBodyImage from "../images/care-stage-mind-body-generated.png";
 
 const careStages = [
   {
