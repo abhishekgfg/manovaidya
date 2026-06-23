@@ -128,7 +128,12 @@ const navItems = [
   },
   { label: "Conditions", href: "#conditions", hasMenu: true, megaMenu: conditionGroups },
   { label: "Programs", href: "#programs", hasMenu: true },
-  { label: "Resources", href: "#resources", hasMenu: true },
+  {
+    label: "Resources",
+    href: "#resources",
+    hasMenu: true,
+    submenu: [{ label: "Blog", href: "/blog" }],
+  },
   // { label: "Our Approach", href: "/about/approach" },
   { label: "Success Stories", href: "#stories" },
 ];
@@ -158,6 +163,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isConditionsOpen, setIsConditionsOpen] = React.useState(false);
   const [isAboutOpen, setIsAboutOpen] = React.useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = React.useState(false);
   const [openConditionGroup, setOpenConditionGroup] = React.useState(null);
   const [isConsultationModalOpen, setIsConsultationModalOpen] = React.useState(false);
   const conditionsCloseTimer = React.useRef(null);
@@ -182,6 +188,12 @@ function Header() {
       );
     }
 
+    if (item.label === "Resources") {
+      return item.submenu.some(
+        (subItem) => subItem.href === location.pathname
+      );
+    }
+
     if (item.href.startsWith("#")) {
       return location.pathname === "/" && location.hash === item.href;
     }
@@ -200,6 +212,7 @@ function Header() {
     setIsMenuOpen(false);
     setIsConditionsOpen(false);
     setIsAboutOpen(false);
+    setIsResourcesOpen(false);
     setOpenConditionGroup(null);
   };
 
@@ -438,6 +451,7 @@ function Header() {
                 onClick={() => {
                   setIsAboutOpen((open) => !open);
                   setIsConditionsOpen(false);
+                  setIsResourcesOpen(false);
                   setOpenConditionGroup(null);
                 }}
               >
@@ -474,6 +488,7 @@ function Header() {
                   if (isConditionsOpen) setOpenConditionGroup(null);
                   setIsConditionsOpen(!isConditionsOpen);
                   setIsAboutOpen(false);
+                  setIsResourcesOpen(false);
                 }}
               >
                 Conditions
@@ -535,7 +550,45 @@ function Header() {
             </section>
 
             {navItems.slice(3).map((item) =>
-              item.href.startsWith("/") ? (
+              item.submenu ? (
+                <section
+                  key={item.label}
+                  className="shrink-0 overflow-hidden rounded-xl border border-violet-100 bg-violet-50/70 shadow-sm"
+                >
+                  <button
+                    type="button"
+                    className="flex min-h-14 w-full items-center justify-between px-4 py-3 text-left text-base font-black leading-5 text-violet-700"
+                    aria-expanded={isResourcesOpen}
+                    aria-controls="mobile-resources-menu"
+                    onClick={() => {
+                      setIsResourcesOpen((open) => !open);
+                      setIsAboutOpen(false);
+                      setIsConditionsOpen(false);
+                      setOpenConditionGroup(null);
+                    }}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform ${isResourcesOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  <div
+                    id="mobile-resources-menu"
+                    className={`gap-1 border-t border-violet-100 px-3 py-2 ${isResourcesOpen ? "grid" : "hidden"}`}
+                  >
+                    {item.submenu.map((subItem) => (
+                      <Link
+                        key={subItem.label}
+                        to={subItem.href}
+                        className="rounded-lg px-4 py-2.5 text-sm font-black text-[#272047] transition hover:bg-white hover:text-[#8B43BA]"
+                        onClick={closeMenu}
+                      >
+                        {subItem.label}
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              ) : item.href.startsWith("/") ? (
                 <Link
                   key={item.label}
                   to={item.href}

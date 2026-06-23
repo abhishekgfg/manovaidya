@@ -12,6 +12,7 @@ import WomenHealthCarePage from "./pages/WomenHealthCarePage";
 import AdultMentalWellnessPage from "./pages/AdultMentalWellnessPage";
 import TeenMentalWellnessPage from "./pages/TeenMentalWellnessPage";
 import ChildHealthCarePage from "./pages/ChildHealthCarePage";
+import BlogPage from "./pages/BlogPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -50,6 +51,7 @@ function App() {
           <Route path="/adult-mental-wellness" element={<AdultMentalWellnessPage />} />
           <Route path="/teen-mental-wellness" element={<TeenMentalWellnessPage />} />
           <Route path="/child-health-care" element={<ChildHealthCarePage />} />
+          <Route path="/blog" element={<BlogPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
