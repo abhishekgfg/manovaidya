@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, User, ShieldCheck } from 'lucide-react';
+import Logo from '../assets/manovaidya-logo (2).png';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -17,7 +18,7 @@ export default function Login() {
     // Simulate a brief network delay for realism
     setTimeout(() => {
       if (username === 'manovaidya' && password === 'manovaidya123') {
-        localStorage.setItem('isAdminAuth', 'true');
+        localStorage.setItem('token', 'admin-token');
         navigate('/');
       } else {
         setError('Invalid username or password');
@@ -31,12 +32,11 @@ export default function Login() {
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1576091160550-2173ff9e9e9c?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
       
       <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white/10 p-8 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] backdrop-blur-xl border border-white/20">
-        <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-500/20 text-blue-400 ring-1 ring-blue-400/50">
-            <ShieldCheck size={32} />
+        <div className="mb-8 text-center flex flex-col items-center">
+          <div className="mx-auto mb-6 flex items-center justify-center rounded-2xl bg-white px-6 py-4 shadow-lg transition-transform hover:scale-105">
+            <img src={Logo} alt="Manovaidya Logo" className="h-10 sm:h-12 w-auto object-contain" />
           </div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">Admin Portal</h2>
-          <p className="mt-2 text-sm text-slate-300">Enter your credentials to access the dashboard</p>
+          <p className="mt-2 text-sm text-slate-300">Enter your credentials to access the Admin Portal</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">

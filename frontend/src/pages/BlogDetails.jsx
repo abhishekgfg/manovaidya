@@ -30,15 +30,13 @@ const TableOfContents = ({ toc, activeId }) => {
               e.preventDefault();
               document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className={`relative pl-8 text-[15px] leading-snug transition-colors ${
-              activeId === heading.id 
-                ? 'font-bold text-slate-800' 
-                : 'font-medium text-slate-500 hover:text-slate-800'
-            } ${heading.level === 'h3' ? 'ml-6' : ''}`}
+            className={`relative pl-8 text-[15px] leading-snug transition-colors duration-300 ${activeId === heading.id
+              ? 'font-bold text-[#0F766E]'
+              : 'font-medium text-slate-500 hover:text-slate-800'
+              } ${heading.level === 'h3' ? 'ml-6' : ''}`}
           >
-            <span className={`absolute left-0 top-1 h-5 w-5 rounded-full border-[2.5px] bg-white transition-colors ${
-              activeId === heading.id ? 'border-[#0F766E]' : 'border-slate-200'
-            }`} />
+            <span className={`absolute left-0 top-1 h-5 w-5 rounded-full border-[2.5px] bg-white transition-colors ${activeId === heading.id ? 'border-[#0F766E]' : 'border-slate-200'
+              }`} />
             {heading.text}
           </a>
         ))}
@@ -66,14 +64,59 @@ export default function BlogDetails() {
         if (data.success) {
           setBlog(data.data);
 
+          // Full SEO: Update page title, meta description, keywords, canonical, and OG tags
           document.title = data.data.metaTitle || data.data.title || 'Blog Details - Manovaidya';
-          let metaDesc = document.querySelector('meta[name="description"]');
-          if (!metaDesc) {
-            metaDesc = document.createElement('meta');
-            metaDesc.name = "description";
-            document.head.appendChild(metaDesc);
+          
+          const setMetaTag = (name, content, isProperty = false) => {
+            if (!content) return;
+            const attr = isProperty ? 'property' : 'name';
+            let tag = document.querySelector(`meta[${attr}="${name}"]`);
+            if (!tag) {
+              tag = document.createElement('meta');
+              tag.setAttribute(attr, name);
+              document.head.appendChild(tag);
+            }
+            tag.setAttribute("content", content);
+          };
+
+          setMetaTag('description', data.data.metaDescription || data.data.shortDescription);
+          setMetaTag('keywords', data.data.metaKeywords || data.data.focusKeyword);
+          setMetaTag('robots', data.data.robots || 'index,follow');
+          
+          // Open Graph (Social Sharing SEO)
+          setMetaTag('og:title', data.data.ogTitle || data.data.metaTitle || data.data.title, true);
+          setMetaTag('og:description', data.data.ogDescription || data.data.metaDescription || data.data.shortDescription, true);
+          setMetaTag('og:url', window.location.href, true);
+          setMetaTag('og:type', 'article', true);
+          const ogImg = data.data.ogImage || data.data.image;
+          if (ogImg) setMetaTag('og:image', getAssetUrl(ogImg), true);
+
+          // Twitter SEO
+          setMetaTag('twitter:card', 'summary_large_image');
+          setMetaTag('twitter:title', data.data.twitterTitle || data.data.ogTitle || data.data.metaTitle || data.data.title);
+          setMetaTag('twitter:description', data.data.twitterDescription || data.data.ogDescription || data.data.metaDescription || data.data.shortDescription);
+          const twImg = data.data.twitterImage || ogImg;
+          if (twImg) setMetaTag('twitter:image', getAssetUrl(twImg));
+
+          // Canonical URL
+          let canonicalLink = document.querySelector('link[rel="canonical"]');
+          if (!canonicalLink) {
+            canonicalLink = document.createElement('link');
+            canonicalLink.rel = "canonical";
+            document.head.appendChild(canonicalLink);
           }
-          metaDesc.setAttribute("content", data.data.metaDescription || data.data.shortDescription || "");
+          canonicalLink.setAttribute("href", data.data.canonicalUrl || window.location.href);
+
+          // Schema Markup (JSON-LD)
+          if (data.data.schemaMarkup) {
+            let script = document.querySelector('script[type="application/ld+json"]');
+            if (!script) {
+              script = document.createElement('script');
+              script.type = "application/ld+json";
+              document.head.appendChild(script);
+            }
+            script.textContent = data.data.schemaMarkup;
+          }
 
           // Fetch related blogs (mocking by just fetching latest 3 from same category if possible, else just 3 latest)
           const relatedRes = await api.get(`/blogs`);
@@ -97,7 +140,7 @@ export default function BlogDetails() {
     if (!blog?.content) return '';
     const parser = new DOMParser();
     const doc = parser.parseFromString(blog.content, 'text/html');
-    
+
     // Remove inline background colors (often caused by copy-pasting into the editor)
     const allElements = doc.querySelectorAll('*');
     allElements.forEach(el => {
@@ -108,13 +151,13 @@ export default function BlogDetails() {
 
     const headings = doc.querySelectorAll('h2, h3');
     const newToc = [];
-    
+
     headings.forEach((h) => {
       const id = h.textContent.replace(/\s+/g, '-').toLowerCase().replace(/[^a-z0-9-]/g, '');
       h.id = id;
       newToc.push({ id, text: h.textContent, level: h.tagName.toLowerCase() });
     });
-    
+
     setToc(newToc);
     return doc.body.innerHTML;
   }, [blog?.content]);
@@ -122,24 +165,32 @@ export default function BlogDetails() {
   // TOC active state tracking
   useEffect(() => {
     if (toc.length === 0) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-20% 0px -80% 0px' }
-    );
 
-    toc.forEach((h) => {
-      const el = document.getElementById(h.id);
-      if (el) observer.observe(el);
-    });
+    const handleScroll = () => {
+      // Find the current active heading based on scroll position
+      const headingElements = toc.map(h => document.getElementById(h.id)).filter(Boolean);
 
-    return () => observer.disconnect();
-  }, [toc, processedContent]);
+      // Add offset to trigger highlight when heading is near the top of the viewport
+      const scrollPosition = window.scrollY + 200;
+
+      let currentId = toc[0]?.id || '';
+      for (const el of headingElements) {
+        if (el.offsetTop <= scrollPosition) {
+          currentId = el.id;
+        } else {
+          break; // Since headings are in order, we can break early
+        }
+      }
+
+      setActiveId(currentId);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Trigger once on load
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [toc]);
 
   if (loading) {
     return (
@@ -184,18 +235,18 @@ export default function BlogDetails() {
     <main className="min-h-screen bg-[#F8FAFC] pb-24 ">
       {/* Breadcrumb */}
       <div className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-[1320px] px-4 py-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center text-xs font-semibold text-slate-500">
+        <div className="mx-auto px-4 py-4 sm:px-6 lg:px-10">
+          <nav className="flex items-center text-sm font-medium text-slate-500">
             <Link to="/" className="hover:text-teal-700">Home</Link>
-            <span className="mx-2 text-slate-300">{'>'}</span>
+            <span className="mx-3 text-slate-300">{'>'}</span>
             <Link to="/blog" className="hover:text-teal-700">Blog</Link>
-            <span className="mx-2 text-slate-300">{'>'}</span>
-            <span className="text-slate-900 truncate max-w-[200px] sm:max-w-md">{blog.title}</span>
+            <span className="mx-3 text-slate-300">{'>'}</span>
+            <span className="text-slate-900 font-semibold truncate max-w-[200px] sm:max-w-md">{blog.title}</span>
           </nav>
         </div>
       </div>
 
-      <div className="mx-auto mt-10 w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto mt-10 w-full  px-4 sm:px-6 lg:px-10">
         {/* Hero Section (2-Column) */}
         <div className="mb-12 flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
           {/* Text Content */}
@@ -269,7 +320,7 @@ export default function BlogDetails() {
         </div>
       </div>
 
-      <div className="mx-auto grid w-full max-w-[1320px] items-start gap-16 px-4 sm:px-6 lg:px-8 xl:grid-cols-[1fr_320px]">
+      <div className="mx-auto grid w-full  gap-16 px-4 sm:px-6 lg:px-10 xl:grid-cols-[1fr_320px]">
 
         {/* LEFT COLUMN: Main Content */}
         <motion.article
@@ -349,8 +400,8 @@ export default function BlogDetails() {
         </motion.article>
 
         {/* RIGHT COLUMN: Sticky Sidebar */}
-        <aside className="relative">
-          <div className="sticky top-8 space-y-8">
+        <aside className="relative h-full">
+          <div className="sticky top-8 flex max-h-[calc(100vh-4rem)] flex-col gap-8 overflow-y-auto overflow-x-hidden pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
             {/* Share Widget */}
             <div className="rounded-[24px] border border-slate-100 bg-white p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">

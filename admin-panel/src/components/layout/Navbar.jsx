@@ -1,7 +1,19 @@
-import React from 'react';
-import { Bell, Search, Menu } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bell, Search, Menu, LogOut, User as UserIcon, ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar({ sidebarOpen, setSidebarOpen }) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear auth token/data
+    localStorage.removeItem('token');
+    
+    // Redirect to login page
+    navigate('/login');
+  };
+
   return (
     <header className="sticky top-0 z-40 flex w-full bg-white drop-shadow-sm border-b border-slate-200">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -45,14 +57,55 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }) {
             </li>
           </ul>
 
-          <div className="flex items-center gap-4">
-            <span className="hidden text-right lg:block">
-              <span className="block text-sm font-medium text-slate-800">Admin User</span>
-              <span className="block text-xs text-slate-500">Administrator</span>
-            </span>
-            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold shadow-sm">
-              AU
-            </div>
+          <div className="relative">
+            <button 
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="flex items-center gap-4 focus:outline-none"
+            >
+              <span className="hidden text-right lg:block">
+                <span className="block text-sm font-bold text-slate-800">Dr. Ankush Garg</span>
+                <span className="block text-xs font-medium text-slate-500">Administrator</span>
+              </span>
+              <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-white shadow-sm ring-2 ring-slate-100">
+                <img 
+                  src="https://ui-avatars.com/api/?name=Ankush+Garg&background=0F766E&color=fff&bold=true" 
+                  alt="Dr. Ankush Garg" 
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <ChevronDown className="hidden h-4 w-4 text-slate-500 sm:block" />
+            </button>
+
+            {/* Dropdown Menu */}
+            {dropdownOpen && (
+              <>
+                {/* Overlay to close dropdown when clicking outside */}
+                <div 
+                  className="fixed inset-0 z-40"
+                  onClick={() => setDropdownOpen(false)}
+                ></div>
+                
+                <div className="absolute right-0 mt-4 flex w-48 flex-col rounded-xl border border-slate-200 bg-white shadow-lg z-50 overflow-hidden">
+                  <ul className="flex flex-col border-b border-slate-100 p-2">
+                    <li>
+                      <button className="flex w-full items-center gap-3.5 rounded-lg px-4 py-2.5 text-sm font-medium text-slate-600 duration-300 ease-in-out hover:bg-slate-50 hover:text-teal-700">
+                        <UserIcon className="h-4.5 w-4.5" />
+                        My Profile
+                      </button>
+                    </li>
+                  </ul>
+                  <div className="p-2">
+                    <button 
+                      onClick={handleLogout}
+                      className="flex w-full items-center gap-3.5 rounded-lg px-4 py-2.5 text-sm font-medium text-red-600 duration-300 ease-in-out hover:bg-red-50"
+                    >
+                      <LogOut className="h-4.5 w-4.5" />
+                      Log Out
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -3,12 +3,23 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdminLayout from './components/layout/AdminLayout';
 import Dashboard from './pages/Dashboard';
 import BlogManagement from './pages/BlogManagement';
+import Login from './pages/Login';
+
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<AdminLayout />}>
+        <Route path="/login" element={<Login />} />
+        
+        <Route path="/" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
           <Route index element={<Dashboard />} />
           {/* Placeholder routes for other sidebar links */}
           <Route path="appointments" element={<div className="p-4">Appointments Page (Coming Soon)</div>} />

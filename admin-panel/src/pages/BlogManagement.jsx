@@ -269,8 +269,8 @@ export default function BlogManagement() {
           <div className="flex items-start gap-3">
             <div className="rounded-xl bg-violet-100 p-2.5 text-violet-700"><Info size={20} /></div>
             <div>
-              <h2 className="font-semibold text-slate-900">SEO Score, Google Rank नहीं</h2>
-              <p className="mt-1 text-xs leading-5 text-slate-600">Gemini content evidence से deep 100-point score, search intent, metadata, keywords और E-E-A-T audit करता है। Exact Google ranking domain deploy और Search Console verify होने के बाद मिलेगी.</p>
+              <h2 className="font-semibold text-slate-900">SEO Score vs. Google Rank</h2>
+              <p className="mt-1 text-xs leading-5 text-slate-600">Gemini provides a deep 100-point SEO score by auditing content evidence, search intent, metadata, keywords, and E-E-A-T. Your exact Google rank will be available after domain deployment and Search Console verification.</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${searchConsoleConfigured ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-600'}`}>Google: {searchConsoleConfigured ? 'Configured' : 'After deployment'}</span>
                 <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${integrationStatus?.gemini?.configured ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>Gemini: {integrationStatus?.gemini?.configured ? integrationStatus.gemini.model : 'Setup required'}</span>
