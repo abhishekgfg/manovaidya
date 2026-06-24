@@ -156,9 +156,23 @@ export const updateBlog = async (req, res) => {
       }
     }
 
+    // Remove seo audit fields from updateData to prevent conflict with $unset
+    delete updateData.aiSeoScore;
+    delete updateData.aiSeoAudit;
+    delete updateData.aiSeoModel;
+    delete updateData.aiSeoAnalyzedAt;
+
     const blog = await Blog.findByIdAndUpdate(
       id,
-      { ...updateData, updatedAt: Date.now() },
+      {
+        $set: { ...updateData, updatedAt: Date.now() },
+        $unset: {
+          aiSeoScore: 1,
+          aiSeoAudit: 1,
+          aiSeoModel: 1,
+          aiSeoAnalyzedAt: 1
+        }
+      },
       { new: true, runValidators: true }
     );
 

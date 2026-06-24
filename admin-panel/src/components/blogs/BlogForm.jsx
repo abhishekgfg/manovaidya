@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { X, Plus, Trash2 } from 'lucide-react';
+import { useMemo, useRef, useState } from 'react';
+import { Code2, ImagePlus, Link2, Plus, Sparkles, Trash2, Video, X } from 'lucide-react';
 import JoditEditor from 'jodit-react';
+import api, { getAssetUrl } from '../../api/axiosInstance';
 
 const initialFormData = {
   title: '',
@@ -11,31 +12,128 @@ const initialFormData = {
   content: '',
   authorName: '',
   status: 'published',
-  faq: []
+  faq: [],
+  metaTitle: '',
+  metaDescription: '',
+  focusKeyword: '',
+  metaKeywords: '',
+  canonicalUrl: '',
+  imageAlt: '',
+  ogTitle: '',
+  ogDescription: '',
+  ogImage: '',
+  twitterTitle: '',
+  twitterDescription: '',
+  twitterImage: '',
+  robots: 'index,follow',
+  schemaMarkup: ''
+};
+
+const youtubeEmbedExample = '<iframe src="https://www.youtube.com/embed/VIDEO_ID" title="YouTube video" allowfullscreen></iframe>';
+
+const escapeHtml = (value = '') => value
+  .replaceAll('&', '&amp;')
+  .replaceAll('"', '&quot;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;');
+
+const getYouTubeVideoId = (value = '') => {
+  const match = value.match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
+  return match?.[1] || null;
+};
+
+const isSafeUrl = (value = '') => {
+  try {
+    const url = new URL(value);
+    return ['http:', 'https:'].includes(url.protocol);
+  } catch {
+    return false;
+  }
 };
 
 export default function BlogForm({ blog, onClose, onSave }) {
   const editor = useRef(null);
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(() => blog
+    ? { ...initialFormData, ...blog, faq: blog.faq || [] }
+    : initialFormData);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [youtubeInput, setYoutubeInput] = useState('');
+  const [linkedImage, setLinkedImage] = useState({ imageUrl: '', linkUrl: '', alt: '', newTab: true });
+  const [editorNotice, setEditorNotice] = useState(null);
 
-  const editorConfig = {
+  const editorConfig = useMemo(() => ({
     readonly: false,
-    placeholder: 'Start typing your blog content...',
-    height: 400,
-  };
-
-  useEffect(() => {
-    if (blog) {
-      setFormData(blog);
+    placeholder: 'Start typing your blog content... Use headings, images, links, tables and videos.',
+    height: 500,
+    minHeight: 420,
+    toolbarAdaptive: false,
+    toolbarSticky: false,
+    spellcheck: true,
+    showCharsCounter: true,
+    showWordsCounter: true,
+    showXPathInStatusbar: true,
+    beautifyHTML: true,
+    sourceEditor: 'area',
+    askBeforePasteHTML: false,
+    askBeforePasteFromWord: false,
+    defaultActionOnPaste: 'insert_as_html',
+    defaultActionOnPasteFromWord: 'insert_clear_html',
+    processPasteHTML: true,
+    enableDragAndDropFileToEditor: true,
+    uploader: {
+      insertImageAsBase64URI: true
+    },
+    link: {
+      processVideoLink: true,
+      processPastedLink: true,
+      noFollowCheckbox: true,
+      openInNewTabCheckbox: true,
+      openInNewTabCheckboxDefaultChecked: true,
+      ariaLabelInput: true
+    },
+    image: {
+      openOnDblClick: true,
+      editSrc: true,
+      editTitle: true,
+      editAlt: true,
+      editLink: true,
+      editSize: true,
+      editMargins: true,
+      editBorderRadius: true,
+      editAlign: true,
+      showPreview: true,
+      useImageEditor: true
+    },
+    video: {
+      defaultWidth: 800,
+      defaultHeight: 450
+    },
+    allowResizeTags: new Set(['img', 'iframe', 'table']),
+    mediaInFakeBlock: false,
+    cleanHTML: {
+      allowTags: false,
+      denyTags: 'script,style,object,embed,applet',
+      fillEmptyParagraph: false,
+      removeEmptyElements: false,
+      removeEventAttributes: true,
+      safeJavaScriptLink: true,
+      safeLinksTarget: true,
+      sandboxIframesInContent: false,
+      useIframeSandbox: false
     }
-  }, [blog]);
+  }), []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => {
+      const nextData = { ...prev, [name]: value };
+      if (name === 'title' && !blog && !prev.slug) {
+        nextData.slug = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      }
+      return nextData;
+    });
   };
 
   const handleFileChange = (e) => {
@@ -46,6 +144,68 @@ export default function BlogForm({ blog, onClose, onSave }) {
 
   const handleContentChange = (value) => {
     setFormData(prev => ({ ...prev, content: value }));
+  };
+
+  const insertHtmlIntoEditor = (html) => {
+    if (editor.current?.s) {
+      editor.current.s.focus();
+      editor.current.s.insertHTML(html);
+      handleContentChange(editor.current.value);
+    } else {
+      handleContentChange(`${formData.content}${html}`);
+    }
+  };
+
+  const insertYouTubeVideo = () => {
+    const videoId = getYouTubeVideoId(youtubeInput.trim());
+    if (!videoId) {
+      setEditorNotice({ type: 'error', text: 'Valid YouTube URL ya iframe embed code paste karein.' });
+      return;
+    }
+
+    const embedHtml = `<div class="youtube-video" style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;margin:24px 0;border-radius:12px;"><iframe src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><p><br></p>`;
+    insertHtmlIntoEditor(embedHtml);
+    setYoutubeInput('');
+    setEditorNotice({ type: 'success', text: 'YouTube video content mein insert ho gaya.' });
+  };
+
+  const insertLinkedImage = () => {
+    if (!isSafeUrl(linkedImage.imageUrl) || !isSafeUrl(linkedImage.linkUrl)) {
+      setEditorNotice({ type: 'error', text: 'Image URL aur destination link dono valid http/https URL hone chahiye.' });
+      return;
+    }
+
+    const target = linkedImage.newTab ? ' target="_blank" rel="noopener noreferrer"' : '';
+    const imageHtml = `<p><a href="${escapeHtml(linkedImage.linkUrl)}"${target}><img src="${escapeHtml(linkedImage.imageUrl)}" alt="${escapeHtml(linkedImage.alt || formData.title)}" style="max-width:100%;height:auto;border-radius:12px;" /></a></p><p><br></p>`;
+    insertHtmlIntoEditor(imageHtml);
+    setLinkedImage({ imageUrl: '', linkUrl: '', alt: '', newTab: true });
+    setEditorNotice({ type: 'success', text: 'Clickable image content mein insert ho gayi.' });
+  };
+
+  const generateSchemaMarkup = () => {
+    const articleSchema = {
+      '@type': 'BlogPosting',
+      headline: formData.metaTitle || formData.title,
+      description: formData.metaDescription || formData.shortDescription,
+      author: { '@type': 'Person', name: formData.authorName },
+      datePublished: blog?.createdAt || new Date().toISOString(),
+      dateModified: new Date().toISOString(),
+      ...(formData.canonicalUrl ? { mainEntityOfPage: { '@type': 'WebPage', '@id': formData.canonicalUrl } } : {}),
+      ...(formData.image && /^https?:\/\//i.test(formData.image) ? { image: formData.image } : {})
+    };
+    const graph = [articleSchema];
+    if (formData.faq.length) {
+      graph.push({
+        '@type': 'FAQPage',
+        mainEntity: formData.faq.map(item => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer }
+        }))
+      });
+    }
+    const schema = { '@context': 'https://schema.org', '@graph': graph };
+    setFormData(prev => ({ ...prev, schemaMarkup: JSON.stringify(schema, null, 2) }));
   };
 
   const handleFaqChange = (index, field, value) => {
@@ -74,18 +234,41 @@ export default function BlogForm({ blog, onClose, onSave }) {
     setError(null);
 
     try {
-      const url = blog 
-        ? `http://localhost:5003/api/blogs/${blog._id}`
-        : 'http://localhost:5003/api/blogs';
-      
-      const method = blog ? 'PUT' : 'POST';
+      let editorContent = editor.current?.value || formData.content;
+      if (!editorContent.trim()) throw new Error('Blog content is required.');
 
+      // Enforce alt tags for all images in the editor content
+      const defaultAlt = formData.imageAlt?.trim() || formData.title?.trim() || 'Blog Image';
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = editorContent;
+      const images = tempDiv.getElementsByTagName('img');
+      for (let i = 0; i < images.length; i++) {
+        if (!images[i].getAttribute('alt') || images[i].getAttribute('alt').trim() === '') {
+          images[i].setAttribute('alt', defaultAlt);
+        }
+      }
+      editorContent = tempDiv.innerHTML;
+
+      // Automatically set the main imageAlt if not provided
+      if (!formData.imageAlt || formData.imageAlt.trim() === '') {
+        formData.imageAlt = defaultAlt;
+      }
+
+      if (formData.schemaMarkup.trim()) {
+        try {
+          JSON.parse(formData.schemaMarkup);
+        } catch {
+          throw new Error('Schema markup valid JSON-LD format mein hona chahiye.');
+        }
+      }
+
+      const dataToSubmit = { ...formData, content: editorContent };
       const submitData = new FormData();
-      Object.keys(formData).forEach(key => {
+      Object.keys(dataToSubmit).forEach(key => {
         if (key === 'faq') {
-          submitData.append(key, JSON.stringify(formData[key]));
+          submitData.append(key, JSON.stringify(dataToSubmit[key]));
         } else if (key !== 'image') {
-          submitData.append(key, formData[key]);
+          submitData.append(key, dataToSubmit[key]);
         }
       });
 
@@ -95,12 +278,9 @@ export default function BlogForm({ blog, onClose, onSave }) {
         submitData.append('image', formData.image);
       }
 
-      const response = await fetch(url, {
-        method,
-        body: submitData, // Browser sets Content-Type to multipart/form-data with correct boundary
-      });
-
-      const data = await response.json();
+      const { data } = blog
+        ? await api.put(`/blogs/${blog._id}`, submitData)
+        : await api.post('/blogs', submitData);
 
       if (!data.success) {
         throw new Error(data.message || 'Something went wrong');
@@ -108,7 +288,7 @@ export default function BlogForm({ blog, onClose, onSave }) {
 
       onSave(data.data || data); // pass back saved blog
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || err.message);
     } finally {
       setLoading(false);
     }
@@ -209,7 +389,7 @@ export default function BlogForm({ blog, onClose, onSave }) {
                 />
                 {!imageFile && formData.image && (
                   <p className="mt-2 text-xs text-slate-500">
-                    Current image: <a href={`http://localhost:5003${formData.image}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">View</a>
+                    Current image: <a href={getAssetUrl(formData.image)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">View</a>
                   </p>
                 )}
               </div>
@@ -232,10 +412,139 @@ export default function BlogForm({ blog, onClose, onSave }) {
                 ref={editor}
                 value={formData.content}
                 config={editorConfig}
-                tabIndex={1} // tabIndex of textarea
+                tabIndex={1}
                 onBlur={newContent => handleContentChange(newContent)}
-                onChange={newContent => {}}
+                onChange={() => {}}
               />
+
+              <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="mb-4 flex items-center gap-2">
+                  <Sparkles size={18} className="text-violet-600" />
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-900">Editor content tools</h4>
+                    <p className="text-xs text-slate-500">Video aur linked image ko safely content mein insert karein.</p>
+                  </div>
+                </div>
+
+                {editorNotice && (
+                  <div className={`mb-4 rounded-lg px-3 py-2 text-xs font-medium ${editorNotice.type === 'success' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
+                    {editorNotice.text}
+                  </div>
+                )}
+
+                <div className="grid gap-4 xl:grid-cols-2">
+                  <div className="rounded-xl border border-red-100 bg-white p-4 shadow-sm">
+                    <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                      <Video size={19} className="text-red-600" /> YouTube video
+                    </div>
+                    <textarea
+                      value={youtubeInput}
+                      onChange={(event) => setYoutubeInput(event.target.value)}
+                      rows="3"
+                      placeholder="YouTube URL ya iframe embed code paste karein"
+                      className="block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-xs text-slate-800 outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100"
+                    />
+                    <div className="mt-2 rounded-lg bg-slate-900 p-2.5 font-mono text-[10px] leading-4 text-slate-300">
+                      {youtubeEmbedExample}
+                    </div>
+                    <p className="mt-2 text-[11px] leading-4 text-slate-500">YouTube → Share → Embed se code copy karein, ya normal watch/shorts URL paste karein.</p>
+                    <button type="button" onClick={insertYouTubeVideo} className="mt-3 inline-flex items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-red-700">
+                      <Code2 size={15} /> Insert video
+                    </button>
+                  </div>
+
+                  <div className="rounded-xl border border-violet-100 bg-white p-4 shadow-sm">
+                    <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                      <ImagePlus size={19} className="text-violet-600" /> Clickable image
+                    </div>
+                    <div className="space-y-2">
+                      <input type="url" value={linkedImage.imageUrl} onChange={(event) => setLinkedImage(prev => ({ ...prev, imageUrl: event.target.value }))} placeholder="Image URL (https://...)" className="block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-xs outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100" />
+                      <input type="url" value={linkedImage.linkUrl} onChange={(event) => setLinkedImage(prev => ({ ...prev, linkUrl: event.target.value }))} placeholder="Click destination URL (https://...)" className="block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-xs outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100" />
+                      <input type="text" value={linkedImage.alt} onChange={(event) => setLinkedImage(prev => ({ ...prev, alt: event.target.value }))} placeholder="Image alt text (SEO + accessibility)" className="block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-xs outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100" />
+                      <label className="flex items-center gap-2 text-[11px] text-slate-600"><input type="checkbox" checked={linkedImage.newTab} onChange={(event) => setLinkedImage(prev => ({ ...prev, newTab: event.target.checked }))} className="accent-violet-600" /> Link new tab mein khole</label>
+                    </div>
+                    <button type="button" onClick={insertLinkedImage} className="mt-3 inline-flex items-center gap-2 rounded-lg bg-violet-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-violet-700">
+                      <Link2 size={15} /> Insert linked image
+                    </button>
+                    <p className="mt-2 text-[11px] leading-4 text-slate-500">Editor ki existing image ko double-click karke bhi Link, Alt, Size aur Alignment edit kar sakte hain.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50 to-white p-5">
+              <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <h4 className="text-lg font-semibold text-slate-900">SEO & Social Sharing</h4>
+                  <p className="mt-1 text-xs text-slate-500">Google metadata, canonical, Open Graph, Twitter Card aur JSON-LD configure karein.</p>
+                </div>
+                <button type="button" onClick={generateSchemaMarkup} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-violet-200 bg-white px-3 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-100">
+                  <Sparkles size={15} /> Generate JSON-LD
+                </button>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Meta Title</label>
+                  <input type="text" name="metaTitle" value={formData.metaTitle} onChange={handleChange} maxLength="60" placeholder="Recommended: 50–60 characters" className="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
+                  <p className={`mt-1 text-right text-[11px] ${formData.metaTitle.length > 60 ? 'text-red-600' : 'text-slate-400'}`}>{formData.metaTitle.length}/60</p>
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Focus Keyword</label>
+                  <input type="text" name="focusKeyword" value={formData.focusKeyword} onChange={handleChange} placeholder="Main keyword for this article" className="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Meta Description</label>
+                  <textarea name="metaDescription" value={formData.metaDescription} onChange={handleChange} maxLength="160" rows="3" placeholder="Recommended: 140–160 characters" className="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
+                  <p className={`mt-1 text-right text-[11px] ${formData.metaDescription.length > 160 ? 'text-red-600' : 'text-slate-400'}`}>{formData.metaDescription.length}/160</p>
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Canonical URL</label>
+                  <input type="url" name="canonicalUrl" value={formData.canonicalUrl} onChange={handleChange} placeholder="https://website.com/blog/slug" className="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Robots</label>
+                  <select name="robots" value={formData.robots} onChange={handleChange} className="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100">
+                    <option value="index,follow">Index, Follow</option>
+                    <option value="index,nofollow">Index, No Follow</option>
+                    <option value="noindex,follow">No Index, Follow</option>
+                    <option value="noindex,nofollow">No Index, No Follow</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Meta Keywords</label>
+                  <input type="text" name="metaKeywords" value={formData.metaKeywords} onChange={handleChange} placeholder="keyword one, keyword two" className="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Main Image Alt Text</label>
+                  <input type="text" name="imageAlt" value={formData.imageAlt} onChange={handleChange} placeholder="Describe the cover image" className="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
+                </div>
+              </div>
+
+              <div className="mt-5 grid gap-5 lg:grid-cols-2">
+                <div className="rounded-xl border border-slate-200 bg-white p-4">
+                  <h5 className="mb-3 text-sm font-semibold text-slate-800">Open Graph (Facebook / LinkedIn)</h5>
+                  <div className="space-y-3">
+                    <input type="text" name="ogTitle" value={formData.ogTitle} onChange={handleChange} placeholder="OG title (defaults to meta title)" className="block w-full rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-violet-500" />
+                    <textarea name="ogDescription" value={formData.ogDescription} onChange={handleChange} rows="2" placeholder="OG description" className="block w-full rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-violet-500" />
+                    <input type="url" name="ogImage" value={formData.ogImage} onChange={handleChange} placeholder="OG image URL (1200 × 630 recommended)" className="block w-full rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-violet-500" />
+                  </div>
+                </div>
+                <div className="rounded-xl border border-slate-200 bg-white p-4">
+                  <h5 className="mb-3 text-sm font-semibold text-slate-800">Twitter / X Card</h5>
+                  <div className="space-y-3">
+                    <input type="text" name="twitterTitle" value={formData.twitterTitle} onChange={handleChange} placeholder="Twitter title" className="block w-full rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-violet-500" />
+                    <textarea name="twitterDescription" value={formData.twitterDescription} onChange={handleChange} rows="2" placeholder="Twitter description" className="block w-full rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-violet-500" />
+                    <input type="url" name="twitterImage" value={formData.twitterImage} onChange={handleChange} placeholder="Twitter image URL" className="block w-full rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-violet-500" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <label className="mb-1 flex items-center gap-2 text-sm font-medium text-slate-700"><Code2 size={16} /> Schema Markup (JSON-LD)</label>
+                <textarea name="schemaMarkup" value={formData.schemaMarkup} onChange={handleChange} rows="9" spellCheck="false" placeholder='{"@context":"https://schema.org","@type":"BlogPosting"}' className="block w-full rounded-xl border border-slate-700 bg-slate-900 p-3 font-mono text-xs leading-5 text-emerald-300 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
+                <p className="mt-1 text-[11px] text-slate-500">Save karte waqt JSON validity automatically check hogi.</p>
+              </div>
             </div>
 
             {/* FAQs Section */}

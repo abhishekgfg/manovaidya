@@ -42,6 +42,95 @@ const blogSchema = new mongoose.Schema({
     required: false,
     trim: true
   },
+  metaTitle: {
+    type: String,
+    trim: true,
+    maxlength: 60,
+    default: ''
+  },
+  metaDescription: {
+    type: String,
+    trim: true,
+    maxlength: 160,
+    default: ''
+  },
+  focusKeyword: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  metaKeywords: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  canonicalUrl: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  imageAlt: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  ogTitle: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  ogDescription: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  ogImage: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  twitterTitle: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  twitterDescription: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  twitterImage: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  robots: {
+    type: String,
+    enum: ['index,follow', 'index,nofollow', 'noindex,follow', 'noindex,nofollow'],
+    default: 'index,follow'
+  },
+  schemaMarkup: {
+    type: String,
+    default: ''
+  },
+  aiSeoScore: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: null
+  },
+  aiSeoAudit: {
+    type: mongoose.Schema.Types.Mixed,
+    default: null
+  },
+  aiSeoModel: {
+    type: String,
+    default: ''
+  },
+  aiSeoAnalyzedAt: {
+    type: Date,
+    default: null
+  },
   content: {
     type: String,
     required: true

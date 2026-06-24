@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Apple,
   Baby,
@@ -16,92 +17,9 @@ import {
   UsersRound,
   Waves,
 } from "lucide-react";
-import adultWellnessImage from "../images/adult-wellness-support.png";
-import familyCareImage from "../images/about-family-care.png";
-import childHeroImage from "../images/child-health-care-hero.png";
-import childSignsImage from "../images/child-signs-reflection.png";
-import childSupportImage from "../images/child-support-family.png";
-import neuroAyurvedaImage from "../images/science-neuro-ayurveda.png";
-import teenFamilyImage from "../images/teen-family-support.png";
-import teenSignsImage from "../images/teen-common-signs.png";
-import womenWellnessImage from "../images/women-mental-health-hero.png";
+import api, { getAssetUrl } from "../api/axiosInstance";
 
-const blogPosts = [
-  {
-    category: "Autism",
-    title: "Early Signs of Autism in Children: A Complete Guide for Parents",
-    excerpt: "Learn about early signs, symptoms and when to seek professional help.",
-    date: "May 20, 2025",
-    readTime: "8 min read",
-    image: childHeroImage,
-  },
-  {
-    category: "Speech Delay",
-    title: "Speech Delay in Children: Causes, Signs and What Parents Can Do",
-    excerpt: "Understand the causes of speech delay and practical ways to support your child.",
-    date: "May 18, 2025",
-    readTime: "7 min read",
-    image: teenFamilyImage,
-  },
-  {
-    category: "ADHD",
-    title: "ADHD in Children: Symptoms, Causes and Natural Support Strategies",
-    excerpt: "A comprehensive guide to ADHD symptoms and holistic support approaches.",
-    date: "May 15, 2025",
-    readTime: "9 min read",
-    image: childSignsImage,
-  },
-  {
-    category: "Neuro-Ayurveda",
-    title: "How Neuro-Ayurveda Supports Brain Development in Children",
-    excerpt: "Explore the principles of Neuro-Ayurveda and their role in holistic development.",
-    date: "May 12, 2025",
-    readTime: "6 min read",
-    image: neuroAyurvedaImage,
-  },
-  {
-    category: "Sensory Integration",
-    title: "Sensory Processing Challenges in Children with Autism",
-    excerpt: "Understand sensory sensitivities and how to create a supportive environment.",
-    date: "May 10, 2025",
-    readTime: "8 min read",
-    image: teenSignsImage,
-  },
-  {
-    category: "Parenting",
-    title: "Parenting a Child with Autism: Challenges and Practical Tips",
-    excerpt: "Helpful tips and emotional support for parents on their journey.",
-    date: "May 8, 2025",
-    readTime: "7 min read",
-    image: childSupportImage,
-  },
-  {
-    category: "Mental Health",
-    title: "Anxiety in Children: Signs, Causes and Natural Ways to Help",
-    excerpt: "How to identify anxiety in children and support their emotional wellbeing.",
-    date: "May 5, 2025",
-    readTime: "6 min read",
-    image: womenWellnessImage,
-  },
-  {
-    category: "Gut Health",
-    title: "Gut Health and Mental Wellbeing: The Hidden Connection",
-    excerpt: "Discover how gut health impacts brain function and behaviour.",
-    date: "May 2, 2025",
-    readTime: "7 min read",
-    image: adultWellnessImage,
-  },
-  {
-    category: "Child Development",
-    title: "Holistic Child Development: Beyond Academics",
-    excerpt: "Why holistic development is essential for a child's overall wellbeing.",
-    date: "Apr 30, 2025",
-    readTime: "6 min read",
-    image: familyCareImage,
-  },
-];
-
-const categories = [
+const categoriesData = [
   { name: "Autism", count: 12, Icon: Puzzle },
   { name: "ADHD", count: 10, Icon: Brain },
   { name: "Speech Delay", count: 8, Icon: MessageCircle },
@@ -113,9 +31,29 @@ const categories = [
   { name: "Gut Health", count: 6, Icon: Apple },
 ];
 
-const popularPosts = blogPosts.slice(0, 4);
-
 function BlogListingSection() {
+  const [blogs, setBlogs] = useState([]);
+  const [popularPosts, setPopularPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const { data } = await api.get('/blogs');
+        if (data.success) {
+          setBlogs(data.data);
+          setPopularPosts(data.data.slice(0, 4));
+        }
+      } catch (err) {
+        setError(err.response?.data?.message || err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
+  }, []);
+
   return (
     <section id="articles" className="bg-[#fbfcfa] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <div className="mx-auto grid w-full max-w-[1320px] gap-8 xl:grid-cols-[minmax(0,1fr)_300px]">
@@ -138,74 +76,84 @@ function BlogListingSection() {
             </label>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {blogPosts.map((post) => (
-              <article
-                key={post.title}
-                className="group flex min-h-[390px] flex-col overflow-hidden rounded-lg border border-[#dce3dd] bg-white shadow-[0_2px_8px_rgba(26,56,42,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,56,42,0.12)]"
-              >
-                <div className="h-[160px] overflow-hidden bg-[#eef2ee]">
-                  <img
-                    src={post.image}
-                    alt=""
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div className="flex flex-1 flex-col p-4">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.035em] text-[#8b43ba]">
-                    {post.category}
-                  </p>
-                  <h3 className="mt-2 text-[15px] font-extrabold leading-[1.35] tracking-[-0.015em] text-[#17201c]">
-                    {post.title}
-                  </h3>
-                  <p className="mt-3 text-[12px] font-medium leading-[1.55] text-[#65706a]">
-                    {post.excerpt}
-                  </p>
-                  <p className="mt-auto pt-5 text-[11px] font-medium text-[#67716c]">
-                    {post.date}
-                    <span className="mx-2 text-[#a6afa9]">•</span>
-                    {post.readTime}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <nav className="mt-7 flex items-center justify-center gap-2" aria-label="Blog pagination">
-            {["previous", "1", "2", "3", "ellipsis", "10", "next"].map((item) => {
-              const isActive = item === "1";
-              const isEllipsis = item === "ellipsis";
-
-              return (
-                <button
-                  key={item}
-                  type="button"
-                  aria-label={item === "previous" ? "Previous page" : item === "next" ? "Next page" : undefined}
-                  aria-current={isActive ? "page" : undefined}
-                  disabled={item === "previous"}
-                  className={`flex h-9 min-w-9 items-center justify-center rounded-md border px-2 text-[12px] font-bold transition ${
-                    isActive
-                      ? "border-[#8b43ba] bg-[#8b43ba] text-white"
-                      : isEllipsis
-                        ? "border-transparent bg-transparent text-slate-500"
-                        : "border-violet-200 bg-white text-[#272047] hover:border-[#8b43ba] hover:text-[#8b43ba] disabled:cursor-not-allowed disabled:opacity-45"
-                  }`}
+          {loading ? (
+            <div className="py-10 text-center">Loading blogs...</div>
+          ) : error ? (
+            <div className="py-10 text-center text-red-500">{error}</div>
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {blogs.map((post) => (
+                <article
+                  key={post._id || post.slug}
+                  className="group flex min-h-[390px] flex-col overflow-hidden rounded-lg border border-[#dce3dd] bg-white shadow-[0_2px_8px_rgba(26,56,42,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(26,56,42,0.12)]"
                 >
-                  {item === "previous" ? (
-                    <ChevronLeft className="h-4 w-4" />
-                  ) : item === "next" ? (
-                    <ChevronRight className="h-4 w-4" />
-                  ) : item === "ellipsis" ? (
-                    "..."
-                  ) : (
-                    item
-                  )}
-                </button>
-              );
-            })}
-          </nav>
+                  <Link to={`/blog/${post.slug}`} className="block h-[160px] overflow-hidden bg-[#eef2ee]" title={post.title}>
+                    <img
+                      src={getAssetUrl(post.image)}
+                      alt={post.imageAlt || post.title}
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                      loading="lazy"
+                    />
+                  </Link>
+
+                  <div className="flex flex-1 flex-col p-4">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.035em] text-[#8b43ba]">
+                      {post.category || "General"}
+                    </p>
+                    <h3 className="mt-2 text-[15px] font-extrabold leading-[1.35] tracking-[-0.015em] text-[#17201c]">
+                      <Link to={`/blog/${post.slug}`} className="hover:text-[#8b43ba]">
+                        {post.title}
+                      </Link>
+                    </h3>
+                    <p className="mt-3 text-[12px] font-medium leading-[1.55] text-[#65706a] line-clamp-3">
+                      {post.shortDescription || post.excerpt}
+                    </p>
+                    <p className="mt-auto pt-5 text-[11px] font-medium text-[#67716c]">
+                      {new Date(post.createdAt || post.date).toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
+                      <span className="mx-2 text-[#a6afa9]">•</span>
+                      {Math.ceil((post.content?.length || 1000) / 1000)} min read
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {!loading && !error && blogs.length > 0 && (
+            <nav className="mt-7 flex items-center justify-center gap-2" aria-label="Blog pagination">
+              {["previous", "1", "2", "3", "ellipsis", "10", "next"].map((item) => {
+                const isActive = item === "1";
+                const isEllipsis = item === "ellipsis";
+
+                return (
+                  <button
+                    key={item}
+                    type="button"
+                    aria-label={item === "previous" ? "Previous page" : item === "next" ? "Next page" : undefined}
+                    aria-current={isActive ? "page" : undefined}
+                    disabled={item === "previous"}
+                    className={`flex h-9 min-w-9 items-center justify-center rounded-md border px-2 text-[12px] font-bold transition ${
+                      isActive
+                        ? "border-[#8b43ba] bg-[#8b43ba] text-white"
+                        : isEllipsis
+                          ? "border-transparent bg-transparent text-slate-500"
+                          : "border-violet-200 bg-white text-[#272047] hover:border-[#8b43ba] hover:text-[#8b43ba] disabled:cursor-not-allowed disabled:opacity-45"
+                    }`}
+                  >
+                    {item === "previous" ? (
+                      <ChevronLeft className="h-4 w-4" />
+                    ) : item === "next" ? (
+                      <ChevronRight className="h-4 w-4" />
+                    ) : item === "ellipsis" ? (
+                      "..."
+                    ) : (
+                      item
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
+          )}
         </div>
 
         <aside className="space-y-5 xl:pt-[1px]">
@@ -222,7 +170,7 @@ function BlogListingSection() {
           <div className="rounded-xl border border-[#e1e7e2] bg-[#f5f7f3] p-5">
             <h3 className="text-[17px] font-extrabold text-[#17201c]">Categories</h3>
             <ul className="mt-4 space-y-3.5">
-              {categories.map(({ name, count, Icon }) => (
+              {categoriesData.map(({ name, count, Icon }) => (
                 <li key={name} className="flex items-center gap-3 text-[#272047]">
                   <Icon className="h-4 w-4 shrink-0 text-[#8b43ba]" strokeWidth={1.8} />
                   <span className="min-w-0 flex-1 text-[13px] font-semibold">{name}</span>
@@ -238,21 +186,30 @@ function BlogListingSection() {
             <h3 className="text-[17px] font-extrabold text-[#17201c]">Popular Posts</h3>
             <div className="mt-4 space-y-4">
               {popularPosts.map((post) => (
-                <article key={post.title} className="flex gap-3">
-                  <img
-                    src={post.image}
-                    alt=""
-                    className="h-[58px] w-[64px] shrink-0 rounded-md object-cover"
-                    loading="lazy"
-                  />
+                <article key={post._id || post.slug} className="flex gap-3">
+                  <Link to={`/blog/${post.slug}`} className="shrink-0" title={post.title}>
+                    <img
+                      src={getAssetUrl(post.image)}
+                      alt={post.imageAlt || post.title}
+                      className="h-[58px] w-[64px] rounded-md object-cover"
+                      loading="lazy"
+                    />
+                  </Link>
                   <div className="min-w-0">
                     <h4 className="line-clamp-2 text-[11px] font-extrabold leading-[1.35] text-[#27332d]">
-                      {post.title}
+                      <Link to={`/blog/${post.slug}`} className="hover:text-[#8b43ba]">
+                        {post.title}
+                      </Link>
                     </h4>
-                    <p className="mt-1 text-[9px] font-medium text-[#78827c]">{post.date}</p>
+                    <p className="mt-1 text-[9px] font-medium text-[#78827c]">
+                      {new Date(post.createdAt || post.date).toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </p>
                   </div>
                 </article>
               ))}
+              {popularPosts.length === 0 && !loading && (
+                <p className="text-[11px] text-slate-500">No popular posts yet.</p>
+              )}
             </div>
           </div>
 
