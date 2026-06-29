@@ -12,6 +12,8 @@ import WomenHealthCarePage from "./pages/WomenHealthCarePage";
 import AdultMentalWellnessPage from "./pages/AdultMentalWellnessPage";
 import TeenMentalWellnessPage from "./pages/TeenMentalWellnessPage";
 import TeenStressAnxietyIndiaPage from "./teenmental/TeenStressAnxietyIndiaPage";
+import TeenDepressionLowMoodIndiaPage from "./teenmental/TeenDepressionLowMoodIndiaPage";
+import ExamPerformancePressureIndiaPage from "./teenmental/ExamPerformancePressureIndiaPage";
 import ChildHealthCarePage from "./pages/ChildHealthCarePage";
 import ADHDChildArticlePage from "./childhealthcare/ADHDChildArticlePage";
 import AutismTreatmentIndiaPage from "./childhealthcare/AutismTreatmentIndiaPage";
@@ -61,6 +63,10 @@ function App() {
           <Route path="/teen-mental-wellness" element={<TeenMentalWellnessPage />} />
           <Route path="/teen-stress-anxiety-support" element={<TeenStressAnxietyIndiaPage />} />
           <Route path="/teen-stress-anxiety-support/" element={<TeenStressAnxietyIndiaPage />} />
+          <Route path="/teen-depression-support" element={<TeenDepressionLowMoodIndiaPage />} />
+          <Route path="/teen-depression-support/" element={<TeenDepressionLowMoodIndiaPage />} />
+          <Route path="/exam-performance-pressure" element={<ExamPerformancePressureIndiaPage />} />
+          <Route path="/exam-performance-pressure/" element={<ExamPerformancePressureIndiaPage />} />
           <Route path="/child-health-care" element={<ChildHealthCarePage />} />
           <Route path="/child-health-care/adhd-child" element={<ADHDChildArticlePage />} />
           <Route path="/autism-treatment-india" element={<AutismTreatmentIndiaPage />} />
