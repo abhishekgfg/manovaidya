@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   ArrowRight,
   BookOpen,
@@ -18,6 +19,7 @@ const concerns = [
     iconColor: "#6043c4",
     iconBg: "#eee6ff",
     linkText: "Explore Autism Support",
+    href: "/autism-treatment-india",
   },
   {
     title: "ADHD &\nHyperactivity",
@@ -27,6 +29,7 @@ const concerns = [
     iconColor: "#d87b27",
     iconBg: "#ffebd6",
     linkText: "Explore ADHD Support",
+    href: "/child-health-care/adhd-child",
   },
   {
     title: "Speech Delay\nSupport",
@@ -36,6 +39,7 @@ const concerns = [
     iconColor: "#1691c8",
     iconBg: "#dff5ff",
     linkText: "Explore Speech Support",
+    href: "/speech-delay-support-india",
   },
   {
     title: "Learning\nDifficulties",
@@ -45,6 +49,7 @@ const concerns = [
     iconColor: "#4a9a3a",
     iconBg: "#e8f6df",
     linkText: "Explore Learning Support",
+    href: "/learning-attention-difficulties-india",
   },
   {
     title: "Behavioural\nChallenges",
@@ -54,6 +59,7 @@ const concerns = [
     iconColor: "#b99018",
     iconBg: "#fff1c9",
     linkText: "Explore Behaviour Support",
+    href: "/behavioural-concerns-children-india",
   },
   {
     title: "Child Development\nSupport",
@@ -63,6 +69,7 @@ const concerns = [
     iconColor: "#ef4f7b",
     iconBg: "#ffe0ec",
     linkText: "Explore Child Development",
+    href: "/child-development-support-india",
   },
 ];
 
@@ -85,7 +92,7 @@ function ChildHealthCareConcernsSection() {
         </div>
 
         <div className="mt-4 grid grid-cols-1 gap-3 min-[520px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-3">
-          {concerns.map(({ title, description, Icon, iconColor, iconBg, linkText }) => (
+          {concerns.map(({ title, description, Icon, iconColor, iconBg, linkText, href }) => (
             <article
               key={title}
               className="flex min-h-[285px] flex-col items-center rounded-lg border border-[#ded9ee] bg-white px-4 py-6 text-center shadow-[0_8px_22px_rgba(45,38,103,0.08)] lg:min-h-[300px] lg:px-3 lg:py-6"
@@ -105,13 +112,13 @@ function ChildHealthCareConcernsSection() {
                 {description}
               </p>
 
-              <a
-                href="#assessment"
+              <Link
+                to={href || "#assessment"}
                 className="mt-auto inline-flex items-center gap-3 text-[11.5px] font-black text-[#3b2b94] transition hover:text-[#8B43BA]"
               >
                 {linkText}
                 <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.7} />
-              </a>
+              </Link>
             </article>
           ))}
         </div>

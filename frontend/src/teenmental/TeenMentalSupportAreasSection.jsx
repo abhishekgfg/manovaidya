@@ -17,6 +17,7 @@ const supportAreas = [
     action: "Explore Stress Support",
     Icon: Brain,
     iconClass: "bg-[#8B43BA]/10 text-[#8B43BA]",
+    href: "/teen-stress-anxiety-support",
   },
   {
     title: "Depression &\nLow Mood",
@@ -79,7 +80,7 @@ function TeenMentalSupportAreasSection() {
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-3 min-[500px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
-          {supportAreas.map(({ title, description, action, Icon, iconClass }) => (
+          {supportAreas.map(({ title, description, action, Icon, iconClass, href }) => (
             <article
               key={title}
               className="flex min-h-[310px] min-w-0 flex-col items-center rounded-md border border-[#e2deea] bg-white px-3 py-5 text-center shadow-[0_8px_22px_rgba(45,32,84,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(45,32,84,0.11)]"
@@ -97,7 +98,7 @@ function TeenMentalSupportAreasSection() {
               </p>
 
               <a
-                href="#assessment"
+                href={href || "#assessment"}
                 className="mt-auto inline-flex items-center gap-2 whitespace-nowrap pt-4 text-[10.5px] font-black text-[#8B43BA] transition hover:text-[#18181b]"
               >
                 {action}

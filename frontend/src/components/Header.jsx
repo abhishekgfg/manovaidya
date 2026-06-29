@@ -18,15 +18,15 @@ const conditionGroups = [
     href: "/child-health-care",
     featuredTitle: "Child Development Care",
     items: [
-      "Autism Spectrum Disorder",
-      "ADHD",
-      "Learning Disorders",
-      "Speech Delay",
-      "Behavioral Issues",
-      "Developmental Delays",
-      "Intellectual Disability",
-      "Pediatric Anxiety",
-      "Bedwetting (Enuresis)",
+      { label: "Autism Spectrum Disorder", href: "/autism-treatment-india" },
+      { label: "ADHD", href: "/child-health-care/adhd-child" },
+      { label: "Learning Disorders", href: "/learning-attention-difficulties-india" },
+      { label: "Speech Delay", href: "/speech-delay-support-india" },
+      { label: "Behavioral Issues", href: "/behavioural-concerns-children-india" },
+      { label: "Child Developmental Delays", href: "/child-development-support-india" },
+      // { label: "Intellectual Disability", href: "/child-health-care" },
+      // { label: "Pediatric Anxiety", href: "/child-health-care" },
+      // { label: "Bedwetting (Enuresis)", href: "/child-health-care" },
     ],
   },
   {
@@ -364,16 +364,20 @@ function Header() {
                             <ChevronDown className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                           </Link>
                           <div className="mt-4 space-y-3">
-                            {group.items.map((condition) => (
-                              <Link
-                                key={condition}
-                                to={group.href}
-                                className="block whitespace-normal text-[14px] font-semibold leading-[1.35] text-[#2f293f] transition hover:text-[#7b3db3]"
-                                onClick={closeMenu}
-                              >
-                                {condition}
-                              </Link>
-                            ))}
+                            {group.items.map((condition) => {
+                              const label = typeof condition === 'string' ? condition : condition.label;
+                              const href = typeof condition === 'string' ? group.href : condition.href;
+                              return (
+                                <Link
+                                  key={label}
+                                  to={href}
+                                  className="block whitespace-normal text-[14px] font-semibold leading-[1.35] text-[#2f293f] transition hover:text-[#7b3db3]"
+                                  onClick={closeMenu}
+                                >
+                                  {label}
+                                </Link>
+                              );
+                            })}
                           </div>
                         </div>
                       ))}
@@ -591,16 +595,20 @@ function Header() {
                         >
                           {group.featuredTitle}
                         </Link>
-                        {group.items.map((condition) => (
-                          <Link
-                            key={condition}
-                            to={group.href}
-                            className="rounded-lg px-3 py-2.5 text-[13px] font-bold leading-5 text-[#302650] transition hover:bg-white hover:text-[#8B43BA]"
-                            onClick={closeMenu}
-                          >
-                            {condition}
-                          </Link>
-                        ))}
+                        {group.items.map((condition) => {
+                          const label = typeof condition === 'string' ? condition : condition.label;
+                          const href = typeof condition === 'string' ? group.href : condition.href;
+                          return (
+                            <Link
+                              key={label}
+                              to={href}
+                              className="rounded-lg px-3 py-2.5 text-[13px] font-bold leading-5 text-[#302650] transition hover:bg-white hover:text-[#8B43BA]"
+                              onClick={closeMenu}
+                            >
+                              {label}
+                            </Link>
+                          );
+                        })}
                       </div>
                     ) : null}
                   </div>
@@ -785,11 +793,10 @@ function Header() {
               </div>
               {consultationStatus.message ? (
                 <p
-                  className={`rounded-lg px-3 py-2 text-sm font-bold ${
-                    consultationStatus.type === "success"
-                      ? "bg-emerald-50 text-emerald-700"
-                      : "bg-red-50 text-red-700"
-                  }`}
+                  className={`rounded-lg px-3 py-2 text-sm font-bold ${consultationStatus.type === "success"
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "bg-red-50 text-red-700"
+                    }`}
                 >
                   {consultationStatus.message}
                 </p>

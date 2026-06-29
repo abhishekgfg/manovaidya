@@ -11,7 +11,14 @@ import SeniorMindCarePage from "./pages/SeniorMindCarePage";
 import WomenHealthCarePage from "./pages/WomenHealthCarePage";
 import AdultMentalWellnessPage from "./pages/AdultMentalWellnessPage";
 import TeenMentalWellnessPage from "./pages/TeenMentalWellnessPage";
+import TeenStressAnxietyIndiaPage from "./teenmental/TeenStressAnxietyIndiaPage";
 import ChildHealthCarePage from "./pages/ChildHealthCarePage";
+import ADHDChildArticlePage from "./childhealthcare/ADHDChildArticlePage";
+import AutismTreatmentIndiaPage from "./childhealthcare/AutismTreatmentIndiaPage";
+import SpeechDelaySupportIndiaPage from "./childhealthcare/SpeechDelaySupportIndiaPage";
+import LearningAttentionDifficultiesIndiaPage from "./childhealthcare/LearningAttentionDifficultiesIndiaPage";
+import BehaviouralConcernsChildrenIndiaPage from "./childhealthcare/BehaviouralConcernsChildrenIndiaPage";
+import ChildDevelopmentSupportIndiaPage from "./childhealthcare/ChildDevelopmentSupportIndiaPage";
 import BlogPage from "./pages/BlogPage";
 import BlogDetails from "./pages/BlogDetails";
 import SuccessStoriesPage from "./pages/SuccessStoriesPage";
@@ -52,7 +59,20 @@ function App() {
           <Route path="/women-health-care" element={<WomenHealthCarePage />} />
           <Route path="/adult-mental-wellness" element={<AdultMentalWellnessPage />} />
           <Route path="/teen-mental-wellness" element={<TeenMentalWellnessPage />} />
+          <Route path="/teen-stress-anxiety-support" element={<TeenStressAnxietyIndiaPage />} />
+          <Route path="/teen-stress-anxiety-support/" element={<TeenStressAnxietyIndiaPage />} />
           <Route path="/child-health-care" element={<ChildHealthCarePage />} />
+          <Route path="/child-health-care/adhd-child" element={<ADHDChildArticlePage />} />
+          <Route path="/autism-treatment-india" element={<AutismTreatmentIndiaPage />} />
+          <Route path="/autism-treatment-india/" element={<AutismTreatmentIndiaPage />} />
+          <Route path="/speech-delay-support-india" element={<SpeechDelaySupportIndiaPage />} />
+          <Route path="/speech-delay-support-india/" element={<SpeechDelaySupportIndiaPage />} />
+          <Route path="/learning-attention-difficulties-india" element={<LearningAttentionDifficultiesIndiaPage />} />
+          <Route path="/learning-attention-difficulties-india/" element={<LearningAttentionDifficultiesIndiaPage />} />
+          <Route path="/behavioural-concerns-children-india" element={<BehaviouralConcernsChildrenIndiaPage />} />
+          <Route path="/behavioural-concerns-children-india/" element={<BehaviouralConcernsChildrenIndiaPage />} />
+          <Route path="/child-development-support-india" element={<ChildDevelopmentSupportIndiaPage />} />
+          <Route path="/child-development-support-india/" element={<ChildDevelopmentSupportIndiaPage />} />
           <Route path="/success-stories" element={<SuccessStoriesPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogDetails />} />
