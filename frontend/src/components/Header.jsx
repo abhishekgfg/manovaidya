@@ -9,6 +9,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
+import api from "../api/axiosInstance";
 import logo from "../images/manovaidya-logo (2).png";
 
 const conditionGroups = [
@@ -128,6 +129,7 @@ const navItems = [
   },
   { label: "Conditions", href: "#conditions", hasMenu: true, megaMenu: conditionGroups },
   { label: "Programs", href: "#programs", hasMenu: true },
+  { label: "Success Stories", href: "/success-stories" },
   {
     label: "Resources",
     href: "#resources",
@@ -135,7 +137,6 @@ const navItems = [
     submenu: [{ label: "Blog", href: "/blog" }],
   },
   // { label: "Our Approach", href: "/about/approach" },
-  { label: "Success Stories", href: "#stories" },
 ];
 
 const timeSlots = [
@@ -166,6 +167,19 @@ function Header() {
   const [isResourcesOpen, setIsResourcesOpen] = React.useState(false);
   const [openConditionGroup, setOpenConditionGroup] = React.useState(null);
   const [isConsultationModalOpen, setIsConsultationModalOpen] = React.useState(false);
+  const [consultationForm, setConsultationForm] = React.useState({
+    name: "",
+    phone: "",
+    consultationMode: "",
+    preferredDate: "",
+    preferredTime: "",
+    message: "",
+  });
+  const [consultationStatus, setConsultationStatus] = React.useState({
+    type: "",
+    message: "",
+  });
+  const [isSubmittingConsultation, setIsSubmittingConsultation] = React.useState(false);
   const conditionsCloseTimer = React.useRef(null);
 
   const conditionRoutes = conditionGroups.map((group) => group.href);
@@ -226,6 +240,51 @@ function Header() {
     conditionsCloseTimer.current = window.setTimeout(() => {
       setIsConditionsOpen(false);
     }, 220);
+  };
+
+  const handleConsultationChange = (event) => {
+    const { name, value } = event.target;
+    setConsultationForm((current) => ({ ...current, [name]: value }));
+    if (consultationStatus.message) {
+      setConsultationStatus({ type: "", message: "" });
+    }
+  };
+
+  const handleConsultationSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmittingConsultation(true);
+    setConsultationStatus({ type: "", message: "" });
+
+    try {
+      const { data } = await api.post("/consultations", consultationForm);
+
+      if (!data.success) {
+        throw new Error(data.message || "Unable to submit consultation request");
+      }
+
+      setConsultationStatus({
+        type: "success",
+        message: "Request submitted successfully. Our team will contact you soon.",
+      });
+      setConsultationForm({
+        name: "",
+        phone: "",
+        consultationMode: "",
+        preferredDate: "",
+        preferredTime: "",
+        message: "",
+      });
+    } catch (error) {
+      setConsultationStatus({
+        type: "error",
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong. Please try again.",
+      });
+    } finally {
+      setIsSubmittingConsultation(false);
+    }
   };
 
   React.useEffect(() => {
@@ -646,18 +705,38 @@ function Header() {
               <X className="h-4 w-4" />
             </button>
             <h2 className="mb-4 text-2xl font-black text-[#272047]">Book Consultation</h2>
-            <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setIsConsultationModalOpen(false); alert("Form submitted successfully!"); }}>
+            <form className="space-y-4" onSubmit={handleConsultationSubmit}>
               <div>
                 <label className="block text-sm font-bold text-[#272047]">Name</label>
-                <input type="text" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required />
+                <input
+                  type="text"
+                  name="name"
+                  value={consultationForm.name}
+                  onChange={handleConsultationChange}
+                  className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                  required
+                />
               </div>
               <div>
                 <label className="block text-sm font-bold text-[#272047]">Phone</label>
-                <input type="tel" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required />
+                <input
+                  type="tel"
+                  name="phone"
+                  value={consultationForm.phone}
+                  onChange={handleConsultationChange}
+                  className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                  required
+                />
               </div>
               <div>
                 <label className="block text-sm font-bold text-[#272047]">Consultation Mode</label>
-                <select defaultValue="" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required>
+                <select
+                  name="consultationMode"
+                  value={consultationForm.consultationMode}
+                  onChange={handleConsultationChange}
+                  className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                  required
+                >
                   <option value="" disabled>Select Mode</option>
                   <option value="online">Online Consultation</option>
                   <option value="clinic">Clinic Visit</option>
@@ -666,11 +745,25 @@ function Header() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-[#272047]">Date</label>
-                  <input type="date" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required />
+                  <input
+                    type="date"
+                    name="preferredDate"
+                    value={consultationForm.preferredDate}
+                    onChange={handleConsultationChange}
+                    min={new Date().toISOString().split("T")[0]}
+                    className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                    required
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-[#272047]">Time</label>
-                  <select defaultValue="" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500" required>
+                  <select
+                    name="preferredTime"
+                    value={consultationForm.preferredTime}
+                    onChange={handleConsultationChange}
+                    className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                    required
+                  >
                     <option value="" disabled>Select Time</option>
                     {timeSlots.map((slot) => (
                       <option key={slot} value={slot}>
@@ -682,10 +775,31 @@ function Header() {
               </div>
               <div>
                 <label className="block text-sm font-bold text-[#272047]">Message</label>
-                <textarea rows="2" className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"></textarea>
+                <textarea
+                  rows="2"
+                  name="message"
+                  value={consultationForm.message}
+                  onChange={handleConsultationChange}
+                  className="mt-1.5 block w-full rounded-lg border border-violet-200 px-3 py-2 text-sm text-[#272047] shadow-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                />
               </div>
-              <button type="submit" className="mt-2 w-full rounded-lg bg-[#8b43ba] px-4 py-2.5 text-[15px] font-black text-white shadow-[0_10px_18px_rgba(139,67,186,0.24)] transition hover:bg-[#7835a4] focus:outline-none focus:ring-2 focus:ring-[#8b43ba] focus:ring-offset-2">
-                Submit Request
+              {consultationStatus.message ? (
+                <p
+                  className={`rounded-lg px-3 py-2 text-sm font-bold ${
+                    consultationStatus.type === "success"
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "bg-red-50 text-red-700"
+                  }`}
+                >
+                  {consultationStatus.message}
+                </p>
+              ) : null}
+              <button
+                type="submit"
+                disabled={isSubmittingConsultation}
+                className="mt-2 w-full rounded-lg bg-[#8b43ba] px-4 py-2.5 text-[15px] font-black text-white shadow-[0_10px_18px_rgba(139,67,186,0.24)] transition hover:bg-[#7835a4] focus:outline-none focus:ring-2 focus:ring-[#8b43ba] focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-violet-300"
+              >
+                {isSubmittingConsultation ? "Submitting..." : "Submit Request"}
               </button>
             </form>
           </div>

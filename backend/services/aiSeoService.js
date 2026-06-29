@@ -99,10 +99,118 @@ const seoReviewSchema = {
           priority: { type: 'string', enum: ['high', 'medium', 'low'] },
           title: { type: 'string' },
           reason: { type: 'string' },
+          issueLocation: { type: 'string' },
+          currentIssue: { type: 'string' },
+          recommendedReplacement: { type: 'string' },
+          howToUse: { type: 'string' },
           exactRecommendation: { type: 'string' }
         },
-        required: ['priority', 'title', 'reason', 'exactRecommendation']
+        required: ['priority', 'title', 'reason', 'issueLocation', 'currentIssue', 'recommendedReplacement', 'howToUse', 'exactRecommendation']
       }
+    },
+    auditIssues: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          severity: { type: 'string', enum: ['Critical', 'High', 'Medium', 'Low'] },
+          location: { type: 'string' },
+          problematicText: { type: 'string' },
+          problem: { type: 'string' },
+          whyItMatters: { type: 'string' },
+          category: { type: 'string' },
+          seoImpact: { type: 'string' },
+          userImpact: { type: 'string' },
+          suggestedFix: { type: 'string' },
+          whyReplacementIsBetter: { type: 'string' }
+        },
+        required: ['severity', 'location', 'problematicText', 'problem', 'whyItMatters', 'category', 'seoImpact', 'userImpact', 'suggestedFix', 'whyReplacementIsBetter']
+      }
+    },
+    sentenceCorrections: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          location: { type: 'string' },
+          original: { type: 'string' },
+          improved: { type: 'string' },
+          reason: { type: 'string' }
+        },
+        required: ['location', 'original', 'improved', 'reason']
+      }
+    },
+    missingContentSuggestions: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          section: { type: 'string' },
+          whyNeeded: { type: 'string' },
+          readyToPasteText: { type: 'string' }
+        },
+        required: ['section', 'whyNeeded', 'readyToPasteText']
+      }
+    },
+    seoRecommendations: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        metaTitle: { type: 'string' },
+        metaDescription: { type: 'string' },
+        urlSlug: { type: 'string' },
+        focusKeyword: { type: 'string' },
+        secondaryKeywords: { type: 'array', items: { type: 'string' } },
+        imageAltText: { type: 'array', items: { type: 'string' } },
+        ogTitle: { type: 'string' },
+        ogDescription: { type: 'string' },
+        twitterTitle: { type: 'string' },
+        twitterDescription: { type: 'string' }
+      },
+      required: ['metaTitle', 'metaDescription', 'urlSlug', 'focusKeyword', 'secondaryKeywords', 'imageAltText', 'ogTitle', 'ogDescription', 'twitterTitle', 'twitterDescription']
+    },
+    schemaSuggestions: { type: 'array', items: { type: 'string' } },
+    featuredSnippetSuggestions: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          targetQuery: { type: 'string' },
+          readyToPasteAnswer: { type: 'string' }
+        },
+        required: ['targetQuery', 'readyToPasteAnswer']
+      }
+    },
+    seoFaqs: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          question: { type: 'string' },
+          answer: { type: 'string' }
+        },
+        required: ['question', 'answer']
+      }
+    },
+    finalChecklist: { type: 'array', items: { type: 'string' } },
+    estimatedImpact: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        seo: { type: 'string' },
+        userTrust: { type: 'string' },
+        readability: { type: 'string' },
+        engagement: { type: 'string' },
+        conversion: { type: 'string' },
+        medicalCompliance: { type: 'string' },
+        overallQuality: { type: 'string' }
+      },
+      required: ['seo', 'userTrust', 'readability', 'engagement', 'conversion', 'medicalCompliance', 'overallQuality']
     },
     contentGaps: { type: 'array', items: { type: 'string' } },
     suggestedHeadings: { type: 'array', items: { type: 'string' } },
@@ -140,6 +248,15 @@ const seoReviewSchema = {
     'metadataAudit',
     'rankingPotential',
     'priorityActions',
+    'auditIssues',
+    'sentenceCorrections',
+    'missingContentSuggestions',
+    'seoRecommendations',
+    'schemaSuggestions',
+    'featuredSnippetSuggestions',
+    'seoFaqs',
+    'finalChecklist',
+    'estimatedImpact',
     'contentGaps',
     'suggestedHeadings',
     'internalLinkIdeas',
@@ -296,23 +413,40 @@ export const analyzeBlogSeo = async (blog, searchMetrics = null) => {
           config: {
             systemInstruction: [
               'You are a senior SEO content strategist for a mental-health and wellness website.',
-              'Perform a deep, evidence-based audit using only the supplied blog, calculated contentSignals, and optional Search Console data.',
+              'You are also a medical content reviewer, E-E-A-T specialist, technical editor, UX writer, accessibility reviewer, and senior copy editor.',
+              'Perform a complete line-by-line audit using only the supplied blog, calculated contentSignals, and optional Search Console data.',
+              'Do not summarize or skip important headings/sentences. Review headings, intro, body, FAQs, metadata, schema, image fields, and CTA opportunities.',
               'Never invent Google rankings, search volume, competitors, traffic, medical evidence, credentials, or links.',
               'The overallScore must equal the sum of exactly six category scores: Search intent 20, Content quality 20, On-page SEO 20, Metadata and SERP 15, E-E-A-T and safety 15, Technical and social 10.',
               'Use those exact category names and max scores. Penalize missing or weak evidence; do not award points merely because a field exists.',
-              'Give precise diagnoses and directly usable edits for search intent coverage, metadata, headings, readability, E-E-A-T, internal linking, and medically responsible wording.',
+              'Give precise diagnoses and directly usable edits for search intent coverage, metadata, headings, readability, E-E-A-T, internal linking, schema, image alt text, and medically responsible wording.',
+              'Every priority action must explain why it helps SEO or ranking readiness, name the exact field or content section to edit, and include a concrete replacement or example when metadata, heading, slug, FAQ, or intro copy is weak.',
+              'For each priority action, fill issueLocation with the exact field or section name, currentIssue with what is wrong now, recommendedReplacement with ready-to-paste replacement text or a concrete example, and howToUse with where/how to apply it in the admin editor.',
+              'If the supplied content does not include the exact old sentence, say which field is missing or weak instead of inventing a quote. For recommendedReplacement, provide usable text, heading, FAQ, link suggestion, schema fix, alt text, or snippet copy.',
+              'For auditIssues, include every meaningful issue you find across grammar, spelling, readability, SEO, E-E-A-T, medical compliance, AI-like writing, structure, UX writing, accessibility, duplicate content, tone, factual consistency, formatting, conversion, schema, internal links, images, featured snippets, and FAQ opportunities.',
+              'For each auditIssues item, provide exact problematicText when present, why it is wrong, severity, category, SEO impact, user impact, better suggestedFix, and why the replacement is better.',
+              'For sentenceCorrections, include exact original sentences/headings that should be rewritten and improved ready-to-paste versions. Include as many as are materially useful, prioritizing high impact lines if the content is long.',
+              'For missingContentSuggestions, provide ready-to-paste sections such as intro, conclusion, disclaimer, author/reviewer note, source note, CTA, FAQ block, comparison table intro, or child/parent guidance where missing.',
+              'For seoRecommendations, provide final ready-to-use meta title, meta description, URL slug, focus keyword, secondary keywords, image alt text suggestions, OG title/description, and Twitter title/description.',
+              'For featuredSnippetSuggestions, provide concise answer paragraphs that could target position-zero style snippets without claiming guaranteed ranking.',
+              'For seoFaqs, generate at least 10 SEO-friendly FAQs with concise medically safe answers.',
+              'For finalChecklist, return actionable checkbox-style tasks such as Fix grammar, Replace awkward sentence, Add internal link, Add FAQ, Add schema, Improve CTA, Improve heading, Add image alt, Add conclusion, Reduce repetition, Improve E-E-A-T, Improve compliance, Improve readability, Optimize keyword usage, Optimize featured snippet.',
+              'Separate true ranking evidence from SEO readiness. If Search Console data is absent, say that ranking cannot be verified yet and focus on actions that improve crawlability, relevance, snippet quality, topical coverage, trust, and internal linking.',
+              'For mental-health content, strongly evaluate E-E-A-T: author/doctor attribution, review date, safe wording, no guaranteed outcomes, clear disclaimers, and source/reference needs.',
+              'Prioritize fixes by likely SEO impact: title/meta and intent first, then content gaps/headings, E-E-A-T safety, internal links, schema/social/technical cleanup.',
               'Likely search queries and semantic terms are editorial hypotheses, not verified search-volume data. State limitations accordingly.',
               'Keep the suggested meta title at 60 characters or fewer and the meta description at 160 characters or fewer.',
               'Keep the suggested slug short, lowercase, hyphenated, and aligned with the primary keyword.',
               'Flag unsupported medical claims, diagnosis promises, guaranteed outcomes, keyword stuffing, and missing source/author signals.',
               'If Search Console data is absent, set liveGoogleRankingAvailable false and score from content only rather than inferring live performance.',
               'rankingPotential is an editorial readiness estimate, never a promise of ranking.',
-              'Keep the response concise: maximum 6 priority actions; maximum 6 items in each recommendation list; and maximum 2 evidence and 2 action items per score category.'
+              'Keep the response comprehensive but usable: maximum 8 priority actions, maximum 30 auditIssues, maximum 30 sentenceCorrections, exactly 10-14 seoFaqs, and maximum 8 items in each supporting recommendation list.'
             ].join(' '),
             responseMimeType: 'application/json',
             responseJsonSchema: seoReviewSchema,
-            temperature: 0.2,
-            maxOutputTokens: 8192,
+            temperature: 0,
+            topP: 0.1,
+            maxOutputTokens: 16384,
             thinkingConfig: { thinkingLevel: 'LOW' }
           }
         });

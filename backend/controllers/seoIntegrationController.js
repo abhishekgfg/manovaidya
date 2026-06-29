@@ -43,6 +43,21 @@ export const getBlogSearchPerformance = async (req, res) => {
 export const getBlogGeminiSeoReview = async (req, res) => {
   try {
     const blog = await getBlog(req.params.id);
+    const forceRefresh = req.query.force === 'true' || req.body?.force === true;
+
+    if (!forceRefresh && blog.aiSeoAudit && Number.isFinite(blog.aiSeoScore)) {
+      return res.json({
+        success: true,
+        data: {
+          model: blog.aiSeoModel,
+          review: blog.aiSeoAudit,
+          analyzedAt: blog.aiSeoAnalyzedAt,
+          searchMetricsIncluded: Boolean(blog.aiSeoAudit.analysisBasis?.searchConsoleIncluded),
+          cached: true
+        }
+      });
+    }
+
     let searchMetrics = null;
     try {
       searchMetrics = await getSearchConsoleMetrics(blog, 28);
@@ -63,7 +78,8 @@ export const getBlogGeminiSeoReview = async (req, res) => {
       data: {
         ...result,
         analyzedAt: blog.aiSeoAnalyzedAt,
-        searchMetricsIncluded: Boolean(searchMetrics)
+        searchMetricsIncluded: Boolean(searchMetrics),
+        cached: false
       }
     });
   } catch (error) {

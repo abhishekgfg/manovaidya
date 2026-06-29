@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdminLayout from './components/layout/AdminLayout';
 import Dashboard from './pages/Dashboard';
 import BlogManagement from './pages/BlogManagement';
+import Appointments from './pages/Appointments';
 import Login from './pages/Login';
 
 const PrivateRoute = ({ children }) => {
@@ -22,7 +23,7 @@ function App() {
         <Route path="/" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
           <Route index element={<Dashboard />} />
           {/* Placeholder routes for other sidebar links */}
-          <Route path="appointments" element={<div className="p-4">Appointments Page (Coming Soon)</div>} />
+          <Route path="appointments" element={<Appointments />} />
           <Route path="patients" element={<div className="p-4">Patients Page (Coming Soon)</div>} />
           <Route path="blog" element={<BlogManagement />} />
           <Route path="blogs" element={<Navigate to="/blog" replace />} />

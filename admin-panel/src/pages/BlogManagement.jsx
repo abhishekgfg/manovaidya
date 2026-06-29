@@ -1,5 +1,25 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Activity, AlertCircle, BrainCircuit, CheckCircle2, Edit2, Info, Plus, Search, Target, Trash2, TrendingUp, X, Zap } from 'lucide-react';
+import {
+  Activity,
+  AlertCircle,
+  BarChart3,
+  Bot,
+  BrainCircuit,
+  CheckCircle2,
+  Edit2,
+  FileSearch,
+  Gauge,
+  Info,
+  Plus,
+  RefreshCw,
+  Search,
+  Sparkles,
+  Target,
+  Trash2,
+  TrendingUp,
+  X,
+  Zap
+} from 'lucide-react';
 import BlogForm from '../components/blogs/BlogForm';
 import api from '../api/axiosInstance';
 
@@ -39,29 +59,27 @@ const calculateSeoScore = (blog) => {
     checks.push({ label, points, maxPoints, recommendation, status: points === maxPoints ? 'pass' : points > 0 ? 'partial' : 'fail' });
   };
 
-  addCheck('Meta title added', title ? 8 : 0, 8, 'Unique meta title add karein.');
-  addCheck('Meta title length', title.length >= 45 && title.length <= 60 ? 4 : title.length >= 30 && title.length <= 65 ? 2 : 0, 4, 'Meta title 45–60 characters rakhein.');
-  addCheck('Meta description added', description ? 8 : 0, 8, 'Search result ke liye meta description add karein.');
-  addCheck('Meta description length', description.length >= 120 && description.length <= 160 ? 4 : description.length >= 80 && description.length <= 170 ? 2 : 0, 4, 'Meta description 120–160 characters rakhein.');
-  addCheck('Focus keyword selected', keyword ? 6 : 0, 6, 'Ek clear focus keyword select karein.');
-  addCheck('Keyword in title', keyword && title.toLowerCase().includes(keyword) ? 5 : 0, 5, 'Focus keyword ko title mein naturally use karein.');
-  addCheck('Keyword in URL slug', keyword && (blog.slug || '').toLowerCase().includes(keyword.replace(/\s+/g, '-')) ? 4 : 0, 4, 'Focus keyword ko short URL slug mein use karein.');
-  addCheck('Keyword in introduction', keyword && (blog.shortDescription || '').toLowerCase().includes(keyword) ? 4 : 0, 4, 'Focus keyword ko short description/introduction mein use karein.');
-  addCheck('Keyword in content', keyword && textContent.toLowerCase().includes(keyword) ? 3 : 0, 3, 'Keyword ko content mein naturally use karein; stuffing na karein.');
-
-  const contentPoints = words.length >= 1000 ? 12 : words.length >= 600 ? 8 : words.length >= 300 ? 4 : 0;
-  addCheck(`Content depth (${words.length} words)`, contentPoints, 12, 'Detailed article ke liye roughly 1000+ useful words target karein.');
-  addCheck('H2/H3 heading structure', documentNode.querySelectorAll('h2, h3').length >= 2 ? 6 : documentNode.querySelectorAll('h2, h3').length ? 3 : 0, 6, 'Content ko descriptive H2/H3 headings mein structure karein.');
-  addCheck('Internal links', internalLinks.length >= 2 ? 5 : internalLinks.length ? 3 : 0, 5, 'Kam se kam 2 relevant internal pages/blogs link karein.');
-  addCheck('Useful external source', externalLinks.length ? 3 : 0, 3, 'Ek credible external source/reference link karein.');
-  addCheck('Relevant image', blog.image || contentImages.length ? 3 : 0, 3, 'Relevant cover/content image add karein.');
-  addCheck('Image alt text', allImagesHaveAlt && (blog.image || contentImages.length) ? 4 : 0, 4, 'Har image par descriptive alt text add karein.');
-  addCheck('Canonical URL', /^https?:\/\//i.test(blog.canonicalUrl || '') ? 5 : 0, 5, 'Correct absolute canonical URL set karein.');
-  addCheck('Valid JSON-LD schema', schemaIsValid ? 5 : 0, 5, 'BlogPosting JSON-LD generate aur validate karein.');
-  addCheck('Helpful FAQs', (blog.faq?.length || 0) >= 2 ? 3 : blog.faq?.length ? 2 : 0, 3, 'Relevant user questions ke 2+ FAQs add karein.');
-  addCheck('Open Graph sharing', blog.ogTitle && blog.ogDescription && (blog.ogImage || blog.image) ? 4 : blog.ogTitle || blog.ogDescription ? 2 : 0, 4, 'OG title, description aur 1200×630 image add karein.');
-  addCheck('Indexable robots setting', blog.robots === 'index,follow' ? 2 : 0, 2, 'Ranking page ke liye robots ko index,follow rakhein.');
-  addCheck('Twitter/X card', blog.twitterTitle && blog.twitterDescription && (blog.twitterImage || blog.ogImage || blog.image) ? 2 : 0, 2, 'Twitter title, description aur image add karein.');
+  addCheck('Meta title added', title ? 8 : 0, 8, 'Add a unique meta title.');
+  addCheck('Meta title length', title.length >= 45 && title.length <= 60 ? 4 : title.length >= 30 && title.length <= 65 ? 2 : 0, 4, 'Keep meta title around 45-60 characters.');
+  addCheck('Meta description added', description ? 8 : 0, 8, 'Add a search-result ready meta description.');
+  addCheck('Meta description length', description.length >= 120 && description.length <= 160 ? 4 : description.length >= 80 && description.length <= 170 ? 2 : 0, 4, 'Keep meta description around 120-160 characters.');
+  addCheck('Focus keyword selected', keyword ? 6 : 0, 6, 'Select one clear focus keyword.');
+  addCheck('Keyword in title', keyword && title.toLowerCase().includes(keyword) ? 5 : 0, 5, 'Use the focus keyword naturally in the title.');
+  addCheck('Keyword in URL slug', keyword && (blog.slug || '').toLowerCase().includes(keyword.replace(/\s+/g, '-')) ? 4 : 0, 4, 'Use the focus keyword in a short URL slug.');
+  addCheck('Keyword in introduction', keyword && (blog.shortDescription || '').toLowerCase().includes(keyword) ? 4 : 0, 4, 'Use the focus keyword naturally near the introduction.');
+  addCheck('Keyword in content', keyword && textContent.toLowerCase().includes(keyword) ? 3 : 0, 3, 'Use the keyword naturally in the content without stuffing.');
+  addCheck(`Content depth (${words.length} words)`, words.length >= 1000 ? 12 : words.length >= 600 ? 8 : words.length >= 300 ? 4 : 0, 12, 'Build a more detailed article with useful depth.');
+  addCheck('H2/H3 heading structure', documentNode.querySelectorAll('h2, h3').length >= 2 ? 6 : documentNode.querySelectorAll('h2, h3').length ? 3 : 0, 6, 'Structure the content with descriptive H2/H3 headings.');
+  addCheck('Internal links', internalLinks.length >= 2 ? 5 : internalLinks.length ? 3 : 0, 5, 'Add at least 2 relevant internal links.');
+  addCheck('Useful external source', externalLinks.length ? 3 : 0, 3, 'Add one credible external reference where useful.');
+  addCheck('Relevant image', blog.image || contentImages.length ? 3 : 0, 3, 'Add a relevant cover or content image.');
+  addCheck('Image alt text', allImagesHaveAlt && (blog.image || contentImages.length) ? 4 : 0, 4, 'Add descriptive alt text to every image.');
+  addCheck('Canonical URL', /^https?:\/\//i.test(blog.canonicalUrl || '') ? 5 : 0, 5, 'Set a correct absolute canonical URL.');
+  addCheck('Valid JSON-LD schema', schemaIsValid ? 5 : 0, 5, 'Add valid BlogPosting JSON-LD schema.');
+  addCheck('Helpful FAQs', (blog.faq?.length || 0) >= 2 ? 3 : blog.faq?.length ? 2 : 0, 3, 'Add 2 or more helpful FAQs.');
+  addCheck('Open Graph sharing', blog.ogTitle && blog.ogDescription && (blog.ogImage || blog.image) ? 4 : blog.ogTitle || blog.ogDescription ? 2 : 0, 4, 'Add OG title, description, and share image.');
+  addCheck('Indexable robots setting', blog.robots === 'index,follow' ? 2 : 0, 2, 'Use index,follow for ranking pages.');
+  addCheck('Twitter/X card', blog.twitterTitle && blog.twitterDescription && (blog.twitterImage || blog.ogImage || blog.image) ? 2 : 0, 2, 'Add Twitter title, description, and image.');
 
   const score = Math.min(100, checks.reduce((total, check) => total + check.points, 0));
   return {
@@ -80,19 +98,44 @@ const getDisplayedSeo = (blog, localAnalysis) => {
   return {
     score,
     tone: getScoreTone(score),
-    source: hasAiScore ? 'AI deep audit' : 'Preliminary audit'
+    source: hasAiScore ? 'Saved Gemini audit' : 'Local SEO audit'
   };
 };
+
+const GeminiMark = () => (
+  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#4285F4] via-[#A142F4] to-[#34A853] text-sm font-black text-white shadow-sm">
+    G
+  </span>
+);
+
+const ScoreRing = ({ score, tone, size = 'h-12 w-12' }) => (
+  <span
+    className={`relative flex shrink-0 items-center justify-center rounded-full bg-white text-xs font-bold text-slate-800 ${size}`}
+    style={{ background: `conic-gradient(${tone.color} ${score * 3.6}deg, #e2e8f0 0deg)` }}
+  >
+    <span className="flex h-[78%] w-[78%] items-center justify-center rounded-full bg-white">{score}</span>
+  </span>
+);
+
+const ModalShell = ({ children, maxWidth = 'max-w-5xl', onClose }) => (
+  <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
+    <div className={`max-h-[92vh] w-full ${maxWidth} overflow-hidden rounded-2xl bg-white shadow-2xl`}>
+      {children}
+    </div>
+    <button type="button" aria-label="Close modal" className="sr-only" onClick={onClose} />
+  </div>
+);
 
 export default function BlogManagement() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [seoDetails, setSeoDetails] = useState(null);
+  const [localSeoDetails, setLocalSeoDetails] = useState(null);
+  const [geminiDetails, setGeminiDetails] = useState(null);
+  const [consoleDetails, setConsoleDetails] = useState(null);
   const [integrationStatus, setIntegrationStatus] = useState(null);
   const [searchMetrics, setSearchMetrics] = useState(null);
   const [searchMetricsLoading, setSearchMetricsLoading] = useState(false);
@@ -118,20 +161,38 @@ export default function BlogManagement() {
   };
 
   useEffect(() => {
-    // Initial API load for the dashboard table.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchBlogs();
+    void fetchBlogs();
     api.get('/seo/integrations/status')
       .then(({ data }) => setIntegrationStatus(data.data))
       .catch(() => setIntegrationStatus(null));
   }, []);
 
-  const loadAiReviewForBlog = async (blog) => {
+  const scoredBlogs = useMemo(() => blogs.map((blog) => {
+    const seoAnalysis = calculateSeoScore(blog);
+    return { ...blog, seoAnalysis, seoDisplay: getDisplayedSeo(blog, seoAnalysis) };
+  }), [blogs]);
+
+  const searchConsoleConfigured = Boolean(
+    integrationStatus?.searchConsole?.siteConfigured
+    && integrationStatus?.searchConsole?.credentialsConfigured
+  );
+
+  const averageSeoScore = scoredBlogs.length
+    ? Math.round(scoredBlogs.reduce((total, blog) => total + blog.seoDisplay.score, 0) / scoredBlogs.length)
+    : 0;
+
+  const filteredBlogs = scoredBlogs.filter((blog) =>
+    blog.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    blog.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    blog.authorName?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const loadAiReviewForBlog = async (blog, { force = false } = {}) => {
     if (!blog?._id) return;
     try {
       setAiReviewLoading(true);
       setAiReviewError('');
-      const { data } = await api.post(`/blogs/${blog._id}/gemini-seo-review`);
+      const { data } = await api.post(`/blogs/${blog._id}/gemini-seo-review${force ? '?force=true' : ''}`, force ? { force: true } : {});
       const result = data.data;
       const savedAudit = {
         aiSeoScore: result.review.overallScore,
@@ -141,15 +202,7 @@ export default function BlogManagement() {
       };
       setAiReview(result);
       setBlogs((current) => current.map((item) => item._id === blog._id ? { ...item, ...savedAudit } : item));
-      setSeoDetails((current) => current?._id === blog._id ? {
-        ...current,
-        ...savedAudit,
-        seoDisplay: {
-          score: result.review.overallScore,
-          tone: getScoreTone(result.review.overallScore),
-          source: 'AI deep audit'
-        }
-      } : current);
+      setGeminiDetails((current) => current?._id === blog._id ? { ...current, ...savedAudit } : current);
     } catch (err) {
       setAiReviewError(err.response?.data?.message || err.message);
     } finally {
@@ -157,17 +210,16 @@ export default function BlogManagement() {
     }
   };
 
-  const openSeoDetails = (blog) => {
-    setSeoDetails(blog);
-    setSearchMetrics(null);
-    setSearchMetricsError('');
+  const openGeminiDetails = (blog) => {
+    setGeminiDetails(blog);
     setAiReviewError('');
     if (blog.aiSeoAudit) {
       setAiReview({
         model: blog.aiSeoModel,
         review: blog.aiSeoAudit,
         analyzedAt: blog.aiSeoAnalyzedAt,
-        searchMetricsIncluded: Boolean(blog.aiSeoAudit.analysisBasis?.searchConsoleIncluded)
+        searchMetricsIncluded: Boolean(blog.aiSeoAudit.analysisBasis?.searchConsoleIncluded),
+        cached: true
       });
     } else {
       setAiReview(null);
@@ -175,22 +227,27 @@ export default function BlogManagement() {
     }
   };
 
-  const loadSearchMetrics = async () => {
-    if (!seoDetails) return;
+  const openConsoleDetails = (blog) => {
+    setConsoleDetails(blog);
+    setSearchMetrics(null);
+    setSearchMetricsError('');
+    if (searchConsoleConfigured) {
+      void loadSearchMetrics(blog);
+    }
+  };
+
+  const loadSearchMetrics = async (blog = consoleDetails) => {
+    if (!blog?._id) return;
     try {
       setSearchMetricsLoading(true);
       setSearchMetricsError('');
-      const { data } = await api.get(`/blogs/${seoDetails._id}/search-console?days=28`);
+      const { data } = await api.get(`/blogs/${blog._id}/search-console?days=28`);
       setSearchMetrics(data.data);
     } catch (err) {
       setSearchMetricsError(err.response?.data?.message || err.message);
     } finally {
       setSearchMetricsLoading(false);
     }
-  };
-
-  const loadAiReview = async () => {
-    await loadAiReviewForBlog(seoDetails);
   };
 
   const handleAddNew = () => {
@@ -205,43 +262,22 @@ export default function BlogManagement() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this blog?')) return;
-    
     try {
       const { data } = await api.delete(`/blogs/${id}`);
-      
       if (data.success) {
-        setBlogs(prev => prev.filter(b => b._id !== id));
+        setBlogs((prev) => prev.filter((blog) => blog._id !== id));
       } else {
         alert(data.message || 'Failed to delete blog');
       }
     } catch (err) {
-      alert('Error deleting blog: ' + (err.response?.data?.message || err.message));
+      alert(`Error deleting blog: ${err.response?.data?.message || err.message}`);
     }
   };
 
   const handleFormSave = () => {
     setIsFormOpen(false);
-    fetchBlogs(); // Refresh list to get updated data
+    void fetchBlogs();
   };
-
-  const scoredBlogs = useMemo(() => blogs.map((blog) => {
-    const seoAnalysis = calculateSeoScore(blog);
-    return { ...blog, seoAnalysis, seoDisplay: getDisplayedSeo(blog, seoAnalysis) };
-  }), [blogs]);
-  const averageSeoScore = scoredBlogs.length
-    ? Math.round(scoredBlogs.reduce((total, blog) => total + blog.seoDisplay.score, 0) / scoredBlogs.length)
-    : 0;
-  const searchConsoleConfigured = Boolean(
-    integrationStatus?.searchConsole?.siteConfigured
-    && integrationStatus?.searchConsole?.credentialsConfigured
-  );
-  const filteredBlogs = scoredBlogs.filter(blog => 
-    blog.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    blog.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    blog.authorName?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  const activeSeoScore = aiReview?.review?.overallScore ?? seoDetails?.seoAnalysis?.score ?? 0;
-  const activeSeoTone = getScoreTone(activeSeoScore);
 
   if (loading && blogs.length === 0) {
     return <div className="p-8 text-center">Loading blogs...</div>;
@@ -252,9 +288,9 @@ export default function BlogManagement() {
       <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Blog Management</h1>
-          <p className="mt-1 text-sm text-slate-500">Create, edit, and manage your blog posts.</p>
+          <p className="mt-1 text-sm text-slate-500">Create, edit, and manage blog SEO with local checks, Gemini AI, and Search Console.</p>
         </div>
-        
+
         <button
           onClick={handleAddNew}
           className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
@@ -264,22 +300,24 @@ export default function BlogManagement() {
         </button>
       </div>
 
-      <div className="mb-6 grid gap-4 lg:grid-cols-[1.4fr_0.6fr_0.6fr]">
-        <div className="rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 to-white p-5 shadow-sm">
-          <div className="flex items-start gap-3">
+      <div className="mb-6 grid gap-4 lg:grid-cols-[1.35fr_0.65fr_0.65fr]">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start gap-4">
             <div className="rounded-xl bg-violet-100 p-2.5 text-violet-700"><Info size={20} /></div>
             <div>
-              <h2 className="font-semibold text-slate-900">SEO Score vs. Google Rank</h2>
-              <p className="mt-1 text-xs leading-5 text-slate-600">Gemini provides a deep 100-point SEO score by auditing content evidence, search intent, metadata, keywords, and E-E-A-T. Your exact Google rank will be available after domain deployment and Search Console verification.</p>
+              <h2 className="font-semibold text-slate-900">Stable SEO workflow</h2>
+              <p className="mt-1 text-xs leading-5 text-slate-600">
+                Local SEO score is deterministic. Gemini score is saved after analysis and reused until you explicitly refresh the AI audit.
+              </p>
               <div className="mt-3 flex flex-wrap gap-2">
-                <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${searchConsoleConfigured ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-600'}`}>Google: {searchConsoleConfigured ? 'Configured' : 'After deployment'}</span>
+                <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${searchConsoleConfigured ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-600'}`}>Search Console: {searchConsoleConfigured ? 'Configured' : 'Not configured'}</span>
                 <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${integrationStatus?.gemini?.configured ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>Gemini: {integrationStatus?.gemini?.configured ? integrationStatus.gemini.model : 'Setup required'}</span>
               </div>
             </div>
           </div>
         </div>
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center justify-between"><span className="text-xs font-medium text-slate-500">Average saved score</span><Activity size={18} className="text-violet-600" /></div>
+          <div className="flex items-center justify-between"><span className="text-xs font-medium text-slate-500">Average shown score</span><Activity size={18} className="text-violet-600" /></div>
           <p className="mt-2 text-3xl font-bold text-slate-900">{averageSeoScore}<span className="text-sm font-medium text-slate-400">/100</span></p>
         </div>
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -288,11 +326,7 @@ export default function BlogManagement() {
         </div>
       </div>
 
-      {error && (
-        <div className="mb-6 rounded-lg bg-red-100 p-4 text-sm text-red-700">
-          {error}
-        </div>
-      )}
+      {error && <div className="mb-6 rounded-lg bg-red-100 p-4 text-sm text-red-700">{error}</div>}
 
       <div className="mb-6 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
         <div className="relative max-w-md">
@@ -300,25 +334,25 @@ export default function BlogManagement() {
             type="text"
             placeholder="Search blogs by title, category, or author..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(event) => setSearchQuery(event.target.value)}
             className="w-full rounded-lg border border-slate-300 py-2 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
           <Search className="absolute left-3 top-2.5 text-slate-400" size={18} />
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-600">
+          <table className="w-full min-w-[1080px] text-left text-sm text-slate-600">
             <thead className="bg-slate-50 text-xs uppercase text-slate-700">
               <tr>
                 <th className="px-6 py-4">Title</th>
                 <th className="px-6 py-4">Author</th>
                 <th className="px-6 py-4">Category</th>
                 <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4">SEO Score</th>
+                <th className="px-6 py-4">SEO</th>
+                <th className="px-6 py-4">Tools</th>
                 <th className="px-6 py-4">Views</th>
-                <th className="px-6 py-4">Date</th>
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
@@ -326,8 +360,9 @@ export default function BlogManagement() {
               {filteredBlogs.length > 0 ? (
                 filteredBlogs.map((blog) => (
                   <tr key={blog._id} className="border-b border-slate-200 hover:bg-slate-50">
-                    <td className="px-6 py-4 font-medium text-slate-900">
-                      {blog.title}
+                    <td className="max-w-xs px-6 py-4 font-medium text-slate-900">
+                      <p className="line-clamp-2">{blog.title}</p>
+                      <p className="mt-1 text-xs font-normal text-slate-400">{new Date(blog.createdAt).toLocaleDateString()}</p>
                     </td>
                     <td className="px-6 py-4">{blog.authorName}</td>
                     <td className="px-6 py-4">
@@ -343,34 +378,44 @@ export default function BlogManagement() {
                     <td className="px-6 py-4">
                       <button
                         type="button"
-                        onClick={() => openSeoDetails(blog)}
-                        className={`group flex min-w-32 items-center gap-3 rounded-xl border px-3 py-2 text-left transition hover:-translate-y-0.5 hover:shadow-md ${blog.seoDisplay.tone.background} ${blog.seoDisplay.tone.border}`}
-                        title="View SEO score details"
+                        onClick={() => setLocalSeoDetails(blog)}
+                        className={`group flex min-w-40 items-center gap-3 rounded-xl border px-3 py-2 text-left transition hover:-translate-y-0.5 hover:shadow-md ${blog.seoDisplay.tone.background} ${blog.seoDisplay.tone.border}`}
+                        title="Open local SEO audit"
                       >
-                        <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-xs font-bold text-slate-800" style={{ background: `conic-gradient(${blog.seoDisplay.tone.color} ${blog.seoDisplay.score * 3.6}deg, #e2e8f0 0deg)` }}>
-                          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white">{blog.seoDisplay.score}</span>
+                        <ScoreRing score={blog.seoDisplay.score} tone={blog.seoDisplay.tone} size="h-10 w-10" />
+                        <span>
+                          <span className={`block text-xs font-semibold ${blog.seoDisplay.tone.text}`}>{blog.seoDisplay.label || blog.seoDisplay.tone.label}</span>
+                          <span className="block text-[10px] text-slate-500">{blog.seoDisplay.source}</span>
                         </span>
-                        <span><span className={`block text-xs font-semibold ${blog.seoDisplay.tone.text}`}>{blog.seoDisplay.tone.label}</span><span className="block text-[10px] text-slate-500">{blog.seoDisplay.source}</span></span>
                       </button>
                     </td>
-                    <td className="px-6 py-4">{blog.views}</td>
                     <td className="px-6 py-4">
-                      {new Date(blog.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <button
-                          onClick={() => handleEdit(blog)}
-                          className="rounded-lg p-1.5 text-blue-600 hover:bg-blue-50"
-                          title="Edit"
+                          type="button"
+                          onClick={() => openGeminiDetails(blog)}
+                          className="inline-flex items-center gap-2 rounded-lg border border-violet-200 bg-violet-50 px-3 py-2 text-xs font-bold text-violet-700 transition hover:border-violet-300 hover:bg-violet-100"
                         >
-                          <Edit2 size={18} />
+                          <Sparkles className="h-4 w-4" />
+                          Gemini
                         </button>
                         <button
-                          onClick={() => handleDelete(blog._id)}
-                          className="rounded-lg p-1.5 text-red-600 hover:bg-red-50"
-                          title="Delete"
+                          type="button"
+                          onClick={() => openConsoleDetails(blog)}
+                          className="inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-bold text-blue-700 transition hover:border-blue-300 hover:bg-blue-100"
                         >
+                          <BarChart3 className="h-4 w-4" />
+                          Console
+                        </button>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">{blog.views}</td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button onClick={() => handleEdit(blog)} className="rounded-lg p-1.5 text-blue-600 hover:bg-blue-50" title="Edit">
+                          <Edit2 size={18} />
+                        </button>
+                        <button onClick={() => handleDelete(blog._id)} className="rounded-lg p-1.5 text-red-600 hover:bg-red-50" title="Delete">
                           <Trash2 size={18} />
                         </button>
                       </div>
@@ -379,9 +424,7 @@ export default function BlogManagement() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="px-6 py-8 text-center text-slate-500">
-                    No blogs found.
-                  </td>
+                  <td colSpan="8" className="px-6 py-8 text-center text-slate-500">No blogs found.</td>
                 </tr>
               )}
             </tbody>
@@ -397,120 +440,841 @@ export default function BlogManagement() {
         />
       )}
 
-      {seoDetails && (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
-          <div className="max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-2xl bg-white shadow-2xl">
-            <div className="flex items-start justify-between border-b border-slate-200 p-5">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-violet-600">On-page SEO audit</p>
-                <h3 className="mt-1 text-xl font-bold text-slate-900">{seoDetails.title}</h3>
-                <p className="mt-1 text-xs text-slate-500">{seoDetails.seoAnalysis.wordCount} words · {seoDetails.seoAnalysis.passed}/{seoDetails.seoAnalysis.checks.length} checks fully passed</p>
-              </div>
-              <button type="button" onClick={() => setSeoDetails(null)} className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700"><X size={20} /></button>
+      {localSeoDetails && (
+        <LocalSeoModal
+          blog={localSeoDetails}
+          onClose={() => setLocalSeoDetails(null)}
+          onEdit={() => {
+            setLocalSeoDetails(null);
+            handleEdit(localSeoDetails);
+          }}
+        />
+      )}
+
+      {geminiDetails && (
+        <GeminiModal
+          blog={geminiDetails}
+          aiReview={aiReview}
+          loading={aiReviewLoading}
+          error={aiReviewError}
+          onClose={() => setGeminiDetails(null)}
+          onAnalyze={() => loadAiReviewForBlog(geminiDetails)}
+          onRefresh={() => loadAiReviewForBlog(geminiDetails, { force: true })}
+        />
+      )}
+
+      {consoleDetails && (
+        <SearchConsoleModal
+          blog={consoleDetails}
+          configured={searchConsoleConfigured}
+          metrics={searchMetrics}
+          loading={searchMetricsLoading}
+          error={searchMetricsError}
+          onClose={() => setConsoleDetails(null)}
+          onRefresh={() => loadSearchMetrics(consoleDetails)}
+        />
+      )}
+    </div>
+  );
+}
+
+function LocalSeoModal({ blog, onClose, onEdit }) {
+  const analysis = blog.seoAnalysis || calculateSeoScore(blog);
+  return (
+    <ModalShell onClose={onClose}>
+      <div className="flex items-start justify-between border-b border-slate-200 p-5">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-violet-600">Local deterministic audit</p>
+          <h3 className="mt-1 text-xl font-bold text-slate-900">{blog.title}</h3>
+          <p className="mt-1 text-xs text-slate-500">{analysis.wordCount} words - {analysis.passed}/{analysis.checks.length} checks fully passed</p>
+        </div>
+        <button type="button" onClick={onClose} className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700"><X size={20} /></button>
+      </div>
+      <div className="max-h-[calc(90vh-96px)] overflow-y-auto p-5">
+        <div className={`mb-5 flex items-center justify-between rounded-2xl border p-5 ${analysis.tone.background} ${analysis.tone.border}`}>
+          <div>
+            <p className={`text-sm font-semibold ${analysis.tone.text}`}>{analysis.tone.label}</p>
+            <p className="mt-1 text-xs text-slate-600">Stable score from fixed on-page SEO rules.</p>
+          </div>
+          <p className="text-4xl font-bold text-slate-900">{analysis.score}<span className="text-base text-slate-400">/100</span></p>
+        </div>
+
+        {analysis.improvements.length > 0 ? (
+          <div className="mb-5 rounded-2xl border border-amber-100 bg-amber-50/60 p-4">
+            <div className="flex items-center gap-2">
+              <FileSearch className="h-5 w-5 text-amber-600" />
+              <h4 className="text-sm font-bold text-slate-900">Fix these first for SEO improvement</h4>
             </div>
-
-            <div className="max-h-[calc(90vh-96px)] overflow-y-auto p-5">
-              <div className={`mb-5 flex items-center justify-between rounded-2xl border p-5 ${activeSeoTone.background} ${activeSeoTone.border}`}>
-                <div><p className={`text-sm font-semibold ${activeSeoTone.text}`}>{activeSeoTone.label}</p><p className="mt-1 text-xs text-slate-600">{aiReview ? `Gemini deep audit · ${aiReview.review.confidence || 'medium'} confidence` : aiReviewLoading ? 'AI evidence analyze कर रहा है…' : 'Preliminary content-field audit'}</p></div>
-                <p className="text-4xl font-bold text-slate-900">{activeSeoScore}<span className="text-base text-slate-400">/100</span></p>
-              </div>
-
-              <div className="mb-6 grid gap-4 xl:grid-cols-2">
-                <section className="rounded-2xl border border-blue-200 bg-blue-50/50 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div><h4 className="text-sm font-bold text-slate-900">Google Search Console</h4><p className="mt-1 text-xs text-slate-500">{searchConsoleConfigured ? 'Exact page · last 28 available days' : 'Production domain required'}</p></div>
-                    <button type="button" onClick={loadSearchMetrics} disabled={!searchConsoleConfigured || searchMetricsLoading} className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500">{!searchConsoleConfigured ? 'After deployment' : searchMetricsLoading ? 'Loading...' : searchMetrics ? 'Refresh' : 'Load ranking'}</button>
+            <div className="mt-3 grid gap-2 md:grid-cols-2">
+              {analysis.improvements.slice(0, 6).map((check) => (
+                <div key={check.label} className="rounded-xl bg-white p-3 text-xs shadow-sm">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="font-semibold text-slate-800">{check.label}</p>
+                    <span className="shrink-0 font-bold text-amber-700">{check.points}/{check.maxPoints}</span>
                   </div>
-                  {!searchConsoleConfigured && <p className="mt-3 rounded-lg border border-blue-100 bg-white p-3 text-xs leading-5 text-slate-600">Google localhost pages को index या rank-track नहीं करता। Domain live होने पर property URL और credentials configure करके यह automatically enable हो जाएगा.</p>}
-                  {searchMetricsError && <p className="mt-3 rounded-lg bg-red-100 p-2.5 text-xs text-red-700">{searchMetricsError}</p>}
-                  {searchMetrics && (
-                    <div className="mt-4">
-                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-2">
-                        <div className="rounded-xl bg-white p-3"><p className="text-[10px] uppercase text-slate-400">Avg position</p><p className="mt-1 text-xl font-bold text-blue-700">{searchMetrics.position ?? '—'}</p></div>
-                        <div className="rounded-xl bg-white p-3"><p className="text-[10px] uppercase text-slate-400">Impressions</p><p className="mt-1 text-xl font-bold text-slate-900">{searchMetrics.impressions}</p></div>
-                        <div className="rounded-xl bg-white p-3"><p className="text-[10px] uppercase text-slate-400">Clicks</p><p className="mt-1 text-xl font-bold text-slate-900">{searchMetrics.clicks}</p></div>
-                        <div className="rounded-xl bg-white p-3"><p className="text-[10px] uppercase text-slate-400">CTR</p><p className="mt-1 text-xl font-bold text-slate-900">{searchMetrics.ctr}%</p></div>
-                      </div>
-                      {!searchMetrics.hasData && <p className="mt-3 text-xs text-slate-500">इस exact canonical page के लिए selected period में Search Console data नहीं मिला.</p>}
-                      {searchMetrics.topQueries.length > 0 && (
-                        <div className="mt-3"><p className="mb-2 text-[10px] font-bold uppercase tracking-wide text-slate-500">Top queries</p><div className="space-y-1.5">{searchMetrics.topQueries.slice(0, 5).map((item) => <div key={item.query} className="flex items-center justify-between gap-2 rounded-lg bg-white px-3 py-2 text-xs"><span className="truncate text-slate-700">{item.query}</span><span className="shrink-0 font-semibold text-blue-700">#{item.position}</span></div>)}</div></div>
-                      )}
-                    </div>
-                  )}
-                </section>
-
-                <section className="rounded-2xl border border-violet-200 bg-violet-50/50 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div><h4 className="text-sm font-bold text-slate-900">Gemini SEO Strategist</h4><p className="mt-1 text-xs text-slate-500">Content + available GSC data review</p></div>
-                    <button type="button" onClick={loadAiReview} disabled={aiReviewLoading} className="rounded-lg bg-violet-600 px-3 py-2 text-xs font-semibold text-white hover:bg-violet-700 disabled:opacity-60">{aiReviewLoading ? 'Analyzing...' : aiReview ? 'Run again' : 'Generate review'}</button>
-                  </div>
-                  {aiReviewError && <p className="mt-3 rounded-lg bg-red-100 p-2.5 text-xs text-red-700">{aiReviewError}</p>}
-                  {aiReview && (
-                    <div className="mt-4 space-y-3">
-                      <div className="rounded-xl border border-violet-100 bg-white p-4">
-                        <div className="flex items-start gap-3"><BrainCircuit size={20} className="mt-0.5 shrink-0 text-violet-600" /><div><p className="text-xs leading-5 text-slate-700">{aiReview.review.summary}</p><p className="mt-2 text-[11px] font-medium text-violet-700">{aiReview.review.scoreRationale}</p></div></div>
-                      </div>
-
-                      <div className="grid grid-cols-3 gap-2">
-                        <div className="rounded-xl bg-white p-3"><p className="text-[9px] font-bold uppercase text-slate-400">AI SEO score</p><p className="mt-1 text-2xl font-bold text-violet-700">{aiReview.review.overallScore}<span className="text-xs text-slate-400">/100</span></p></div>
-                        <div className="rounded-xl bg-white p-3"><p className="text-[9px] font-bold uppercase text-slate-400">Intent match</p><p className="mt-1 text-2xl font-bold text-blue-700">{aiReview.review.searchIntent?.matchScore ?? '—'}<span className="text-xs text-slate-400">/100</span></p></div>
-                        <div className="rounded-xl bg-white p-3"><p className="text-[9px] font-bold uppercase text-slate-400">Readiness</p><p className="mt-1 text-2xl font-bold text-emerald-700">{aiReview.review.rankingPotential?.score ?? '—'}<span className="text-xs text-slate-400">/100</span></p></div>
-                      </div>
-
-                      <div>
-                        <p className="mb-2 text-[10px] font-bold uppercase tracking-wide text-slate-500">AI score breakdown</p>
-                        <div className="grid gap-2 sm:grid-cols-2">
-                          {(aiReview.review.categoryScores || []).map((category) => (
-                            <div key={category.category} className="rounded-xl border border-violet-100 bg-white p-3">
-                              <div className="flex items-center justify-between gap-2"><p className="text-xs font-semibold text-slate-800">{category.category}</p><span className="text-xs font-bold text-violet-700">{category.score}/{category.maxScore}</span></div>
-                              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-violet-500" style={{ width: `${Math.min(100, (category.score / category.maxScore) * 100)}%` }} /></div>
-                              <p className="mt-2 text-[10px] leading-4 text-slate-500">{category.verdict}</p>
-                              {category.actions?.[0] && <p className="mt-1 text-[10px] font-medium leading-4 text-violet-700">Next: {category.actions[0]}</p>}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="rounded-xl bg-white p-4">
-                        <div className="flex items-center justify-between gap-2"><p className="text-[10px] font-bold uppercase text-violet-600">Metadata & SERP preview</p><span className="text-[10px] text-slate-400">Title {aiReview.review.metadataAudit?.titleScore ?? '—'} · Description {aiReview.review.metadataAudit?.descriptionScore ?? '—'}</span></div>
-                        <div className="mt-3 rounded-lg border border-slate-200 p-3"><p className="text-sm font-medium text-blue-700">{aiReview.review.metadataAudit?.serpPreviewTitle || aiReview.review.suggestedMetaTitle}</p><p className="mt-1 text-xs leading-5 text-slate-600">{aiReview.review.metadataAudit?.serpPreviewDescription || aiReview.review.suggestedMetaDescription}</p><p className="mt-1 text-[10px] text-emerald-700">/{aiReview.review.suggestedSlug}</p></div>
-                        <div className="mt-3 grid gap-2 sm:grid-cols-2"><div><p className="text-[10px] font-bold text-slate-700">Title issues</p><ul className="mt-1 list-disc space-y-1 pl-4 text-[10px] leading-4 text-slate-500">{(aiReview.review.metadataAudit?.titleIssues || []).map((item) => <li key={item}>{item}</li>)}</ul></div><div><p className="text-[10px] font-bold text-slate-700">Description issues</p><ul className="mt-1 list-disc space-y-1 pl-4 text-[10px] leading-4 text-slate-500">{(aiReview.review.metadataAudit?.descriptionIssues || []).map((item) => <li key={item}>{item}</li>)}</ul></div></div>
-                        <p className="mt-3 text-[11px] text-violet-700">Primary keyword: <strong>{aiReview.review.suggestedFocusKeyword}</strong></p>
-                        <p className="mt-1 text-[10px] text-slate-500">Meta keywords: {(aiReview.review.suggestedMetaKeywords || []).join(', ')}</p>
-                      </div>
-
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        <div className="rounded-xl bg-white p-4"><div className="flex items-center gap-2"><Target size={16} className="text-blue-600" /><p className="text-xs font-bold text-slate-800">Search intent</p></div><p className="mt-2 text-[11px] leading-5 text-slate-600"><strong>{aiReview.review.searchIntent?.primaryIntent}</strong> · {aiReview.review.searchIntent?.targetAudience}</p><p className="mt-2 text-[10px] leading-4 text-blue-700">{aiReview.review.searchIntent?.recommendedAngle}</p><div className="mt-2 flex flex-wrap gap-1">{(aiReview.review.searchIntent?.likelySearchQueries || []).slice(0, 5).map((item) => <span key={item} className="rounded-full bg-blue-50 px-2 py-1 text-[9px] text-blue-700">{item}</span>)}</div></div>
-                        <div className="rounded-xl bg-white p-4"><div className="flex items-center gap-2"><Zap size={16} className="text-amber-500" /><p className="text-xs font-bold text-slate-800">Keyword strategy</p></div><p className="mt-2 text-[11px] leading-5 text-slate-600">{aiReview.review.keywordStrategy?.placementAssessment}</p><p className="mt-2 text-[10px] text-slate-500">Stuffing risk: <strong>{aiReview.review.keywordStrategy?.stuffingRisk}</strong></p><div className="mt-2 flex flex-wrap gap-1">{(aiReview.review.keywordStrategy?.semanticTerms || []).slice(0, 8).map((item) => <span key={item} className="rounded-full bg-amber-50 px-2 py-1 text-[9px] text-amber-700">{item}</span>)}</div></div>
-                      </div>
-
-                      <div><p className="mb-2 text-[10px] font-bold uppercase tracking-wide text-slate-500">Priority actions</p><div className="space-y-2">{(aiReview.review.priorityActions || []).map((action, index) => <div key={`${action.title}-${index}`} className="rounded-xl border border-violet-100 bg-white p-3"><div className="flex items-center gap-2"><span className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase ${action.priority === 'high' ? 'bg-red-100 text-red-700' : action.priority === 'medium' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>{action.priority}</span><p className="text-xs font-semibold text-slate-800">{action.title}</p></div><p className="mt-1 text-[10px] leading-4 text-slate-500">{action.reason}</p><p className="mt-1 text-[11px] font-medium leading-5 text-violet-700">{action.exactRecommendation}</p></div>)}</div></div>
-
-                      <details className="rounded-xl bg-white p-4 text-xs"><summary className="cursor-pointer font-semibold text-violet-700">Open complete deep audit</summary><div className="mt-4 grid gap-4 text-slate-600 sm:grid-cols-2"><div><p className="font-semibold text-slate-800">Content gaps</p><ul className="mt-1 list-disc space-y-1 pl-5">{(aiReview.review.contentGaps || []).map((item) => <li key={item}>{item}</li>)}</ul></div><div><p className="font-semibold text-slate-800">Suggested headings</p><ul className="mt-1 list-disc space-y-1 pl-5">{(aiReview.review.suggestedHeadings || []).map((item) => <li key={item}>{item}</li>)}</ul></div><div><p className="font-semibold text-slate-800">Internal links</p><ul className="mt-1 list-disc space-y-1 pl-5">{(aiReview.review.internalLinkIdeas || []).map((item) => <li key={item}>{item}</li>)}</ul></div><div><p className="font-semibold text-slate-800">E-E-A-T & trust</p><ul className="mt-1 list-disc space-y-1 pl-5">{(aiReview.review.eeatRecommendations || []).map((item) => <li key={item}>{item}</li>)}</ul></div><div><p className="font-semibold text-slate-800">Ranking blockers</p><ul className="mt-1 list-disc space-y-1 pl-5">{(aiReview.review.rankingPotential?.blockers || []).map((item) => <li key={item}>{item}</li>)}</ul></div><div><p className="font-semibold text-slate-800">Quick wins</p><ul className="mt-1 list-disc space-y-1 pl-5">{(aiReview.review.rankingPotential?.quickWins || []).map((item) => <li key={item}>{item}</li>)}</ul></div>{(aiReview.review.riskFlags || []).length > 0 && <div><p className="font-semibold text-red-700">Risk flags</p><ul className="mt-1 list-disc space-y-1 pl-5">{aiReview.review.riskFlags.map((item) => <li key={item}>{item}</li>)}</ul></div>}<div><p className="font-semibold text-slate-800">Data limitations</p><ul className="mt-1 list-disc space-y-1 pl-5">{(aiReview.review.analysisBasis?.limitations || []).map((item) => <li key={item}>{item}</li>)}</ul></div></div></details>
-                      <p className="text-[10px] text-slate-400">Model: {aiReview.model} · Analyzed: {aiReview.analyzedAt ? new Date(aiReview.analyzedAt).toLocaleString() : 'now'} · GSC evidence: {aiReview.searchMetricsIncluded ? 'Included' : 'Not available'}</p>
-                    </div>
-                  )}
-                </section>
-              </div>
-
-              <h4 className="mb-3 text-sm font-semibold text-slate-900">Audit breakdown</h4>
-              <div className="space-y-2">
-                {seoDetails.seoAnalysis.checks.map((check) => (
-                  <div key={check.label} className="flex items-start gap-3 rounded-xl border border-slate-200 p-3">
-                    {check.status === 'pass' ? <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-emerald-600" /> : <AlertCircle size={18} className={`mt-0.5 shrink-0 ${check.status === 'partial' ? 'text-amber-500' : 'text-red-500'}`} />}
-                    <div className="min-w-0 flex-1"><p className="text-sm font-medium text-slate-800">{check.label}</p>{check.status !== 'pass' && <p className="mt-0.5 text-xs leading-5 text-slate-500">{check.recommendation}</p>}</div>
-                    <span className="shrink-0 text-xs font-bold text-slate-600">{check.points}/{check.maxPoints}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 flex justify-end">
-                <button type="button" onClick={() => { setSeoDetails(null); handleEdit(seoDetails); }} className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"><Edit2 size={16} /> Improve this blog</button>
-              </div>
+                  <p className="mt-1 leading-5 text-slate-500">{check.recommendation}</p>
+                </div>
+              ))}
             </div>
           </div>
+        ) : null}
+
+        <h4 className="mb-3 text-sm font-semibold text-slate-900">Audit breakdown</h4>
+        <div className="space-y-2">
+          {analysis.checks.map((check) => (
+            <div key={check.label} className="flex items-start gap-3 rounded-xl border border-slate-200 p-3">
+              {check.status === 'pass' ? <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-emerald-600" /> : <AlertCircle size={18} className={`mt-0.5 shrink-0 ${check.status === 'partial' ? 'text-amber-500' : 'text-red-500'}`} />}
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-slate-800">{check.label}</p>
+                {check.status !== 'pass' && <p className="mt-0.5 text-xs leading-5 text-slate-500">{check.recommendation}</p>}
+              </div>
+              <span className="shrink-0 text-xs font-bold text-slate-600">{check.points}/{check.maxPoints}</span>
+            </div>
+          ))}
         </div>
+
+        <div className="mt-5 flex justify-end">
+          <button type="button" onClick={onEdit} className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700">
+            <Edit2 size={16} />
+            Improve this blog
+          </button>
+        </div>
+      </div>
+    </ModalShell>
+  );
+}
+
+function GeminiModal({ blog, aiReview, loading, error, onClose, onAnalyze, onRefresh }) {
+  const score = aiReview?.review?.overallScore ?? blog.aiSeoScore ?? blog.seoAnalysis?.score ?? 0;
+  const tone = getScoreTone(score);
+  const review = aiReview?.review || blog.aiSeoAudit;
+  const [activeAuditTab, setActiveAuditTab] = useState('fixes');
+
+  return (
+    <ModalShell onClose={onClose} maxWidth="max-w-6xl">
+      <div className="flex items-start justify-between border-b border-slate-200 bg-gradient-to-br from-violet-50 via-white to-blue-50 p-5">
+        <div className="flex items-start gap-4">
+          <GeminiMark />
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-violet-700">Gemini AI SEO audit</p>
+            <h3 className="mt-1 text-xl font-bold text-slate-900">{blog.title}</h3>
+            <p className="mt-1 text-xs text-slate-500">
+              Saved score is reused for consistency. Refresh AI only when content changed or you need a new review.
+            </p>
+          </div>
+        </div>
+        <button type="button" onClick={onClose} className="rounded-lg p-2 text-slate-400 hover:bg-white hover:text-slate-700"><X size={20} /></button>
+      </div>
+
+      <div className="max-h-[calc(90vh-96px)] overflow-y-auto p-5">
+        <div className={`mb-5 flex flex-col gap-4 rounded-2xl border p-5 sm:flex-row sm:items-center sm:justify-between ${tone.background} ${tone.border}`}>
+          <div className="flex items-center gap-4">
+            <ScoreRing score={score} tone={tone} size="h-16 w-16" />
+            <div>
+              <p className={`text-sm font-bold ${tone.text}`}>{tone.label}</p>
+              <p className="mt-1 text-xs text-slate-600">
+                {loading ? 'Gemini is analyzing evidence...' : review ? `${aiReview?.cached ? 'Cached' : 'Saved'} Gemini audit` : 'No Gemini audit yet'}
+              </p>
+              {aiReview?.analyzedAt || blog.aiSeoAnalyzedAt ? (
+                <p className="mt-1 text-[11px] text-slate-500">Analyzed: {new Date(aiReview?.analyzedAt || blog.aiSeoAnalyzedAt).toLocaleString()}</p>
+              ) : null}
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" onClick={onAnalyze} disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-60">
+              <Bot className="h-4 w-4" />
+              {review ? 'Load saved audit' : 'Analyze with Gemini'}
+            </button>
+            <button type="button" onClick={onRefresh} disabled={loading} className="inline-flex items-center gap-2 rounded-lg border border-violet-200 bg-white px-4 py-2 text-sm font-semibold text-violet-700 hover:bg-violet-50 disabled:opacity-60">
+              <RefreshCw className="h-4 w-4" />
+              Refresh AI
+            </button>
+          </div>
+        </div>
+
+        {error && <p className="mb-4 rounded-lg bg-red-100 p-3 text-sm text-red-700">{error}</p>}
+        {!review && !loading ? (
+          <div className="rounded-2xl border border-dashed border-violet-200 bg-violet-50/60 p-8 text-center">
+            <GeminiMark />
+            <p className="mt-4 text-sm font-bold text-slate-900">Gemini audit is not generated yet.</p>
+            <p className="mt-1 text-xs text-slate-500">Click Analyze with Gemini to create and save the AI score.</p>
+          </div>
+        ) : null}
+
+        {review ? (
+          <GeminiAuditWorkspace
+            review={review}
+            activeTab={activeAuditTab}
+            setActiveTab={setActiveAuditTab}
+          />
+        ) : null}
+      </div>
+    </ModalShell>
+  );
+}
+
+function GeminiAuditWorkspace({ review, activeTab, setActiveTab }) {
+  const criticalCount = (review.auditIssues || []).filter((issue) => issue.severity === 'Critical').length;
+  const highCount = (review.auditIssues || []).filter((issue) => issue.severity === 'High').length;
+  const tabs = [
+    { id: 'fixes', label: 'Fix First', count: review.priorityActions?.length || 0 },
+    { id: 'audit', label: 'Full Audit', count: (review.auditIssues || []).length },
+    { id: 'corrections', label: 'Corrections', count: (review.sentenceCorrections || []).length },
+    { id: 'seo', label: 'SEO Setup', count: review.seoRecommendations ? 1 : 0 },
+    { id: 'faqs', label: 'FAQs & Snippets', count: (review.seoFaqs || []).length + (review.featuredSnippetSuggestions || []).length },
+    { id: 'checklist', label: 'Checklist', count: (review.finalChecklist || []).length }
+  ];
+
+  return (
+    <div className="space-y-5">
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="flex items-start gap-3">
+          <BrainCircuit size={22} className="mt-0.5 shrink-0 text-violet-600" />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-bold text-slate-900">What Gemini found</p>
+            <p className="mt-1 text-sm leading-6 text-slate-700">{review.summary}</p>
+            <p className="mt-2 text-xs font-medium leading-5 text-violet-700">{review.scoreRationale}</p>
+          </div>
+        </div>
+      </section>
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        <MetricCard label="AI SEO score" value={review.overallScore} color="text-violet-700" />
+        <MetricCard label="Critical + High issues" value={criticalCount + highCount} color="text-red-700" />
+        <MetricCard label="Readiness" value={review.rankingPotential?.score ?? '-'} color="text-emerald-700" />
+      </div>
+
+      <div className="sticky top-0 z-10 rounded-2xl border border-slate-200 bg-white/95 p-2 shadow-sm backdrop-blur">
+        <div className="grid gap-2 sm:grid-cols-3 xl:grid-cols-6">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              className={`rounded-xl px-3 py-2 text-left text-xs font-bold transition ${
+                activeTab === tab.id
+                  ? 'bg-violet-600 text-white shadow-sm'
+                  : 'bg-slate-50 text-slate-600 hover:bg-violet-50 hover:text-violet-700'
+              }`}
+            >
+              <span className="block">{tab.label}</span>
+              <span className={`mt-1 block text-[10px] ${activeTab === tab.id ? 'text-violet-100' : 'text-slate-400'}`}>
+                {tab.count} item{tab.count === 1 ? '' : 's'}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {activeTab === 'fixes' && <FixFirstTab review={review} />}
+      {activeTab === 'audit' && <FullAuditTab review={review} />}
+      {activeTab === 'corrections' && <CorrectionsTab review={review} />}
+      {activeTab === 'seo' && <SeoSetupTab review={review} />}
+      {activeTab === 'faqs' && <FaqSnippetTab review={review} />}
+      {activeTab === 'checklist' && <ChecklistTab review={review} />}
+    </div>
+  );
+}
+
+function FixFirstTab({ review }) {
+  const actions = review.priorityActions || [];
+
+  return (
+    <section className="space-y-4">
+      <div className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5">
+        <div className="flex items-start gap-3">
+          <FileSearch className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" />
+          <div>
+            <h4 className="text-base font-bold text-slate-900">Start here</h4>
+            <p className="mt-1 text-sm leading-6 text-slate-600">
+              These are the most important edits. Each card tells you what is wrong, what to replace or add, and where to use it.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {actions.length > 0 ? (
+        <div className="space-y-3">
+          {actions.map((action, index) => (
+            <ExactFixCard key={`${action.title}-${index}`} action={action} />
+          ))}
+        </div>
+      ) : (
+        <EmptyAuditState title="No priority fixes returned" message="Refresh the Gemini audit to generate exact recommendations." />
       )}
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        <ActionColumn title="Ranking blockers" tone="amber" items={review.rankingPotential?.blockers || []} emptyText="No major blocker reported." />
+        <ActionColumn title="Quick wins" tone="emerald" items={review.rankingPotential?.quickWins || []} emptyText="No quick wins reported." />
+        <ActionColumn title="Safety risks" tone="red" items={review.riskFlags || []} emptyText="No safety risk reported." />
+      </div>
+    </section>
+  );
+}
+
+function FullAuditTab({ review }) {
+  const issuesBySeverity = ['Critical', 'High', 'Medium', 'Low'].map((severity) => ({
+    severity,
+    items: (review.auditIssues || []).filter((issue) => issue.severity === severity)
+  }));
+
+  return (
+    <section className="space-y-4">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5">
+        <h4 className="text-base font-bold text-slate-900">Full audit</h4>
+        <p className="mt-1 text-sm leading-6 text-slate-600">
+          Review issues by severity. Use Critical and High first, then Medium and Low.
+        </p>
+      </div>
+      {issuesBySeverity.map(({ severity, items }) => (
+        <IssueTable key={severity} severity={severity} items={items} />
+      ))}
+    </section>
+  );
+}
+
+function CorrectionsTab({ review }) {
+  const corrections = review.sentenceCorrections || [];
+
+  return (
+    <section className="space-y-4">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5">
+        <h4 className="text-base font-bold text-slate-900">Sentence corrections</h4>
+        <p className="mt-1 text-sm leading-6 text-slate-600">
+          Copy the improved version and replace the original sentence in the blog editor.
+        </p>
+      </div>
+
+      {corrections.length > 0 ? corrections.slice(0, 30).map((item, index) => (
+        <div key={`${item.location}-${index}`} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <p className="text-xs font-bold uppercase tracking-wide text-slate-400">{item.location}</p>
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">
+            <div className="rounded-xl border border-red-100 bg-red-50/70 p-3">
+              <p className="text-[10px] font-bold uppercase text-red-700">Replace this</p>
+              <p className="mt-1 text-sm leading-6 text-slate-700">{item.original}</p>
+            </div>
+            <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 p-3">
+              <p className="text-[10px] font-bold uppercase text-emerald-700">Use this instead</p>
+              <p className="mt-1 text-sm font-medium leading-6 text-slate-900">{item.improved}</p>
+            </div>
+          </div>
+          <p className="mt-3 text-sm leading-6 text-slate-500">{item.reason}</p>
+        </div>
+      )) : (
+        <EmptyAuditState title="No corrections returned" message="The current saved audit does not include sentence-level corrections. Refresh AI to generate the full audit." />
+      )}
+    </section>
+  );
+}
+
+function SeoSetupTab({ review }) {
+  return (
+    <section className="space-y-4">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5">
+        <h4 className="text-base font-bold text-slate-900">SEO setup</h4>
+        <p className="mt-1 text-sm leading-6 text-slate-600">
+          Metadata, intent, keywords, headings, schema, and links in one place.
+        </p>
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-2">
+        <SeoMetadataPanel recommendations={review.seoRecommendations} />
+        <section className="rounded-2xl border border-blue-100 bg-blue-50/50 p-4">
+          <div className="flex items-center gap-2"><Target size={16} className="text-blue-600" /><p className="text-sm font-bold text-slate-800">Search intent</p></div>
+          <p className="mt-2 text-sm leading-6 text-slate-600"><strong>{review.searchIntent?.primaryIntent}</strong> - {review.searchIntent?.targetAudience}</p>
+          <p className="mt-2 text-sm leading-6 text-blue-700">{review.searchIntent?.recommendedAngle}</p>
+          <div className="mt-3 flex flex-wrap gap-1.5">{(review.searchIntent?.likelySearchQueries || []).slice(0, 8).map((item) => <span key={item} className="rounded-full bg-white px-2 py-1 text-xs font-medium text-blue-700">{item}</span>)}</div>
+        </section>
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-2">
+        <section className="rounded-2xl border border-amber-100 bg-amber-50/50 p-4">
+          <div className="flex items-center gap-2"><Zap size={16} className="text-amber-500" /><p className="text-sm font-bold text-slate-800">Keyword strategy</p></div>
+          <p className="mt-2 text-sm leading-6 text-slate-600">{review.keywordStrategy?.placementAssessment}</p>
+          <p className="mt-2 text-xs text-slate-500">Stuffing risk: <strong>{review.keywordStrategy?.stuffingRisk}</strong></p>
+          <div className="mt-3 flex flex-wrap gap-1.5">{(review.keywordStrategy?.semanticTerms || []).slice(0, 10).map((item) => <span key={item} className="rounded-full bg-white px-2 py-1 text-xs font-medium text-amber-700">{item}</span>)}</div>
+        </section>
+        <section className="rounded-2xl border border-slate-200 bg-white p-4">
+          <p className="text-sm font-bold text-slate-900">Score breakdown</p>
+          <div className="mt-3 space-y-3">
+            {(review.categoryScores || []).map((category) => (
+              <div key={category.category}>
+                <div className="flex items-center justify-between gap-2 text-xs">
+                  <p className="font-semibold text-slate-700">{category.category}</p>
+                  <span className="font-bold text-violet-700">{category.score}/{category.maxScore}</span>
+                </div>
+                <div className="mt-1 h-2 overflow-hidden rounded-full bg-slate-100">
+                  <div className="h-full rounded-full bg-violet-500" style={{ width: `${Math.min(100, (category.score / category.maxScore) * 100)}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-3">
+        <ActionColumn title="Content gaps" tone="blue" items={review.contentGaps || []} emptyText="No content gaps returned." />
+        <ActionColumn title="Heading ideas" tone="violet" items={review.suggestedHeadings || []} emptyText="No heading ideas returned." />
+        <ActionColumn title="Internal links" tone="blue" items={review.internalLinkIdeas || []} emptyText="No internal link ideas returned." />
+      </div>
+    </section>
+  );
+}
+
+function FaqSnippetTab({ review }) {
+  return (
+    <section className="grid gap-4 xl:grid-cols-2">
+      <FaqPanel faqs={review.seoFaqs || []} />
+      <SnippetPanel snippets={review.featuredSnippetSuggestions || []} />
+      <ReadyTextPanel title="Missing content to add" items={review.missingContentSuggestions || []} />
+      <ActionColumn title="Schema suggestions" tone="violet" items={review.schemaSuggestions || []} emptyText="No schema suggestions returned." />
+    </section>
+  );
+}
+
+function ChecklistTab({ review }) {
+  return (
+    <section className="space-y-4">
+      <ImpactPanel impact={review.estimatedImpact} checklist={review.finalChecklist || []} />
+      <div className="grid gap-4 lg:grid-cols-2">
+        <ActionColumn title="Trust and E-E-A-T" tone="slate" items={review.eeatRecommendations || []} emptyText="No E-E-A-T issue reported." />
+        <ActionColumn title="Final quick wins" tone="emerald" items={review.rankingPotential?.quickWins || []} emptyText="No quick wins reported." />
+      </div>
+    </section>
+  );
+}
+
+function EmptyAuditState({ title, message }) {
+  return (
+    <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-8 text-center">
+      <FileSearch className="mx-auto h-8 w-8 text-slate-300" />
+      <p className="mt-3 text-sm font-bold text-slate-900">{title}</p>
+      <p className="mt-1 text-sm text-slate-500">{message}</p>
+    </div>
+  );
+}
+
+function SeoActionPlan({ review }) {
+  const highPriorityActions = (review.priorityActions || []).filter((action) => action.priority === 'high');
+  const visibleActions = highPriorityActions.length ? highPriorityActions : (review.priorityActions || []).slice(0, 3);
+
+  return (
+    <div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4">
+      <div className="flex items-start gap-3">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white">
+          <FileSearch className="h-5 w-5" />
+        </span>
+        <div>
+          <h4 className="text-sm font-bold text-slate-900">SEO Action Plan</h4>
+          <p className="mt-1 text-xs leading-5 text-slate-600">
+            Use this to improve page relevance, snippets, crawlability, trust, and ranking readiness. It does not promise a Google rank.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-4 grid gap-3 lg:grid-cols-3">
+        <ActionColumn title="Do first" tone="red" items={visibleActions.map((action) => `${action.issueLocation || action.title}: ${action.recommendedReplacement || action.exactRecommendation}`)} emptyText="No urgent action found." />
+        <ActionColumn title="Ranking blockers" tone="amber" items={review.rankingPotential?.blockers || []} emptyText="No major blocker reported." />
+        <ActionColumn title="Quick wins" tone="emerald" items={review.rankingPotential?.quickWins || []} emptyText="No quick wins reported." />
+      </div>
+
+      <div className="mt-3 grid gap-3 lg:grid-cols-3">
+        <ActionColumn title="Content gaps" tone="blue" items={review.contentGaps || []} emptyText="No content gaps reported." />
+        <ActionColumn title="Heading ideas" tone="violet" items={review.suggestedHeadings || []} emptyText="No heading ideas reported." />
+        <ActionColumn title="Trust and E-E-A-T" tone="slate" items={review.eeatRecommendations || []} emptyText="No E-E-A-T issue reported." />
+      </div>
+
+      <div className="mt-3 grid gap-3 lg:grid-cols-2">
+        <ActionColumn title="Internal link ideas" tone="blue" items={review.internalLinkIdeas || []} emptyText="No internal link ideas reported." />
+        <ActionColumn title="Safety or claim risks" tone="red" items={review.riskFlags || []} emptyText="No risk flags reported." />
+      </div>
+    </div>
+  );
+}
+
+function CompleteAuditSections({ review }) {
+  const issuesBySeverity = ['Critical', 'High', 'Medium', 'Low'].map((severity) => ({
+    severity,
+    items: (review.auditIssues || []).filter((issue) => issue.severity === severity)
+  }));
+
+  return (
+    <div className="space-y-5">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="flex items-center gap-2">
+          <AlertCircle className="h-5 w-5 text-red-600" />
+          <h4 className="text-sm font-bold text-slate-900">Line-by-line issue tables</h4>
+        </div>
+        <p className="mt-1 text-xs leading-5 text-slate-500">Exact problem, impact, and replacement suggestions from the AI audit.</p>
+        <div className="mt-4 space-y-4">
+          {issuesBySeverity.map(({ severity, items }) => (
+            <IssueTable key={severity} severity={severity} items={items} />
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="flex items-center gap-2">
+          <Edit2 className="h-5 w-5 text-violet-600" />
+          <h4 className="text-sm font-bold text-slate-900">Sentence-by-sentence corrections</h4>
+        </div>
+        <div className="mt-4 space-y-3">
+          {(review.sentenceCorrections || []).length > 0 ? review.sentenceCorrections.slice(0, 30).map((item, index) => (
+            <div key={`${item.location}-${index}`} className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">{item.location}</p>
+              <div className="mt-2 grid gap-3 lg:grid-cols-2">
+                <div className="rounded-lg bg-white p-3">
+                  <p className="text-[10px] font-bold uppercase text-red-600">Original</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-600">{item.original}</p>
+                </div>
+                <div className="rounded-lg bg-white p-3">
+                  <p className="text-[10px] font-bold uppercase text-emerald-600">Improved</p>
+                  <p className="mt-1 text-xs font-medium leading-5 text-slate-800">{item.improved}</p>
+                </div>
+              </div>
+              <p className="mt-2 text-xs leading-5 text-slate-500">{item.reason}</p>
+            </div>
+          )) : (
+            <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">No sentence corrections returned.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-2">
+        <ReadyTextPanel title="Missing content suggestions" items={review.missingContentSuggestions || []} />
+        <SeoMetadataPanel recommendations={review.seoRecommendations} />
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-2">
+        <FaqPanel faqs={review.seoFaqs || []} />
+        <SnippetPanel snippets={review.featuredSnippetSuggestions || []} />
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-2">
+        <ActionColumn title="Schema suggestions" tone="violet" items={review.schemaSuggestions || []} emptyText="No schema suggestions returned." />
+        <ImpactPanel impact={review.estimatedImpact} checklist={review.finalChecklist || []} />
+      </section>
+    </div>
+  );
+}
+
+function IssueTable({ severity, items }) {
+  const styles = {
+    Critical: 'text-red-700 bg-red-50 border-red-100',
+    High: 'text-orange-700 bg-orange-50 border-orange-100',
+    Medium: 'text-amber-700 bg-amber-50 border-amber-100',
+    Low: 'text-blue-700 bg-blue-50 border-blue-100'
+  };
+
+  return (
+    <div className={`rounded-xl border p-3 ${styles[severity]}`}>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-xs font-bold uppercase tracking-wide">{severity} issues</p>
+        <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold">{items.length}</span>
+      </div>
+      {items.length > 0 ? (
+        <div className="mt-3 overflow-x-auto">
+          <table className="w-full min-w-[760px] text-left text-xs">
+            <thead className="text-[10px] uppercase text-slate-500">
+              <tr>
+                <th className="px-3 py-2">Location</th>
+                <th className="px-3 py-2">Problem</th>
+                <th className="px-3 py-2">Why it matters</th>
+                <th className="px-3 py-2">Suggested fix</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/80">
+              {items.slice(0, 12).map((issue, index) => (
+                <tr key={`${severity}-${index}`} className="align-top">
+                  <td className="px-3 py-2 font-semibold text-slate-800">{issue.location}</td>
+                  <td className="px-3 py-2 text-slate-600">
+                    <p className="font-medium">{issue.problem}</p>
+                    {issue.problematicText ? <p className="mt-1 rounded bg-white/80 p-1.5 text-[11px]">{issue.problematicText}</p> : null}
+                    <p className="mt-1 text-[10px] uppercase tracking-wide text-slate-400">{issue.category}</p>
+                  </td>
+                  <td className="px-3 py-2 text-slate-600">
+                    <p>{issue.whyItMatters}</p>
+                    <p className="mt-1 text-[11px]"><strong>SEO:</strong> {issue.seoImpact}</p>
+                    <p className="mt-1 text-[11px]"><strong>User:</strong> {issue.userImpact}</p>
+                  </td>
+                  <td className="px-3 py-2 text-slate-700">
+                    <p className="font-medium">{issue.suggestedFix}</p>
+                    <p className="mt-1 text-[11px] text-slate-500">{issue.whyReplacementIsBetter}</p>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="mt-3 rounded-lg bg-white/70 p-3 text-xs text-slate-500">No {severity.toLowerCase()} issues returned.</p>
+      )}
+    </div>
+  );
+}
+
+function ReadyTextPanel({ title, items }) {
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-4">
+      <h4 className="text-sm font-bold text-slate-900">{title}</h4>
+      <div className="mt-3 space-y-3">
+        {items.length > 0 ? items.slice(0, 8).map((item, index) => (
+          <div key={`${item.section}-${index}`} className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+            <p className="text-xs font-bold text-slate-800">{item.section}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500">{item.whyNeeded}</p>
+            <p className="mt-2 whitespace-pre-line rounded-lg bg-white p-2 text-xs font-medium leading-5 text-slate-800">{item.readyToPasteText}</p>
+          </div>
+        )) : (
+          <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">No missing content suggestions returned.</p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function SeoMetadataPanel({ recommendations }) {
+  const rows = recommendations ? [
+    ['Meta title', recommendations.metaTitle],
+    ['Meta description', recommendations.metaDescription],
+    ['URL slug', recommendations.urlSlug],
+    ['Focus keyword', recommendations.focusKeyword],
+    ['Secondary keywords', (recommendations.secondaryKeywords || []).join(', ')],
+    ['Image alt text', (recommendations.imageAltText || []).join(' | ')],
+    ['OG title', recommendations.ogTitle],
+    ['OG description', recommendations.ogDescription],
+    ['Twitter title', recommendations.twitterTitle],
+    ['Twitter description', recommendations.twitterDescription]
+  ] : [];
+
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-4">
+      <h4 className="text-sm font-bold text-slate-900">SEO metadata recommendations</h4>
+      <div className="mt-3 space-y-2">
+        {rows.length > 0 ? rows.map(([label, value]) => (
+          <div key={label} className="rounded-xl bg-slate-50 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">{label}</p>
+            <p className="mt-1 text-xs font-medium leading-5 text-slate-800">{value || 'N/A'}</p>
+          </div>
+        )) : (
+          <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">No metadata recommendations returned.</p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function FaqPanel({ faqs }) {
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-4">
+      <h4 className="text-sm font-bold text-slate-900">SEO FAQ suggestions</h4>
+      <div className="mt-3 space-y-2">
+        {faqs.length > 0 ? faqs.slice(0, 14).map((faq, index) => (
+          <div key={`${faq.question}-${index}`} className="rounded-xl bg-slate-50 p-3">
+            <p className="text-xs font-bold text-slate-800">{faq.question}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-600">{faq.answer}</p>
+          </div>
+        )) : (
+          <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">No FAQs returned.</p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function SnippetPanel({ snippets }) {
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-4">
+      <h4 className="text-sm font-bold text-slate-900">Featured snippet opportunities</h4>
+      <div className="mt-3 space-y-2">
+        {snippets.length > 0 ? snippets.slice(0, 8).map((snippet, index) => (
+          <div key={`${snippet.targetQuery}-${index}`} className="rounded-xl bg-slate-50 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-blue-600">{snippet.targetQuery}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-700">{snippet.readyToPasteAnswer}</p>
+          </div>
+        )) : (
+          <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">No featured snippet suggestions returned.</p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function ImpactPanel({ impact, checklist }) {
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-4">
+      <h4 className="text-sm font-bold text-slate-900">Final checklist and estimated impact</h4>
+      <div className="mt-3 grid gap-3 md:grid-cols-2">
+        <div className="rounded-xl bg-slate-50 p-3">
+          <p className="text-xs font-bold text-slate-800">Implementation checklist</p>
+          <div className="mt-2 space-y-1.5">
+            {checklist.length > 0 ? checklist.slice(0, 18).map((item, index) => (
+              <p key={`${item}-${index}`} className="text-xs leading-5 text-slate-600">☐ {item.replace(/^☐\s*/, '')}</p>
+            )) : <p className="text-xs text-slate-400">No checklist returned.</p>}
+          </div>
+        </div>
+        <div className="rounded-xl bg-slate-50 p-3">
+          <p className="text-xs font-bold text-slate-800">Estimated impact</p>
+          {impact ? (
+            <div className="mt-2 space-y-1.5 text-xs leading-5 text-slate-600">
+              <p><strong>SEO:</strong> {impact.seo}</p>
+              <p><strong>User trust:</strong> {impact.userTrust}</p>
+              <p><strong>Readability:</strong> {impact.readability}</p>
+              <p><strong>Engagement:</strong> {impact.engagement}</p>
+              <p><strong>Conversion:</strong> {impact.conversion}</p>
+              <p><strong>Medical compliance:</strong> {impact.medicalCompliance}</p>
+              <p><strong>Overall quality:</strong> {impact.overallQuality}</p>
+            </div>
+          ) : <p className="mt-2 text-xs text-slate-400">No impact estimate returned.</p>}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ExactFixCard({ action }) {
+  return (
+    <div className="rounded-2xl border border-violet-100 bg-white p-4 shadow-sm">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase ${action.priority === 'high' ? 'bg-red-100 text-red-700' : action.priority === 'medium' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>{action.priority}</span>
+        <p className="text-sm font-bold text-slate-900">{action.title}</p>
+      </div>
+
+      <div className="mt-3 grid gap-3 lg:grid-cols-2">
+        <div className="rounded-xl border border-red-100 bg-red-50/70 p-3">
+          <p className="text-[10px] font-bold uppercase tracking-wide text-red-700">Actual issue</p>
+          <p className="mt-1 text-xs font-semibold text-slate-800">{action.issueLocation || 'Relevant SEO field or content section'}</p>
+          <p className="mt-1 text-xs leading-5 text-slate-600">{action.currentIssue || action.reason}</p>
+        </div>
+
+        <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 p-3">
+          <p className="text-[10px] font-bold uppercase tracking-wide text-emerald-700">Replace / add this</p>
+          <p className="mt-1 whitespace-pre-line rounded-lg bg-white p-2 text-xs font-medium leading-5 text-slate-800">
+            {action.recommendedReplacement || action.exactRecommendation}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-3 rounded-xl border border-blue-100 bg-blue-50/70 p-3">
+        <p className="text-[10px] font-bold uppercase tracking-wide text-blue-700">How to use</p>
+        <p className="mt-1 text-xs leading-5 text-slate-600">{action.howToUse || action.exactRecommendation}</p>
+      </div>
+
+      <p className="mt-3 text-xs leading-5 text-slate-500">{action.reason}</p>
+    </div>
+  );
+}
+
+function ActionColumn({ title, items = [], emptyText, tone }) {
+  const tones = {
+    red: 'border-red-100 bg-white text-red-700',
+    amber: 'border-amber-100 bg-white text-amber-700',
+    emerald: 'border-emerald-100 bg-white text-emerald-700',
+    blue: 'border-blue-100 bg-white text-blue-700',
+    violet: 'border-violet-100 bg-white text-violet-700',
+    slate: 'border-slate-100 bg-white text-slate-700'
+  };
+
+  return (
+    <div className={`rounded-xl border p-3 ${tones[tone] || tones.slate}`}>
+      <p className="text-xs font-bold uppercase tracking-wide">{title}</p>
+      <div className="mt-2 space-y-2">
+        {items.length > 0 ? items.slice(0, 5).map((item, index) => (
+          <div key={`${title}-${index}`} className="flex gap-2 text-xs leading-5 text-slate-600">
+            <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-current" />
+            <span>{item}</span>
+          </div>
+        )) : (
+          <p className="text-xs leading-5 text-slate-400">{emptyText}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function MetricCard({ label, value, color }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+      <p className="text-[10px] font-bold uppercase text-slate-400">{label}</p>
+      <p className={`mt-1 text-3xl font-bold ${color}`}>{value}<span className="text-xs text-slate-400">{Number.isFinite(value) ? '/100' : ''}</span></p>
+    </div>
+  );
+}
+
+function SearchConsoleModal({ blog, configured, metrics, loading, error, onClose, onRefresh }) {
+  return (
+    <ModalShell onClose={onClose} maxWidth="max-w-4xl">
+      <div className="flex items-start justify-between border-b border-slate-200 bg-gradient-to-br from-blue-50 via-white to-sky-50 p-5">
+        <div className="flex items-start gap-4">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
+            <BarChart3 className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-700">Google Search Console</p>
+            <h3 className="mt-1 text-xl font-bold text-slate-900">{blog.title}</h3>
+            <p className="mt-1 text-xs text-slate-500">Exact page performance for the last 28 available days.</p>
+          </div>
+        </div>
+        <button type="button" onClick={onClose} className="rounded-lg p-2 text-slate-400 hover:bg-white hover:text-slate-700"><X size={20} /></button>
+      </div>
+
+      <div className="max-h-[calc(90vh-96px)] overflow-y-auto p-5">
+        <div className="mb-5 flex flex-col gap-3 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-bold text-slate-900">{configured ? 'Search Console connected' : 'Search Console not configured'}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-600">
+              {configured ? 'Use this for real indexed page metrics. It is separate from Gemini editorial scoring.' : 'Production domain property and Google credentials are needed before metrics can load.'}
+            </p>
+          </div>
+          <button type="button" onClick={onRefresh} disabled={!configured || loading} className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500">
+            <RefreshCw className="h-4 w-4" />
+            {loading ? 'Loading...' : metrics ? 'Refresh metrics' : 'Load metrics'}
+          </button>
+        </div>
+
+        {error && <p className="mb-4 rounded-lg bg-red-100 p-3 text-sm text-red-700">{error}</p>}
+
+        {!configured ? (
+          <div className="rounded-2xl border border-dashed border-blue-200 bg-blue-50/50 p-8 text-center">
+            <Gauge className="mx-auto h-9 w-9 text-blue-600" />
+            <p className="mt-4 text-sm font-bold text-slate-900">Console data will appear after setup.</p>
+            <p className="mt-1 text-xs text-slate-500">Google cannot rank-track localhost pages. Configure the live property after deployment.</p>
+          </div>
+        ) : null}
+
+        {metrics ? (
+          <div className="space-y-5">
+            <div className="grid gap-3 sm:grid-cols-4">
+              <MetricTile label="Avg position" value={metrics.position ?? '-'} />
+              <MetricTile label="Impressions" value={metrics.impressions} />
+              <MetricTile label="Clicks" value={metrics.clicks} />
+              <MetricTile label="CTR" value={`${metrics.ctr}%`} />
+            </div>
+            {!metrics.hasData && <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-500">No Search Console data found for this exact canonical page in the selected period.</p>}
+            {metrics.topQueries?.length > 0 ? (
+              <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <p className="mb-3 text-xs font-bold uppercase tracking-wide text-slate-500">Top queries</p>
+                <div className="space-y-2">
+                  {metrics.topQueries.slice(0, 8).map((item) => (
+                    <div key={item.query} className="flex items-center justify-between gap-3 rounded-lg bg-slate-50 px-3 py-2 text-xs">
+                      <span className="truncate text-slate-700">{item.query}</span>
+                      <span className="shrink-0 font-semibold text-blue-700">#{item.position}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    </ModalShell>
+  );
+}
+
+function MetricTile({ label, value }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+      <p className="text-[10px] uppercase text-slate-400">{label}</p>
+      <p className="mt-1 text-2xl font-bold text-slate-900">{value}</p>
     </div>
   );
 }
