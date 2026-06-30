@@ -21,6 +21,7 @@ import SpeechDelaySupportIndiaPage from "./childhealthcare/SpeechDelaySupportInd
 import LearningAttentionDifficultiesIndiaPage from "./childhealthcare/LearningAttentionDifficultiesIndiaPage";
 import BehaviouralConcernsChildrenIndiaPage from "./childhealthcare/BehaviouralConcernsChildrenIndiaPage";
 import ChildDevelopmentSupportIndiaPage from "./childhealthcare/ChildDevelopmentSupportIndiaPage";
+import ChildDevelopmentCareIndiaPage from "./childhealthcare/ChildDevelopmentCareIndiaPage";
 import BlogPage from "./pages/BlogPage";
 import BlogDetails from "./pages/BlogDetails";
 import SuccessStoriesPage from "./pages/SuccessStoriesPage";
@@ -68,6 +69,8 @@ function App() {
           <Route path="/exam-performance-pressure" element={<ExamPerformancePressureIndiaPage />} />
           <Route path="/exam-performance-pressure/" element={<ExamPerformancePressureIndiaPage />} />
           <Route path="/child-health-care" element={<ChildHealthCarePage />} />
+          <Route path="/child-development-care-india" element={<ChildDevelopmentCareIndiaPage />} />
+          <Route path="/child-development-care-india/" element={<ChildDevelopmentCareIndiaPage />} />
           <Route path="/child-health-care/adhd-child" element={<ADHDChildArticlePage />} />
           <Route path="/autism-treatment-india" element={<AutismTreatmentIndiaPage />} />
           <Route path="/autism-treatment-india/" element={<AutismTreatmentIndiaPage />} />

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Activity,
+  ArrowRight,
   Baby,
   BookOpen,
   Brain,
@@ -16,7 +17,9 @@ import {
   ShieldCheck,
   Sparkles,
   Stethoscope,
+  Utensils,
   Users,
+  Waves,
 } from "lucide-react";
 import childHeroImage from "../images/adhd-child-hero-generated.png";
 import supportFamilyImage from "../images/child-support-family.png";
@@ -49,6 +52,71 @@ const categories = [
   { label: "Child Development", count: 11, Icon: Baby },
   { label: "Parenting", count: 9, Icon: Users },
   { label: "Mental Health", count: 13, Icon: HeartHandshake },
+];
+
+const beyondBehaviourHighlights = [
+  { label: "Brain Development & Function", Icon: Brain },
+  { label: "Emotional Regulation", Icon: ShieldCheck },
+  { label: "Learning Readiness", Icon: BookOpen },
+  { label: "Executive Functioning", Icon: Activity },
+  { label: "Behaviour & Environment", Icon: Puzzle },
+];
+
+const adhdAssessmentSteps = [
+  { step: "Step 1", label: "Detailed Parent Discussion", Icon: Users },
+  { step: "Step 2", label: "Developmental Assessment", Icon: BookOpen },
+  { step: "Step 3", label: "Behaviour & Attention Evaluation", Icon: Brain },
+  { step: "Step 4", label: "Report & Insights", Icon: CalendarCheck },
+  { step: "Step 5", label: "Personalised Guidance", Icon: ShieldCheck },
+];
+
+const howWeWorkSteps = [
+  { title: "Assessment", desc: "Understand your child in-depth", Icon: Brain },
+  { title: "Understanding", desc: "Identify strengths & challenges", Icon: Search },
+  { title: "Personalised Plan", desc: "Create an individualized development plan", Icon: Activity },
+  { title: "Parent Guidance", desc: "Train & empower parents", Icon: Users },
+  { title: "Progress Tracking", desc: "Monitor, support & make adjustments", Icon: CalendarCheck },
+];
+
+const assessmentClarityItems = [
+  { label: "Attention and concentration abilities", Icon: Activity },
+  { label: "Learning readiness", Icon: BookOpen },
+  { label: "Academic functioning", Icon: CalendarCheck },
+  { label: "Behavioural patterns", Icon: Puzzle },
+  { label: "Emotional regulation", Icon: HeartHandshake },
+  { label: "Impulsivity", Icon: Sparkles },
+  { label: "Social interaction", Icon: Users },
+  { label: "Daily routines and functioning", Icon: CheckCircle2 },
+  { label: "Developmental strengths", Icon: Brain },
+  { label: "Areas requiring support", Icon: ShieldCheck },
+];
+
+const neuroAyurvedaPillars = [
+  {
+    title: "Pillar 1: Brain Nourishment System",
+    Icon: Brain,
+    text: "Learning, attention, memory, communication and social interaction are all influenced by brain development. The Brain Nourishment System focuses on supporting the foundations of healthy cognitive and developmental functioning. This pillar aims to understand factors that may influence: Attention, Learning readiness, Communication development, Cognitive functioning, Memory, Emotional regulation. The goal is to help create a stronger foundation for growth and development.",
+  },
+  {
+    title: "Pillar 2: Gut Response System",
+    Icon: Utensils,
+    text: "The relationship between digestion and overall wellbeing has been recognized in both traditional and modern health approaches. Many children experiencing developmental concerns may also experience: Picky eating, Digestive discomfort, Food sensitivities, Irregular bowel habits, Appetite concerns. The Gut Response System focuses on understanding how digestive wellbeing may influence overall functioning and development.",
+  },
+  {
+    title: "Pillar 3: Neural Network System",
+    Icon: Sparkles,
+    text: "Development occurs through connections within the brain. The Neural Network System focuses on supporting developmental readiness by understanding how learning, attention, communication and behaviour may be influenced by underlying developmental pathways. Areas often explored include: Learning readiness, Response patterns, Communication development, Attention, Social engagement.",
+  },
+  {
+    title: "Pillar 4: Sensory Integration System",
+    Icon: Waves,
+    text: "Many children with autism experience sensory differences. Some children may become overwhelmed by sounds, lights, textures or crowded environments, while others may actively seek sensory experiences. The Sensory Integration System focuses on understanding: Sensory sensitivities, Sensory preferences, Sensory regulation, Daily functioning challenges, Environmental influences. Understanding sensory needs often helps families better support their child's comfort and participation.",
+  },
+  {
+    title: "Pillar 5: Behaviour Guidance System",
+    Icon: ShieldCheck,
+    text: "Behaviour is often a form of communication. Children may express their needs, frustrations, discomfort or emotions through behaviour. The Behaviour Guidance System focuses on helping families understand: Why behaviours occur, Possible developmental influences, Environmental triggers, Emotional regulation challenges, Supportive behaviour guidance approaches. The goal is to move beyond simply reacting to behaviours and instead understand the factors influencing them.",
+  },
 ];
 
 const faqs = [
@@ -125,6 +193,18 @@ function SidebarCard({ children, className = "" }) {
 function ADHDChildArticlePage() {
   const [activeSection, setActiveSection] = React.useState(pageLinks[0].id);
   const [openFaq, setOpenFaq] = React.useState(0);
+  const [showNeuroPillars, setShowNeuroPillars] = React.useState(false);
+
+  React.useEffect(() => {
+    const fontId = "adhd-martel-font";
+    if (!document.getElementById(fontId)) {
+      const link = document.createElement("link");
+      link.id = fontId;
+      link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/css2?family=Martel:wght@400&display=swap";
+      document.head.appendChild(link);
+    }
+  }, []);
 
   React.useEffect(() => {
     const updateActiveSection = () => {
@@ -152,21 +232,24 @@ function ADHDChildArticlePage() {
   }, []);
 
   return (
-    <main className="bg-[#fbf9fd] text-[#1f1726]">
+    <main
+      className="min-h-screen bg-white text-[#1f1726]"
+      style={{ font: '400 1.125rem/1.5 "Martel", serif' }}
+    >
       <section className="mx-auto grid gap-7 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-10">
 
         <article className="min-w-0">
-          <div className="relative overflow-hidden rounded-lg  px-5 pb-6 pt-2 sm:px-7 lg:grid lg:min-h-[360px] lg:grid-cols-[minmax(0,1fr)_minmax(330px,0.82fr)] lg:items-center lg:gap-8 lg:px-9 lg:pb-8 lg:pt-3">
+          <div className="relative overflow-hidden rounded-lg   pb-6 pt-2  lg:grid lg:min-h-[360px] lg:grid-cols-[minmax(0,1fr)_minmax(330px,0.82fr)] lg:items-center lg:gap-8  lg:pb-8 lg:pt-3">
             <div className="relative z-10">
               <nav className="mb-3 flex flex-wrap items-center gap-2 text-[11px] font-bold text-[#7d7085]" aria-label="Article breadcrumb">
                 <a href="/" className="transition hover:text-[#7835A4]">Home</a>
                 <span>/</span>
-                <a href="/blog" className="transition hover:text-[#7835A4]">Blogs</a>
+                <a href="/child-health-care" className="transition hover:text-[#7835A4]">Child Health Care</a>
                 <span>/</span>
-                <span className="text-[#4b345d]">Child Health Care</span>
+                <span className="text-[#4b345d]">ADHD</span>
               </nav>
               <p className="text-[13px] font-black uppercase tracking-[0.08em] text-[#7835A4]">ADHD Treatment</p>
-              <h1 className="mt-2 max-w-[650px] text-[27px] font-black leading-[1.12] text-[#292064] sm:text-[34px] lg:text-[38px]">
+              <h1 className="mt-2 max-w-[650px] text-[27px] font-black leading-[1.12] text-[#292064] sm:text-[34px] lg:text-[34px]">
                 ADHD Treatment in India: ADHD Assessment, Attention & Child Development Support
               </h1>
               <p className="mt-4 max-w-[620px] text-[14px] font-bold leading-7 text-[#51465a] sm:text-[15px]">
@@ -213,15 +296,15 @@ function ADHDChildArticlePage() {
             </div>
 
             <figure className="relative z-10 mx-auto mt-8 w-full max-w-[520px] lg:mt-0 lg:max-w-none">
-              <div className="absolute -left-8 top-8 hidden h-24 w-24 flex-col items-center justify-center rounded-full bg-[#5d3b90] p-3 text-center text-[9px] font-black leading-tight text-white shadow-[0_12px_24px_rgba(93,59,144,0.22)] lg:flex">
+              <div className="absolute -left-8 top-2 z-20 hidden h-24 w-24 flex-col items-center justify-center rounded-full bg-[#5d3b90] p-3 text-center text-[9px] font-black leading-tight text-white shadow-[0_12px_24px_rgba(93,59,144,0.22)] lg:flex">
                 <Brain className="mb-1 h-5 w-5" />
                 Neuro-Ayurveda Development System
               </div>
-              <div className="overflow-hidden rounded-[48%_52%_46%_54%/58%_42%_58%_42%] border-[6px] border-white bg-[#f3eaf9] shadow-[0_18px_35px_rgba(58,31,90,0.12)]">
+              <div className="-translate-y-[50px] overflow-hidden rounded-[48%_52%_46%_54%/58%_42%_58%_42%] border-[6px] border-white bg-[#f3eaf9] shadow-[0_18px_35px_rgba(58,31,90,0.12)] lg:-translate-y-[58px]">
                 <img
                   src={childHeroImage}
                   alt="Child playing with colorful blocks during developmental support"
-                  className="h-[260px] w-full object-cover object-right sm:h-[330px] lg:h-[390px]"
+                  className="h-[248px] w-full object-cover object-right sm:h-[315px] lg:h-[355px]"
                 />
               </div>
             </figure>
@@ -257,11 +340,11 @@ function ADHDChildArticlePage() {
                   { label: "Brain Development & Cognitive Wellness", Icon: Brain },
                   { label: "Personalized Development Planning", Icon: Sparkles },
                 ].map(({ label, Icon }) => (
-                  <li key={label} className="flex min-h-[82px] items-center gap-3 rounded-lg border border-[#eadff1] bg-white p-3 text-[13px] font-bold text-[#51465a] shadow-[0_8px_18px_rgba(58,31,90,0.04)]">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f0e7f6] text-[#7835A4]">
-                      <Icon className="h-5 w-5" />
+                  <li key={label} className="flex min-h-[122px] flex-col items-center justify-start gap-3 rounded-lg border border-[#eadff1] bg-white p-4 text-center text-[13px] font-bold leading-5 text-[#51465a] shadow-[0_8px_18px_rgba(58,31,90,0.04)]">
+                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#f0e7f6] text-[#7835A4]">
+                      <Icon className="h-7 w-7" strokeWidth={1.8} />
                     </span>
-                    {label}
+                    <span>{label}</span>
                   </li>
                 ))}
               </ul>
@@ -372,10 +455,35 @@ function ADHDChildArticlePage() {
           </section>
 
           <section id="beyond-behaviour" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">Understanding ADHD Beyond Behaviour</h2>
-            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              One of the most common misconceptions about ADHD is that it is simply a behaviour problem.
-            </p>
+            <div className="rounded-lg border border-[#eadff1] bg-white px-4 py-4 shadow-[0_10px_28px_rgba(58,31,90,0.06)] sm:px-5 lg:flex lg:items-center lg:gap-7">
+              <div className="lg:max-w-[43%] lg:shrink-0">
+                <div className="flex items-start gap-3">
+                  {/* <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] bg-[#7835A4] text-[13px] font-black leading-none text-white shadow-[0_7px_16px_rgba(120,53,164,0.22)]">
+                    3
+                  </span> */}
+                  <h2 className="text-[17px] font-black leading-snug text-[#5d268d] sm:text-[18px]">
+                    Understanding ADHD Beyond Behaviour
+                  </h2>
+                </div>
+                <p className="mt-3 text-[13px] font-semibold leading-6 text-[#3f3448] sm:text-[14px]">
+                  ADHD is not just about behaviour. It is connected to brain development, emotional regulation,
+                  learning readiness, executive functioning and overall well-being.
+                </p>
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5 lg:mt-0 lg:flex-1">
+                {beyondBehaviourHighlights.map(({ label, Icon }) => (
+                  <div key={label} className="flex min-h-[86px] flex-col items-center justify-start text-center">
+                    <span className="mb-2 flex h-11 w-11 items-center justify-center rounded-full border border-[#dcc8eb] bg-[#fbf8fd] text-[#7835A4]">
+                      <Icon className="h-6 w-6" strokeWidth={1.8} />
+                    </span>
+                    <span className="max-w-[116px] text-[11px] font-black leading-4 text-[#3b2e45]">
+                      {label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="mt-4 rounded-lg bg-[#f4ecf8] p-5">
               <p className="text-[13px] font-bold text-[#3b2e45] mb-2">Parents are often told:</p>
               <ul className="grid sm:grid-cols-2 gap-2">
@@ -418,7 +526,44 @@ function ADHDChildArticlePage() {
           </section>
 
           <section id="adhd-assessment" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">ADHD Assessment at Manovaidya</h2>
+            <div className="rounded-lg border border-[#eadff1] bg-white px-4 py-4 shadow-[0_10px_28px_rgba(58,31,90,0.06)] sm:px-5">
+              <div className="flex items-start gap-3">
+                {/* <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] bg-[#7835A4] text-[13px] font-black leading-none text-white shadow-[0_7px_16px_rgba(120,53,164,0.22)]">
+                  4
+                </span> */}
+                <div>
+                  <h2 className="text-[17px] font-black leading-snug text-[#5d268d] sm:text-[18px]">
+                    ADHD Assessment at Manovaidya
+                  </h2>
+                  <p className="mt-2 text-[13px] font-semibold leading-6 text-[#3f3448] sm:text-[14px]">
+                    A comprehensive assessment helps understand your child's unique strengths, challenges and needs.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-5 sm:items-start lg:flex lg:items-center lg:justify-between">
+                {adhdAssessmentSteps.map(({ step, label, Icon }, index) => (
+                  <React.Fragment key={label}>
+                    <div className="flex min-h-[92px] flex-col items-center justify-start text-center">
+                      <span className="mb-2 flex h-11 w-11 items-center justify-center rounded-full border border-[#dcc8eb] bg-[#fbf8fd] text-[#7835A4]">
+                        <Icon className="h-6 w-6" strokeWidth={1.8} />
+                      </span>
+                      <span className="text-[11px] font-black leading-4 text-[#2f2636]">{step}</span>
+                      <span className="mt-1 max-w-[118px] text-[11px] font-black leading-4 text-[#3b2e45]">
+                        {label}
+                      </span>
+                    </div>
+                    {index < adhdAssessmentSteps.length - 1 && (
+                      <ArrowRight className="mx-1 hidden h-6 w-6 shrink-0 text-[#9a6fbc] lg:block" strokeWidth={2.2} />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+
+              <div className="mx-auto mt-3 max-w-[560px] rounded-md bg-[#f1f5ef] px-4 py-2 text-center text-[12px] font-black leading-5 text-[#5b5360]">
+                Our goal is clarity, not just diagnosis. We help you understand your child deeply.
+              </div>
+            </div>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
               Every child is unique, and every developmental journey is different.
             </p>
@@ -430,11 +575,13 @@ function ADHDChildArticlePage() {
             </p>
             <div className="mt-5 rounded-lg border border-[#eadff1] bg-white p-5">
               <h3 className="text-[15px] font-black text-[#21142d] mb-3">The assessment process is designed to help families gain clarity about:</h3>
-              <ul className="grid gap-2 sm:grid-cols-2">
-                {["Attention and concentration abilities", "Learning readiness", "Academic functioning", "Behavioural patterns", "Emotional regulation", "Impulsivity", "Social interaction", "Daily routines and functioning", "Developmental strengths", "Areas requiring support"].map((item) => (
-                  <li key={item} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#7835A4]" />
-                    {item}
+              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {assessmentClarityItems.map(({ label, Icon }) => (
+                  <li key={label} className="flex min-h-[76px] items-center gap-3 rounded-lg border border-[#eadff1] bg-[#fbf8fd] p-3 text-[13px] font-bold leading-5 text-[#51465a]">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#7835A4] shadow-[0_6px_14px_rgba(58,31,90,0.07)]">
+                      <Icon className="h-6 w-6" strokeWidth={1.8} />
+                    </span>
+                    <span>{label}</span>
                   </li>
                 ))}
               </ul>
@@ -514,20 +661,70 @@ function ADHDChildArticlePage() {
               alt="The Neuro-Ayurveda Development System"
               className="mt-5 w-full h-auto object-contain max-h-[400px] mb-5 rounded-lg border border-[#eadff1] bg-white shadow-sm p-4"
             />
-            {/* <div className="grid gap-4 sm:grid-cols-2 mt-4">
-              {[
-                { title: "Pillar 5: Behaviour Guidance System", desc: "Behaviour is often a form of communication. Many behaviours observed in children with ADHD may be influenced by attention challenges, emotional regulation difficulties, frustration or environmental demands. The Behaviour Guidance System focuses on helping families understand: Behaviour patterns, Emotional responses, Triggers, Self-regulation challenges, Positive behaviour support strategies. The goal is to move beyond simply reacting to behaviour and instead understand the factors influencing it." },
-              ].map(item => (
-                <div key={item.title} className="bg-white rounded-lg p-5 shadow-[0_8px_22px_rgba(58,31,90,0.04)] border border-[#eadff1]">
-                  <h4 className="text-[15px] font-black text-[#21142d] mb-2">{item.title}</h4>
-                  <p className="text-[13px] font-semibold text-[#5a5063] leading-6">{item.desc}</p>
-                </div>
-              ))}
-            </div> */}
+            <button
+              type="button"
+              onClick={() => setShowNeuroPillars((current) => !current)}
+              className="inline-flex min-h-11 items-center justify-center rounded-md bg-[#7835A4] px-5 text-[12px] font-black text-white shadow-[0_10px_20px_rgba(120,53,164,0.18)] transition hover:bg-[#5f2785]"
+              aria-expanded={showNeuroPillars}
+            >
+              {showNeuroPillars ? "Show Less" : "Read More"}
+            </button>
+
+            {showNeuroPillars && (
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                {neuroAyurvedaPillars.map(({ title, text, Icon }) => (
+                  <div
+                    key={title}
+                    className="rounded-lg border border-[#eadff1] bg-white p-5 shadow-[0_8px_22px_rgba(58,31,90,0.04)] last:sm:col-span-2"
+                  >
+                    <div className="mb-3 flex items-center gap-3">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#f0e7f6] text-[#7835A4]">
+                        <Icon className="h-6 w-6" strokeWidth={1.8} />
+                      </span>
+                      <h3 className="text-[15px] font-black leading-5 text-[#21142d]">{title}</h3>
+                    </div>
+                    <p className="text-[13px] font-semibold leading-6 text-[#5a5063]">{text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
           <section id="how-we-work" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">How We Work at Manovaidya</h2>
+            <div className="rounded-lg border border-[#eadff1] bg-white px-4 py-4 shadow-[0_10px_28px_rgba(58,31,90,0.06)] sm:px-5">
+              <div className="flex items-start gap-3">
+                {/* <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] bg-[#7835A4] text-[13px] font-black leading-none text-white shadow-[0_7px_16px_rgba(120,53,164,0.22)]">
+                  6
+                </span> */}
+                <div>
+                  <h2 className="text-[17px] font-black leading-snug text-[#5d268d] sm:text-[18px]">
+                    How We Work at Manovaidya
+                  </h2>
+                  <p className="mt-2 text-[13px] font-semibold leading-6 text-[#3f3448] sm:text-[14px]">
+                    A structured, step-by-step process designed for long-term growth and real change.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-5 sm:items-start lg:flex lg:items-center lg:justify-between">
+                {howWeWorkSteps.map(({ title, desc, Icon }, index) => (
+                  <React.Fragment key={title}>
+                    <div className="flex min-h-[94px] flex-col items-center justify-start text-center">
+                      <span className="mb-2 flex h-11 w-11 items-center justify-center rounded-full border border-[#dce7d8] bg-[#f7fbf5] text-[#7835A4]">
+                        <Icon className="h-6 w-6" strokeWidth={1.8} />
+                      </span>
+                      <span className="text-[11px] font-black leading-4 text-[#2f2636]">{title}</span>
+                      <span className="mt-1 max-w-[128px] text-[11px] font-black leading-4 text-[#3b2e45]">
+                        {desc}
+                      </span>
+                    </div>
+                    {index < howWeWorkSteps.length - 1 && (
+                      <ArrowRight className="mx-1 hidden h-6 w-6 shrink-0 text-[#9a6fbc] lg:block" strokeWidth={2.2} />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
               Every child is unique, which is why support at Manovaidya begins with understanding the child as a whole rather than focusing on a diagnosis alone.
             </p>

@@ -1,5 +1,7 @@
 import React from "react";
 import {
+  Activity,
+  ArrowRight,
   Baby,
   BookOpen,
   Brain,
@@ -14,14 +16,12 @@ import {
   Share2,
   ShieldCheck,
   Sparkles,
-  Stethoscope,
   Users,
   Utensils,
   Waves,
 } from "lucide-react";
 import childHeroImage from "../images/autism-treatment-hero.png";
 import supportFamilyImage from "../images/child-support-family.png";
-import signsImage from "../images/child-signs-reflection.png";
 import ctaImage from "../images/child-wellbeing-sunset-cta.png";
 import neuroDiagramImage from "../images/neuro-ayurveda-system-diagram-transparent.png";
 import doctorImage from "../images/doctor-ankush-portrait.png";
@@ -110,78 +110,51 @@ const earlySignGroups = [
   },
 ];
 
-const assessmentClarity = [
-  "Communication abilities",
-  "Social interaction skills",
-  "Attention and focus",
-  "Learning patterns",
-  "Behavioural concerns",
-  "Sensory processing",
-  "Emotional regulation",
-  "Daily functioning",
-  "Developmental strengths",
-  "Areas requiring support",
+const autismBeyondHighlights = [
+  { label: "Communication Development", Icon: MessageCircle },
+  { label: "Social Interaction", Icon: Users },
+  { label: "Learning Readiness", Icon: BookOpen },
+  { label: "Sensory Processing", Icon: Waves },
+  { label: "Behaviour & Environment", Icon: Puzzle },
 ];
 
-const assessmentSteps = [
-  {
-    title: "Detailed Parent Discussion",
-    text:
-      "The assessment begins with pregnancy and birth history, early milestones, speech and communication development, behavioural observations, social interaction patterns, learning abilities, sensory concerns, sleep, routines, food preferences and family challenges.",
-  },
-  {
-    title: "Developmental Understanding",
-    text:
-      "The process identifies existing strengths, current developmental challenges, learning readiness, communication abilities, behavioural patterns and sensory processing differences so families can move from uncertainty toward clarity.",
-  },
-  {
-    title: "Individualized Guidance",
-    text:
-      "Families receive parent guidance, developmental support planning, behaviour guidance strategies, communication recommendations, sensory support suggestions, lifestyle routines and progress monitoring approaches.",
-  },
+const autismAssessmentFlow = [
+  { step: "Step 1", label: "Detailed Parent Discussion", Icon: Users },
+  { step: "Step 2", label: "Developmental Assessment", Icon: BookOpen },
+  { step: "Step 3", label: "Communication & Behaviour Evaluation", Icon: MessageCircle },
+  { step: "Step 4", label: "Report & Insights", Icon: CalendarCheck },
+  { step: "Step 5", label: "Personalised Guidance", Icon: ShieldCheck },
 ];
 
-const pillars = [
-  {
-    title: "Brain Nourishment System",
-    Icon: Brain,
-    text:
-      "Supports the foundations of attention, learning readiness, communication development, cognitive functioning, memory and emotional regulation.",
-  },
-  {
-    title: "Gut Response System",
-    Icon: Utensils,
-    text:
-      "Looks at picky eating, digestive discomfort, food sensitivities, irregular bowel habits and appetite concerns that may influence overall wellbeing.",
-  },
-  {
-    title: "Neural Network System",
-    Icon: Sparkles,
-    text:
-      "Explores learning readiness, response patterns, communication development, attention and social engagement through developmental pathways.",
-  },
-  {
-    title: "Sensory Integration System",
-    Icon: Waves,
-    text:
-      "Helps families understand sensory sensitivities, preferences, regulation, daily functioning challenges and environmental influences.",
-  },
-  {
-    title: "Behaviour Guidance System",
-    Icon: ShieldCheck,
-    text:
-      "Focuses on why behaviours occur, possible developmental influences, environmental triggers, emotional regulation and supportive guidance approaches.",
-  },
+const autismAssessmentClarityItems = [
+  { label: "Communication abilities", Icon: MessageCircle },
+  { label: "Social interaction skills", Icon: Users },
+  { label: "Attention and focus", Icon: Activity },
+  { label: "Learning patterns", Icon: BookOpen },
+  { label: "Behavioural concerns", Icon: Puzzle },
+  { label: "Sensory processing", Icon: Waves },
+  { label: "Emotional regulation", Icon: HeartHandshake },
+  { label: "Daily functioning", Icon: CheckCircle2 },
+  { label: "Developmental strengths", Icon: Brain },
+  { label: "Areas requiring support", Icon: ShieldCheck },
 ];
 
-const supportPoints = [
-  "Understanding the child as an individual",
-  "Identifying developmental strengths",
-  "Recognizing areas requiring support",
-  "Providing structured parent guidance",
-  "Creating individualized support plans",
-  "Monitoring developmental progress",
-  "Supporting long-term growth and wellbeing",
+const autismHowWeWorkSteps = [
+  { title: "Assessment", desc: "Understand your child in-depth", Icon: Brain },
+  { title: "Understanding", desc: "Identify strengths & challenges", Icon: Search },
+  { title: "Personalised Plan", desc: "Create an individualized development plan", Icon: Activity },
+  { title: "Parent Guidance", desc: "Train & empower parents", Icon: Users },
+  { title: "Progress Tracking", desc: "Monitor, support & make adjustments", Icon: CalendarCheck },
+];
+
+const autismSupportPointItems = [
+  { label: "Understanding the child as an individual", Icon: Brain },
+  { label: "Identifying developmental strengths", Icon: Sparkles },
+  { label: "Recognizing areas requiring support", Icon: ShieldCheck },
+  { label: "Providing structured parent guidance", Icon: Users },
+  { label: "Creating individualized support plans", Icon: BookOpen },
+  { label: "Monitoring developmental progress", Icon: CalendarCheck },
+  { label: "Supporting long-term growth and wellbeing", Icon: HeartHandshake },
 ];
 
 const familyConcerns = [
@@ -318,8 +291,18 @@ function SidebarCard({ children, className = "" }) {
 function AutismTreatmentIndiaPage() {
   const [activeSection, setActiveSection] = React.useState(pageLinks[0].id);
   const [openFaq, setOpenFaq] = React.useState(0);
+  const [showNeuroPillars, setShowNeuroPillars] = React.useState(false);
 
   React.useEffect(() => {
+    const fontId = "autism-martel-font";
+    if (!document.getElementById(fontId)) {
+      const link = document.createElement("link");
+      link.id = fontId;
+      link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/css2?family=Martel:wght@400&display=swap";
+      document.head.appendChild(link);
+    }
+
     document.title = "Autism Treatment in India | Autism Assessment & Development Support | Manovaidya";
 
     const setMetaTag = (name, content) => {
@@ -415,8 +398,11 @@ function AutismTreatmentIndiaPage() {
   }, []);
 
   return (
-    <main className="bg-[#fbf9fd] text-[#1f1726]">
-      <section className="border-b border-[#eadff1] bg-white">
+    <main
+      className="min-h-screen bg-white text-[#1f1726]"
+      style={{ font: '400 1.125rem/1.5 "Martel", serif' }}
+    >
+      <section className="hidden border-b border-[#eadff1] bg-white">
         <div className="mx-auto flex max-w-[1440px] items-center gap-2 px-4 py-4 text-[11px] font-bold text-[#75677d] sm:px-6 lg:px-8">
           <a href="/" className="transition hover:text-[#7835A4]">Home</a>
           <span>/</span>
@@ -426,8 +412,8 @@ function AutismTreatmentIndiaPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1440px] gap-7 px-4 py-8 sm:px-6 lg:grid-cols-[230px_minmax(0,1fr)_320px] lg:px-8">
-        <div className="hidden lg:block">
+      <section className="mx-auto grid gap-7 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-10">
+        <div className="hidden">
           <div className="sticky top-24 space-y-5">
             <SidebarCard>
               <h2 className="text-[15px] font-black text-[#21142d]">On this page</h2>
@@ -471,15 +457,39 @@ function AutismTreatmentIndiaPage() {
         </div>
 
         <article className="min-w-0">
-          <p className="text-[12px] font-black uppercase tracking-[0.08em] text-[#7835A4]">Autism Treatment in India</p>
-          <h1 className="mt-3 max-w-[820px] text-[32px] font-black leading-[1.12] text-[#17111f] sm:text-[42px]">
+          <div className="relative overflow-hidden rounded-lg pb-6 pt-2 lg:grid lg:min-h-[360px] lg:grid-cols-[minmax(0,1fr)_minmax(330px,0.82fr)] lg:items-center lg:gap-8 lg:pb-8 lg:pt-3">
+            <div className="relative z-10">
+          <nav className="mb-3 flex flex-wrap items-center gap-2 text-[11px] font-bold text-[#7d7085]" aria-label="Article breadcrumb">
+            <a href="/" className="transition hover:text-[#7835A4]">Home</a>
+            <span>/</span>
+            <a href="/child-health-care" className="transition hover:text-[#7835A4]">Child Health Care</a>
+            <span>/</span>
+            <span className="text-[#4b345d]">Autism Treatment in India</span>
+          </nav>
+          <p className="text-[13px] font-black uppercase tracking-[0.08em] text-[#7835A4]">Autism Treatment in India</p>
+          <h1 className="mt-2 max-w-[650px] text-[27px] font-black leading-[1.12] text-[#292064] sm:text-[34px] lg:text-[34px]">
             Autism Treatment, ADHD, Child Development & Mental Health Clinic in India
           </h1>
-          <p className="mt-4 max-w-[760px] text-[15px] font-bold leading-7 text-[#5a5063]">
+          <p className="mt-4 max-w-[620px] text-[14px] font-bold leading-7 text-[#51465a] sm:text-[15px]">
             Autism assessment, child development support and structured Neuro-Ayurveda guidance for families seeking clarity, confidence and a long-term developmental roadmap.
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-5">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a
+              href="#book-consultation"
+              className="inline-flex min-h-11 items-center justify-center rounded-md bg-[#7835A4] px-5 text-[12px] font-black text-white shadow-[0_10px_20px_rgba(120,53,164,0.22)] transition hover:bg-[#5f2785]"
+            >
+              Book Autism Assessment
+            </a>
+            <a
+              href="tel:+917823894080"
+              className="inline-flex min-h-11 items-center justify-center rounded-md border border-[#7835A4] bg-white px-5 text-[12px] font-black text-[#7835A4] transition hover:bg-[#f5ebfb]"
+            >
+              Talk to Our Team
+            </a>
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center gap-5">
             <div className="flex items-center gap-3">
               <a href="/about/doctor">
                 <img src={doctorImage} alt="Dr. Ankush Garg" className="h-12 w-12 rounded-full object-cover transition hover:scale-105" />
@@ -503,14 +513,22 @@ function AutismTreatmentIndiaPage() {
               ))}
             </div>
           </div>
+            </div>
 
-          <figure className="mt-7 overflow-hidden rounded-lg border border-[#eadff1] bg-white shadow-[0_14px_35px_rgba(58,31,90,0.08)]">
-            <img
-              src={childHeroImage}
-              alt="Parent and child receiving autism development support"
-              className="w-full h-auto object-contain max-h-[500px] sm:max-h-[600px]"
-            />
+          <figure className="relative z-10 mx-auto mt-8 w-full max-w-[520px] lg:mt-0 lg:max-w-none">
+            <div className="absolute -left-8 top-2 z-20 hidden h-24 w-24 flex-col items-center justify-center rounded-full bg-[#5d3b90] p-3 text-center text-[9px] font-black leading-tight text-white shadow-[0_12px_24px_rgba(93,59,144,0.22)] lg:flex">
+              <Brain className="mb-1 h-5 w-5" />
+              Neuro-Ayurveda Development System
+            </div>
+            <div className="-translate-y-[50px] overflow-hidden rounded-[48%_52%_46%_54%/58%_42%_58%_42%] border-[6px] border-white bg-[#f3eaf9] shadow-[0_18px_35px_rgba(58,31,90,0.12)] lg:-translate-y-[58px]">
+              <img
+                src={childHeroImage}
+                alt="Parent and child receiving autism development support"
+                className="h-[248px] w-full object-cover object-right sm:h-[315px] lg:h-[355px]"
+              />
+            </div>
           </figure>
+          </div>
 
           <section id="what-is-autism" className="mt-8">
             <h2 className="text-[20px] font-black text-[#17111f]">What is Autism?</h2>
@@ -583,7 +601,30 @@ function AutismTreatmentIndiaPage() {
           </section>
 
           <section id="autism-treatment-in-india" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">Autism Treatment in India: Understanding Autism Beyond Symptoms</h2>
+            <div className="rounded-lg border border-[#eadff1] bg-white px-4 py-4 shadow-[0_10px_28px_rgba(58,31,90,0.06)] sm:px-5 lg:flex lg:items-center lg:gap-7">
+              <div className="lg:max-w-[43%] lg:shrink-0">
+                <h2 className="text-[17px] font-black leading-snug text-[#5d268d] sm:text-[18px]">
+                  Autism Treatment in India: Understanding Autism Beyond Symptoms
+                </h2>
+                <p className="mt-3 text-[13px] font-semibold leading-6 text-[#3f3448] sm:text-[14px]">
+                  Autism is not only about visible symptoms. It is connected to communication, social interaction,
+                  learning readiness, sensory processing and overall development.
+                </p>
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5 lg:mt-0 lg:flex-1">
+                {autismBeyondHighlights.map(({ label, Icon }) => (
+                  <div key={label} className="flex min-h-[86px] flex-col items-center justify-start text-center">
+                    <span className="mb-2 flex h-11 w-11 items-center justify-center rounded-full border border-[#dcc8eb] bg-[#fbf8fd] text-[#7835A4]">
+                      <Icon className="h-6 w-6" strokeWidth={1.8} />
+                    </span>
+                    <span className="max-w-[116px] text-[11px] font-black leading-4 text-[#3b2e45]">
+                      {label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="mt-3 space-y-4 text-[14px] font-semibold leading-7 text-[#51465a]">
               <p>
                 One of the most common concerns parents face is focusing only on visible symptoms.
@@ -625,42 +666,67 @@ function AutismTreatmentIndiaPage() {
           </section>
 
           <section id="autism-assessment" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">Autism Assessment at Manovaidya</h2>
-            <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_300px] lg:items-start">
-              <div className="space-y-4 text-[14px] font-semibold leading-7 text-[#51465a]">
-                <p>
-                  Every child is unique, and every developmental journey is different.
-                </p>
-                <p>
-                  One of the biggest mistakes families make is comparing their child with another child or relying only on online information to understand autism. While online resources can provide awareness, they cannot replace a structured developmental assessment that looks at the child as an individual.
-                </p>
-                <p>
-                  At Manovaidya, autism assessment focuses on understanding the complete developmental picture rather than evaluating a single symptom in isolation.
-                </p>
-                <div className="mt-4 rounded-lg border border-[#eadff1] bg-white p-5">
-                  <h3 className="font-black text-[#21142d] mb-3">The assessment process is designed to help families gain clarity about:</h3>
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    {assessmentClarity.map((item) => (
-                      <span key={item} className="flex gap-2 rounded-md bg-[#fbf9fd] px-3 py-2 text-[12px] font-bold text-[#51465a] ring-1 ring-[#eadff1]">
-                        <CheckCircle2 className="h-4 w-4 shrink-0 text-[#7835A4]" />
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <p>
-                  Our goal is not simply to identify challenges but to understand the child's unique developmental profile and create a meaningful roadmap for future growth and support.
-                </p>
-                <p>
-                  A comprehensive Autism Assessment is often considered one of the most important first steps for families seeking Autism Treatment in India because it provides greater clarity regarding developmental needs and future support planning.
+            <div className="rounded-lg border border-[#eadff1] bg-white px-4 py-4 shadow-[0_10px_28px_rgba(58,31,90,0.06)] sm:px-5">
+              <div>
+                <h2 className="text-[17px] font-black leading-snug text-[#5d268d] sm:text-[18px]">
+                  Autism Assessment at Manovaidya
+                </h2>
+                <p className="mt-2 text-[13px] font-semibold leading-6 text-[#3f3448] sm:text-[14px]">
+                  A comprehensive assessment helps understand your child's unique strengths, challenges and needs.
                 </p>
               </div>
-              <img
-                src={supportFamilyImage}
-                alt="Doctor and parent discussion for autism assessment"
-                className="w-full rounded-lg object-cover shadow-[0_12px_30px_rgba(58,31,90,0.08)]"
-              />
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-5 sm:items-start lg:flex lg:items-center lg:justify-between">
+                {autismAssessmentFlow.map(({ step, label, Icon }, index) => (
+                  <React.Fragment key={label}>
+                    <div className="flex min-h-[92px] flex-col items-center justify-start text-center">
+                      <span className="mb-2 flex h-11 w-11 items-center justify-center rounded-full border border-[#dcc8eb] bg-[#fbf8fd] text-[#7835A4]">
+                        <Icon className="h-6 w-6" strokeWidth={1.8} />
+                      </span>
+                      <span className="text-[11px] font-black leading-4 text-[#2f2636]">{step}</span>
+                      <span className="mt-1 max-w-[118px] text-[11px] font-black leading-4 text-[#3b2e45]">
+                        {label}
+                      </span>
+                    </div>
+                    {index < autismAssessmentFlow.length - 1 && (
+                      <ArrowRight className="mx-1 hidden h-6 w-6 shrink-0 text-[#9a6fbc] lg:block" strokeWidth={2.2} />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+
+              <div className="mx-auto mt-3 max-w-[560px] rounded-md bg-[#f1f5ef] px-4 py-2 text-center text-[12px] font-black leading-5 text-[#5b5360]">
+                Our goal is clarity, not just diagnosis. We help you understand your child deeply.
+              </div>
             </div>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Every child is unique, and every developmental journey is different.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              One of the biggest mistakes families make is comparing their child with another child or relying only on online information to understand autism. While online resources can provide awareness, they cannot replace a structured developmental assessment that looks at the child as an individual.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              At Manovaidya, autism assessment focuses on understanding the complete developmental picture rather than evaluating a single symptom in isolation.
+            </p>
+            <div className="mt-5 rounded-lg border border-[#eadff1] bg-white p-5">
+              <h3 className="text-[15px] font-black text-[#21142d] mb-3">The assessment process is designed to help families gain clarity about:</h3>
+              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {autismAssessmentClarityItems.map(({ label, Icon }) => (
+                  <li key={label} className="flex min-h-[76px] items-center gap-3 rounded-lg border border-[#eadff1] bg-[#fbf8fd] p-3 text-[13px] font-bold leading-5 text-[#51465a]">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#7835A4] shadow-[0_6px_14px_rgba(58,31,90,0.07)]">
+                      <Icon className="h-6 w-6" strokeWidth={1.8} />
+                    </span>
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Our goal is not simply to identify challenges but to understand the child's unique developmental profile and create a meaningful roadmap for future growth and support.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              A comprehensive Autism Assessment is often considered one of the most important first steps for families seeking Autism Treatment in India because it provides greater clarity regarding developmental needs and future support planning.
+            </p>
             
             <h3 className="mt-8 text-[18px] font-black text-[#17111f]">What Does the Assessment Process Include?</h3>
             <div className="mt-5 grid gap-4 sm:grid-cols-3">
@@ -721,6 +787,16 @@ function AutismTreatmentIndiaPage() {
               />
             </a>
 
+            <button
+              type="button"
+              onClick={() => setShowNeuroPillars((current) => !current)}
+              className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-[#7835A4] px-5 text-[12px] font-black text-white shadow-[0_10px_20px_rgba(120,53,164,0.18)] transition hover:bg-[#5f2785]"
+              aria-expanded={showNeuroPillars}
+            >
+              {showNeuroPillars ? "Show Less" : "Read More"}
+            </button>
+
+            {showNeuroPillars && (
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="rounded-lg border border-[#eadff1] bg-white p-5 shadow-[0_8px_22px_rgba(58,31,90,0.04)]">
                 <h3 className="text-[15px] font-black text-[#21142d] mb-2 flex items-center gap-2"><Brain className="h-5 w-5 text-[#7835A4]"/> Pillar 1: Brain Nourishment System</h3>
@@ -747,10 +823,39 @@ function AutismTreatmentIndiaPage() {
                 <p className="text-[13px] font-semibold leading-6 text-[#5f5367]">Behaviour is often a form of communication. Children may express their needs, frustrations, discomfort or emotions through behaviour. The Behaviour Guidance System focuses on helping families understand: Why behaviours occur, Possible developmental influences, Environmental triggers, Emotional regulation challenges, Supportive behaviour guidance approaches. The goal is to move beyond simply reacting to behaviours and instead understand the factors influencing them.</p>
               </div>
             </div>
+            )}
           </section>
 
           <section id="how-we-work" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">How We Work at Manovaidya</h2>
+            <div className="rounded-lg border border-[#eadff1] bg-white px-4 py-4 shadow-[0_10px_28px_rgba(58,31,90,0.06)] sm:px-5">
+              <div>
+                <h2 className="text-[17px] font-black leading-snug text-[#5d268d] sm:text-[18px]">
+                  How We Work at Manovaidya
+                </h2>
+                <p className="mt-2 text-[13px] font-semibold leading-6 text-[#3f3448] sm:text-[14px]">
+                  A structured, step-by-step process designed for long-term growth and real change.
+                </p>
+              </div>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-5 sm:items-start lg:flex lg:items-center lg:justify-between">
+                {autismHowWeWorkSteps.map(({ title, desc, Icon }, index) => (
+                  <React.Fragment key={title}>
+                    <div className="flex min-h-[94px] flex-col items-center justify-start text-center">
+                      <span className="mb-2 flex h-11 w-11 items-center justify-center rounded-full border border-[#dce7d8] bg-[#f7fbf5] text-[#7835A4]">
+                        <Icon className="h-6 w-6" strokeWidth={1.8} />
+                      </span>
+                      <span className="text-[11px] font-black leading-4 text-[#2f2636]">{title}</span>
+                      <span className="mt-1 max-w-[128px] text-[11px] font-black leading-4 text-[#3b2e45]">
+                        {desc}
+                      </span>
+                    </div>
+                    {index < autismHowWeWorkSteps.length - 1 && (
+                      <ArrowRight className="mx-1 hidden h-6 w-6 shrink-0 text-[#9a6fbc] lg:block" strokeWidth={2.2} />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
             <div className="mt-3 space-y-4 text-[14px] font-semibold leading-7 text-[#51465a]">
               <p>
                 Every child is unique, which is why support at Manovaidya begins with understanding the child as a whole rather than focusing on a diagnosis alone.
@@ -764,26 +869,30 @@ function AutismTreatmentIndiaPage() {
               <p>
                 Support focuses on assessment, parent guidance, developmental planning, progress tracking and long-term family support so that parents can move forward with greater clarity, confidence and direction.
               </p>
-              <p className="font-bold text-[#21142d]">
-                Every child is unique. This is why support at Manovaidya begins with a detailed assessment, developmental understanding and personalized guidance rather than a one-size-fits-all approach.
-              </p>
+              <div className="rounded-lg bg-[#f4ecf8] p-5">
+                <p className="text-[14px] font-bold text-[#3b2e45]">
+                  Every child is unique. This is why support at Manovaidya begins with a detailed assessment, developmental understanding and personalized guidance rather than a one-size-fits-all approach.
+                </p>
+              </div>
             </div>
           </section>
 
-          <section id="how-we-support" className="mt-9 grid gap-6 lg:grid-cols-[1fr_270px] lg:items-center">
+          <section id="how-we-support" className="mt-9">
             <div>
               <h2 className="text-[20px] font-black text-[#17111f]">How We Support Children with Autism</h2>
               <div className="mt-3 space-y-4 text-[14px] font-semibold leading-7 text-[#51465a]">
                 <p>
                   At Manovaidya, support is personalized because no two children are exactly alike. Every child has unique strengths, challenges, interests and developmental needs.
                 </p>
-                <div className="rounded-lg border border-[#eadff1] bg-[#fbf9fd] p-5">
-                  <h3 className="font-black text-[#21142d] mb-3">Our approach focuses on:</h3>
-                  <ul className="space-y-2.5">
-                    {supportPoints.map((point) => (
-                      <li key={point} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#7835A4]" />
-                        {point}
+                <div className="rounded-lg border border-[#eadff1] bg-white p-5">
+                  <h3 className="text-[15px] font-black text-[#21142d] mb-3">Our approach focuses on:</h3>
+                  <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    {autismSupportPointItems.map(({ label, Icon }) => (
+                      <li key={label} className="flex min-h-[122px] flex-col items-center justify-start gap-3 rounded-lg border border-[#eadff1] bg-[#fbf8fd] p-4 text-center text-[13px] font-bold leading-5 text-[#51465a]">
+                        <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-[#7835A4] shadow-[0_6px_14px_rgba(58,31,90,0.07)]">
+                          <Icon className="h-7 w-7" strokeWidth={1.8} />
+                        </span>
+                        <span>{label}</span>
                       </li>
                     ))}
                   </ul>
@@ -796,11 +905,6 @@ function AutismTreatmentIndiaPage() {
                 </p>
               </div>
             </div>
-            <img
-              src={signsImage}
-              alt="Autism support for child development"
-              className="h-[230px] w-full rounded-lg object-cover shadow-[0_12px_30px_rgba(58,31,90,0.08)]"
-            />
           </section>
 
           <section id="parent-guidance" className="mt-9 rounded-lg bg-[#f4ecf8] p-5">
@@ -964,7 +1068,7 @@ function AutismTreatmentIndiaPage() {
           </section>
         </article>
 
-        <div className="space-y-5">
+        <div className="sticky top-24 max-h-[calc(100vh-6rem)] space-y-5 overflow-y-auto pb-5">
           <SidebarCard>
             <h2 className="text-[15px] font-black text-[#21142d]">Search</h2>
             <label className="mt-4 flex h-11 items-center rounded-lg border border-[#eadff1] bg-[#fbf9fd] px-3">
@@ -975,6 +1079,31 @@ function AutismTreatmentIndiaPage() {
               />
               <Search className="h-4 w-4 text-[#7835A4]" />
             </label>
+          </SidebarCard>
+
+          <SidebarCard>
+            <h2 className="text-[15px] font-black text-[#21142d]">On this page</h2>
+            <nav className="mt-5 space-y-3.5">
+              {pageLinks.map(({ label, id }) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  onClick={() => setActiveSection(id)}
+                  className={`flex items-start gap-2 rounded-md px-2 py-1.5 text-[12px] font-bold leading-5 transition ${
+                    activeSection === id
+                      ? "bg-[#f0e7f6] text-[#7835A4]"
+                      : "text-[#51465a] hover:bg-[#fbf7ff] hover:text-[#7835A4]"
+                  }`}
+                >
+                  <span
+                    className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
+                      activeSection === id ? "bg-[#7835A4]" : "bg-[#c5adcf]"
+                    }`}
+                  />
+                  {label}
+                </a>
+              ))}
+            </nav>
           </SidebarCard>
 
           <SidebarCard>

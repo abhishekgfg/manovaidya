@@ -27,6 +27,7 @@ import doctorImage from "../images/doctor-ankush-portrait.png";
 import RelatedPagesCard from "./RelatedPagesCard";
 
 const pageLinks = [
+  { label: "Introduction", id: "introduction" },
   { label: "What is Child Development?", id: "what-is-child-development" },
   { label: "Common Concerns", id: "common-concerns" },
   { label: "Beyond Milestones", id: "beyond-milestones" },
@@ -38,6 +39,7 @@ const pageLinks = [
   { label: "How We Work", id: "how-we-work" },
   { label: "Why Manovaidya", id: "why-manovaidya" },
   { label: "About Dr. Ankush Garg", id: "about-dr-ankush-garg" },
+  { label: "Related Support", id: "related-developmental-support" },
   { label: "FAQs", id: "faqs" },
   { label: "Book Consultation", id: "book-consultation" },
 ];
@@ -76,7 +78,7 @@ const commonConcerns = [
     Icon: Brain,
   },
   {
-    title: "Speech Delay & Communication",
+    title: "Speech Delay & Communication Challenges",
     text: "Concerns related to language development, communication skills and expressive abilities.",
     Icon: MessageCircle,
   },
@@ -91,8 +93,13 @@ const commonConcerns = [
     Icon: BookOpen,
   },
   {
-    title: "Social & Emotional Development",
-    text: "Difficulties with peer interaction, emotional regulation and frustration tolerance.",
+    title: "Social Development Challenges",
+    text: "Difficulties interacting with peers, building relationships and participating in social situations.",
+    Icon: HeartHandshake,
+  },
+  {
+    title: "Emotional Regulation Concerns",
+    text: "Managing emotions, frustration tolerance and emotional wellbeing.",
     Icon: Heart,
   },
 ];
@@ -175,6 +182,15 @@ const supportPoints = [
   "Long-Term Development Planning",
 ];
 
+const parentGuidanceItems = [
+  "Developmental understanding",
+  "Behaviour management strategies",
+  "Communication opportunities",
+  "Learning support",
+  "Family participation",
+  "Long-term developmental planning",
+];
+
 const whyChoose = [
   "Structured Neuro-Ayurveda Development System",
   "Personalized Developmental Assessment",
@@ -186,63 +202,63 @@ const whyChoose = [
 ];
 
 const relatedPages = [
-  { title: "Autism Treatment in India", href: "/autism-treatment-india", image: childHeroImage },
-  { title: "ADHD Treatment in India", href: "/child-health-care/adhd-child", image: supportFamilyImage },
-  { title: "Speech Delay & Communication Support", href: "/speech-delay-support-india", image: signsImage },
-  { title: "Behavioural Concerns in Children", href: "/behavioural-concerns-children-india", image: ctaImage },
-  { title: "Learning & Attention Difficulties", href: "/learning-attention-difficulties-india", image: doctorImage },
+  { title: "Autism Treatment in India", href: "/autism-treatment-india" },
+  { title: "ADHD Treatment in India", href: "/child-health-care/adhd-child" },
+  { title: "Speech Delay & Communication Support", href: "/speech-delay-support-india" },
+  { title: "Behavioural Concerns in Children", href: "/behavioural-concerns-children-india" },
+  { title: "Learning & Attention Difficulties", href: "/learning-attention-difficulties-india" },
 ];
 
 const faqs = [
   {
-    question: "What is child development?",
+    question: "1. What is child development?",
     answer:
-      "Child development refers to physical, cognitive, emotional, behavioural, communication and social growth throughout childhood. It includes how children learn skills, build relationships, regulate emotions and become more independent.",
+      "Child development refers to the physical, cognitive, emotional, behavioural, communication and social growth that occurs throughout childhood. Development is a continuous process through which children learn new skills, build relationships, understand the world around them and become more independent over time. Every child develops at a unique pace, and developmental progress may vary from one child to another. Child development involves multiple interconnected areas, including communication, learning, behaviour, emotional wellbeing and social interaction. Understanding development as a whole helps parents better recognize both strengths and areas where additional support may be beneficial.",
   },
   {
-    question: "What are the 4 types of child development?",
+    question: "2. What are the 4 types of child development?",
     answer:
-      "The four commonly discussed areas are physical development, cognitive development, social-emotional development and communication or language development. These areas work together and influence each other.",
+      "Child development is commonly understood through four major developmental areas: physical development, cognitive development, social-emotional development and communication or language development. Physical development involves movement, coordination and motor skills. Cognitive development includes learning, thinking, memory and problem-solving abilities. Social-emotional development focuses on relationships, emotional regulation and social interaction. Communication development involves understanding language, expressing thoughts and interacting with others. These developmental areas work together and influence one another throughout childhood. A child's overall development is best understood by looking at all developmental domains rather than focusing on a single area.",
   },
   {
-    question: "What are the common child development concerns?",
+    question: "3. What are the common child development concerns?",
     answer:
-      "Common concerns include speech delay, communication difficulties, attention challenges, behavioural concerns, learning difficulties, emotional regulation issues, social interaction challenges and milestone delays.",
+      "Common child development concerns may include speech delay, communication difficulties, attention challenges, behavioural concerns, learning difficulties, emotional regulation issues, social interaction challenges and developmental milestone delays. Some children may experience difficulties in one area, while others may have challenges across multiple developmental domains. Every child develops differently, and not all developmental variations indicate a serious concern. However, when parents notice persistent challenges that affect daily functioning, learning or social participation, a structured developmental assessment can help provide greater clarity regarding the child's strengths, developmental needs and future support requirements.",
   },
   {
-    question: "What is a red flag in child development?",
+    question: "4. What is a red flag in child development?",
     answer:
-      "A developmental red flag is a sign that may indicate a child is not progressing as expected in one or more areas, such as communication, social interaction, behaviour or milestones.",
+      "A developmental red flag refers to a sign that may indicate a child is not progressing as expected in one or more developmental areas. Examples may include significant delays in communication, limited social interaction, difficulty responding to others, persistent behavioural concerns or delays in age-appropriate developmental milestones. Red flags do not automatically mean that a child has a developmental disorder. They simply indicate that further developmental understanding may be helpful. Early recognition of developmental concerns allows families to gain clarity and better understand the child's developmental profile, strengths and areas requiring support.",
   },
   {
-    question: "When should parents worry about developmental delays?",
+    question: "5. When should parents worry about developmental delays?",
     answer:
-      "Parents may seek guidance when milestones are significantly delayed, concerns continue over time or difficulties affect communication, learning, attention, behaviour, social interaction or emotional regulation.",
+      "Parents may consider seeking guidance when they notice that developmental milestones appear significantly delayed compared to age expectations or when concerns continue over time without improvement. Difficulties related to communication, learning, attention, behaviour, social interaction or emotional regulation may also warrant further understanding. It is important not to rely solely on comparisons with other children, as every child develops differently. However, persistent concerns should not be ignored. A developmental assessment can help families understand whether observed differences represent normal variation or whether additional developmental support may be beneficial.",
   },
   {
-    question: "What are developmental milestones?",
+    question: "6. What are developmental milestones?",
     answer:
-      "Developmental milestones are skills children typically achieve as they grow, such as communication abilities, motor skills, social interaction, emotional regulation, learning skills and daily living activities.",
+      "Developmental milestones are skills and abilities that children typically achieve as they grow and develop. These milestones may include communication abilities, motor skills, social interaction, emotional regulation, learning skills and daily living activities. Milestones provide general guidelines for understanding developmental progress, but they are not strict rules that apply equally to every child. Some children reach milestones earlier, while others may take more time. Looking at developmental milestones helps parents and professionals understand overall growth and identify areas where additional support or assessment may be helpful.",
   },
   {
-    question: "Can a child with developmental delay catch up?",
+    question: "7. Can a child with developmental delay catch up?",
     answer:
-      "Many children continue developing skills and make meaningful progress with appropriate understanding and support. Outcomes vary depending on the child's strengths, challenges and support systems.",
+      'Many children with developmental delays continue developing skills and making meaningful progress over time. Developmental outcomes vary depending on the child\'s individual profile, strengths, challenges and support systems. Some children may catch up in specific developmental areas, while others may continue benefiting from ongoing developmental guidance and support. Rather than focusing solely on whether a child will "catch up," it is often more helpful to understand the child\'s developmental needs and create a structured plan for growth and learning. Early understanding and personalized support can help families navigate developmental challenges more effectively.',
   },
   {
-    question: "How can parents support child development at home?",
+    question: "8. How can parents support child development at home?",
     answer:
-      "Parents can support development through talking, reading, play, exploration, positive learning experiences, routines, emotional support, healthy sleep and social interaction opportunities.",
+      "Parents play a central role in supporting child development. Everyday interactions such as talking, reading, playing, encouraging exploration and creating positive learning experiences can support growth across multiple developmental areas. Consistent routines, emotional support, healthy sleep habits and opportunities for social interaction also contribute to development. It is important for parents to focus on progress rather than comparison and to create an environment where children feel supported and encouraged. Understanding the child's individual strengths and developmental needs helps families provide more meaningful and effective support at home.",
   },
   {
-    question: "What is the Neuro-Ayurveda Development System?",
+    question: "9. What is the Neuro-Ayurveda Development System?",
     answer:
-      "It is a structured framework developed by Dr. Ankush Garg to understand developmental, behavioural and mental wellness concerns through five interconnected pillars.",
+      "The Neuro-Ayurveda Development System is a structured framework developed by Dr. Ankush Garg to help families better understand developmental, behavioural and mental wellness concerns. The system focuses on five interconnected pillars: Brain Nourishment System, Gut Response System, Neural Network System, Sensory Integration System and Behaviour Guidance System. Together, these pillars provide a broader developmental perspective that helps families understand communication, learning, behaviour, emotional wellbeing and overall development. The goal is to create a structured roadmap that supports long-term developmental understanding and family guidance.",
   },
   {
-    question: "How does Manovaidya assess and support child development?",
+    question: "10. How does Manovaidya assess and support child development?",
     answer:
-      "Manovaidya assesses developmental history, communication, learning patterns, behaviour, social interaction, emotional regulation and parent concerns, then provides personalized guidance and a structured developmental roadmap.",
+      "At Manovaidya, child development assessment focuses on understanding the child as a whole rather than evaluating a single concern in isolation. The assessment process may include developmental history, communication abilities, learning patterns, behaviour observations, social interaction, emotional regulation and parent concerns. Based on this understanding, families receive personalized guidance and a structured developmental roadmap tailored to the child's individual needs. Support focuses on developmental understanding, parent guidance, progress tracking and long-term family support through the Neuro-Ayurveda Development System. The goal is to help families move forward with greater clarity, confidence and direction.",
   },
 ];
 
@@ -257,6 +273,17 @@ function SidebarCard({ children, className = "" }) {
 function ChildDevelopmentSupportIndiaPage() {
   const [activeSection, setActiveSection] = React.useState(pageLinks[0].id);
   const [openFaq, setOpenFaq] = React.useState(0);
+
+  React.useEffect(() => {
+    const fontId = "child-development-martel-font";
+    if (!document.getElementById(fontId)) {
+      const link = document.createElement("link");
+      link.id = fontId;
+      link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/css2?family=Martel:wght@400&display=swap";
+      document.head.appendChild(link);
+    }
+  }, []);
 
   React.useEffect(() => {
     document.title = "Child Development Support in India | Developmental Assessment & Family Guidance | Manovaidya";
@@ -358,93 +385,111 @@ function ChildDevelopmentSupportIndiaPage() {
   }, []);
 
   return (
-    <main className="bg-[#fbf9fd] text-[#1f1726]">
-      <section className="border-b border-[#eadff1] bg-white">
-        <div className="mx-auto flex max-w-[1440px] items-center gap-2 px-4 py-4 text-[11px] font-bold text-[#75677d] sm:px-6 lg:px-8">
-          <a href="/" className="transition hover:text-[#7835A4]">Home</a>
-          <span>/</span>
-          <a href="/child-health-care" className="transition hover:text-[#7835A4]">Child Health Care</a>
-          <span>/</span>
-          <span className="text-[#21142d]">Child Development Support in India</span>
-        </div>
-      </section>
-
-      <section className="mx-auto grid max-w-[1440px] gap-7 px-4 py-8 sm:px-6 lg:grid-cols-[230px_minmax(0,1fr)_320px] lg:px-8">
-        <div className="hidden lg:block">
-          <div className="sticky top-24 space-y-5">
-            <SidebarCard>
-              <h2 className="text-[15px] font-black text-[#21142d]">On this page</h2>
-              <nav className="mt-5 space-y-3.5">
-                {pageLinks.map(({ label, id }) => (
-                  <a
-                    key={id}
-                    href={`#${id}`}
-                    onClick={() => setActiveSection(id)}
-                    className={`flex items-start gap-2 rounded-md px-2 py-1.5 text-[12px] font-bold leading-5 transition ${
-                      activeSection === id ? "bg-[#f0e7f6] text-[#7835A4]" : "text-[#51465a] hover:bg-[#fbf7ff] hover:text-[#7835A4]"
-                    }`}
-                  >
-                    <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${activeSection === id ? "bg-[#7835A4]" : "bg-[#c5adcf]"}`} />
-                    {label}
-                  </a>
-                ))}
-              </nav>
-            </SidebarCard>
-
-            <SidebarCard className="bg-[#fcf9ff]">
-              <Users className="h-8 w-8 text-[#7835A4]" />
-              <h3 className="mt-4 text-[15px] font-black text-[#21142d]">Need Personalized Guidance?</h3>
-              <p className="mt-3 text-[12px] font-bold leading-5 text-[#5f5367]">
-                Our experts are here to understand your child's developmental needs.
-              </p>
-              <a href="#book-consultation" className="mt-4 inline-flex h-10 items-center justify-center rounded-md bg-[#7835A4] px-4 text-[12px] font-black text-white transition hover:bg-[#632b86]">
-                Book a Consultation
-              </a>
-            </SidebarCard>
-          </div>
-        </div>
-
+    <main
+      className="min-h-screen bg-white text-[#1f1726]"
+      style={{ font: '400 1.125rem/1.5 "Martel", serif' }}
+    >
+      <section className="mx-auto grid gap-7 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-10">
         <article className="min-w-0">
-          <p className="text-[12px] font-black uppercase tracking-[0.08em] text-[#7835A4]">Developmental Assessment & Family Support</p>
-          <h1 className="mt-3 max-w-[820px] text-[32px] font-black leading-[1.12] text-[#17111f] sm:text-[42px]">
-            Child Development Support in India
-          </h1>
-          <p className="mt-4 max-w-[760px] text-[15px] font-bold leading-7 text-[#5a5063]">
-            Developmental assessment, communication guidance, family support and long-term child development planning through the Neuro-Ayurveda Development System.
-          </p>
+          <div className="relative overflow-hidden rounded-lg pb-6 pt-2 lg:grid lg:min-h-[360px] lg:grid-cols-[minmax(0,1fr)_minmax(330px,0.82fr)] lg:items-center lg:gap-8 lg:pb-8 lg:pt-3">
+            <div className="relative z-10">
+              <nav className="mb-3 flex flex-wrap items-center gap-2 text-[11px] font-bold text-[#7d7085]" aria-label="Article breadcrumb">
+                <a href="/" className="transition hover:text-[#7835A4]">Home</a>
+                <span>/</span>
+                <a href="/child-health-care" className="transition hover:text-[#7835A4]">Child Health Care</a>
+                <span>/</span>
+                <span className="text-[#4b345d]">Child Development Support in India</span>
+              </nav>
+              <p className="text-[13px] font-black uppercase tracking-[0.08em] text-[#7835A4]">
+                Developmental Assessment, Guidance & Family Support
+              </p>
+              <h1 className="mt-2 max-w-[650px] text-[27px] font-black leading-[1.12] text-[#292064] sm:text-[34px] lg:text-[34px]">
+                Child Development Support in India
+              </h1>
+              <p className="mt-4 max-w-[620px] text-[14px] font-bold leading-7 text-[#51465a] sm:text-[15px]">
+                Developmental assessment, communication guidance, family support and long-term child development planning through the Neuro-Ayurveda Development System.
+              </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-5">
-            <div className="flex items-center gap-3">
-              <img src={doctorImage} alt="Dr. Ankush Garg" className="h-12 w-12 rounded-full object-cover" />
-              <div>
-                <p className="text-[13px] font-black text-[#21142d]">By Dr. Ankush Garg</p>
-                <p className="text-[12px] font-bold text-[#75677d]">Autism, ADHD, Child Development & Mental Health Specialist</p>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <a
+                  href="#book-consultation"
+                  className="inline-flex min-h-11 items-center justify-center rounded-md bg-[#7835A4] px-5 text-[12px] font-black text-white shadow-[0_10px_20px_rgba(120,53,164,0.22)] transition hover:bg-[#5f2785]"
+                >
+                  Book Development Assessment
+                </a>
+                <a
+                  href="tel:+917823894080"
+                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-[#7835A4] bg-white px-5 text-[12px] font-black text-[#7835A4] transition hover:bg-[#f5ebfb]"
+                >
+                  Talk to Our Team
+                </a>
+              </div>
+
+              <div className="mt-6 flex flex-wrap items-center gap-5">
+                <div className="flex items-center gap-3">
+                  <img src={doctorImage} alt="Dr. Ankush Garg" className="h-12 w-12 rounded-full object-cover" />
+                  <div>
+                    <p className="text-[13px] font-black text-[#21142d]">By Dr. Ankush Garg</p>
+                    <p className="text-[12px] font-bold text-[#75677d]">Autism, ADHD, Child Development & Mental Health Specialist</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-[12px] font-black text-[#75677d]">
+                  <span>Share:</span>
+                  {["f", "x", "in", "wa"].map((label) => (
+                    <a
+                      key={label}
+                      href="#share"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f2eaf7] text-[#7835A4] transition hover:bg-[#7835A4] hover:text-white"
+                      aria-label="Share article"
+                    >
+                      {label === "wa" ? <Share2 className="h-4 w-4" /> : <span className="text-[11px] font-black">{label}</span>}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-3 text-[12px] font-black text-[#75677d]">
-              <span>Share:</span>
-              {["f", "x", "in", "wa"].map((label) => (
-                <a key={label} href="#share" className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f2eaf7] text-[#7835A4] transition hover:bg-[#7835A4] hover:text-white" aria-label="Share article">
-                  {label === "wa" ? <Share2 className="h-4 w-4" /> : <span className="text-[11px] font-black">{label}</span>}
-                </a>
-              ))}
-            </div>
+
+            <figure className="relative z-10 mx-auto mt-8 w-full max-w-[520px] lg:mt-0 lg:max-w-none">
+              <div className="absolute -left-8 top-2 z-20 hidden h-24 w-24 flex-col items-center justify-center rounded-full bg-[#5d3b90] p-3 text-center text-[9px] font-black leading-tight text-white shadow-[0_12px_24px_rgba(93,59,144,0.22)] lg:flex">
+                <Brain className="mb-1 h-5 w-5" />
+                Neuro-Ayurveda Development System
+              </div>
+              <div className="-translate-y-[50px] overflow-hidden rounded-[48%_52%_46%_54%/58%_42%_58%_42%] border-[6px] border-white bg-[#f3eaf9] shadow-[0_18px_35px_rgba(58,31,90,0.12)] lg:-translate-y-[58px]">
+                <img
+                  src={childHeroImage}
+                  alt="Parent and child development journey"
+                  className="h-[248px] w-full object-cover object-right sm:h-[315px] lg:h-[355px]"
+                />
+              </div>
+            </figure>
           </div>
 
-          <figure className="mt-7 overflow-hidden rounded-lg border border-[#eadff1] bg-white shadow-[0_14px_35px_rgba(58,31,90,0.08)]">
-            <img src={childHeroImage} alt="Parent and child development journey" className="w-full h-auto object-contain" />
-          </figure>
+          <section id="introduction" className="mt-8">
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Every child grows, learns and develops in a unique way. While some children achieve developmental milestones naturally, others may experience challenges related to communication, behaviour, attention, learning, social interaction or overall development.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              For many parents, concerns begin with small observations. A child may not be speaking as expected, may have difficulty paying attention, struggle with social interaction, experience behavioural challenges or show delays in developmental milestones. Over time, these concerns often lead families to search for answers, guidance and structured support.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              At Manovaidya, Child Development is understood through a comprehensive developmental perspective that looks beyond individual symptoms. Development is influenced by multiple interconnected factors including communication, learning, behaviour, emotional wellbeing, attention, sensory processing and social interaction.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Led by Dr. Ankush Garg, Autism, ADHD, Child Development & Mental Health Specialist in India, Manovaidya follows a structured Neuro-Ayurveda Development System designed to help families better understand developmental concerns and create a clear roadmap for growth, learning and overall development.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Families searching for Child Development Support in India, Developmental Assessment, Child Development Specialist in India or Developmental Guidance often seek clarity regarding their child's strengths, challenges and future developmental needs. Our goal is to provide personalized guidance, structured assessment and long-term developmental support.
+            </p>
+          </section>
 
-          <section id="what-is-child-development" className="mt-8">
+          <section id="what-is-child-development" className="mt-9">
             <h2 className="text-[20px] font-black text-[#17111f]">What is Child Development?</h2>
-            <div className="mt-3 space-y-4 text-[14px] font-semibold leading-7 text-[#51465a]">
-              <p>
-                Child Development refers to the physical, cognitive, emotional, behavioural, communication and social growth that occurs throughout childhood.
-              </p>
-              <p>
-                Development is not limited to a single milestone. Every child develops at a different pace, and development is best understood as a dynamic process influenced by many interconnected factors.
-              </p>
-            </div>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Child Development refers to the physical, cognitive, emotional, behavioural, communication and social growth that occurs throughout childhood.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Development is not limited to a single milestone. It involves multiple developmental areas working together, including:
+            </p>
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               {developmentAreas.map((item) => (
                 <span key={item} className="flex gap-2 rounded-md bg-white px-3 py-2 text-[12px] font-bold text-[#51465a] ring-1 ring-[#eadff1]">
@@ -453,10 +498,19 @@ function ChildDevelopmentSupportIndiaPage() {
                 </span>
               ))}
             </div>
+            <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Every child develops at a different pace. Some variations are part of normal development, while others may indicate the need for a deeper developmental understanding.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              At Manovaidya, development is viewed as a dynamic process influenced by multiple interconnected factors rather than a checklist of milestones.
+            </p>
           </section>
 
           <section id="common-concerns" className="mt-9">
             <h2 className="text-[20px] font-black text-[#17111f]">Common Child Development Concerns</h2>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Parents may seek developmental support for a wide range of concerns, including:
+            </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {commonConcerns.map(({ title, text, Icon }) => (
                 <div key={title} className="rounded-lg border border-[#eadff1] bg-white p-4 shadow-[0_8px_22px_rgba(58,31,90,0.04)]">
@@ -477,7 +531,16 @@ function ChildDevelopmentSupportIndiaPage() {
           <section id="beyond-milestones" className="mt-9 rounded-lg bg-[#f4ecf8] p-5">
             <h2 className="text-[20px] font-black text-[#17111f]">Understanding Child Development Beyond Milestones</h2>
             <p className="mt-3 text-[13px] font-bold leading-6 text-[#3b2e45]">
-              Development is often misunderstood as a checklist of milestones. A child may achieve certain milestones but still experience challenges in communication, learning, behaviour, emotional regulation or social interaction. This is why developmental understanding should focus on the whole child.
+              One of the most common misconceptions about development is that it is measured only by milestones.
+            </p>
+            <p className="mt-3 text-[13px] font-bold leading-6 text-[#3b2e45]">
+              In reality, child development is much broader. A child may achieve certain milestones but still experience challenges related to communication, learning, behaviour, emotional regulation or social interaction.
+            </p>
+            <p className="mt-3 text-[13px] font-bold leading-6 text-[#3b2e45]">
+              Similarly, some children may develop more slowly in one area while showing strengths in others. This is why developmental understanding should focus on the whole child rather than isolated concerns.
+            </p>
+            <p className="mt-3 text-[13px] font-bold leading-6 text-[#3b2e45]">
+              At Manovaidya, child development is viewed through a broader framework that helps families understand the various factors influencing growth, learning and developmental progress.
             </p>
           </section>
 
@@ -486,7 +549,13 @@ function ChildDevelopmentSupportIndiaPage() {
             <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_270px] lg:items-center">
               <div>
                 <p className="text-[14px] font-semibold leading-7 text-[#51465a]">
-                  Assessment focuses on understanding the child as a whole rather than evaluating a single concern in isolation.
+                  Every child has a unique developmental profile.
+                </p>
+                <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+                  Assessment at Manovaidya focuses on understanding the child as a whole rather than evaluating a single concern in isolation.
+                </p>
+                <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+                  The assessment process may include:
                 </p>
                 <div className="mt-5 grid gap-3">
                   {assessmentGroups.map((group) => (
@@ -502,6 +571,9 @@ function ChildDevelopmentSupportIndiaPage() {
                     </div>
                   ))}
                 </div>
+                <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
+                  The goal is to provide families with a clearer understanding of developmental strengths, challenges and support needs.
+                </p>
               </div>
               <img src={supportFamilyImage} alt="Doctor and parent discussion for developmental assessment" className="h-[230px] w-full rounded-lg object-cover shadow-[0_12px_30px_rgba(58,31,90,0.08)]" />
             </div>
@@ -510,7 +582,10 @@ function ChildDevelopmentSupportIndiaPage() {
           <section id="development-support" className="mt-9">
             <h2 className="text-[20px] font-black text-[#17111f]">Child Development Support in India</h2>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Families are often looking for clarity, direction and a structured developmental roadmap. At Manovaidya, support focuses on understanding interconnected developmental influences.
+              Many families searching for Child Development Support in India are looking for more than temporary solutions. They are looking for clarity, direction and a structured developmental roadmap.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Child development may be influenced by:
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {supportInfluences.map((item) => (
@@ -522,12 +597,18 @@ function ChildDevelopmentSupportIndiaPage() {
                 </div>
               ))}
             </div>
+            <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
+              At Manovaidya, support focuses on understanding these interconnected developmental influences and helping families create a meaningful plan for long-term growth and development.
+            </p>
           </section>
 
           <section id="neuro-ayurveda-system" className="mt-9">
             <h2 className="text-[20px] font-black text-[#17111f]">The Neuro-Ayurveda Development System</h2>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Developmental support is guided by the Neuro-Ayurveda Development System developed by Dr. Ankush Garg. Together, the five pillars provide a structured framework for understanding child development comprehensively.
+              At Manovaidya, developmental support is guided by the Neuro-Ayurveda Development System developed by Dr. Ankush Garg.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              The system focuses on five interconnected pillars:
             </p>
             <img src={neuroDiagramImage} alt="Neuro-Ayurveda five pillar development system" className="mt-5 max-h-[320px] w-full rounded-lg border border-[#eadff1] bg-white object-contain p-4" />
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -545,13 +626,19 @@ function ChildDevelopmentSupportIndiaPage() {
                 </div>
               ))}
             </div>
+            <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Together, these five pillars provide a structured framework for understanding child development in a comprehensive way.
+            </p>
           </section>
 
           <section id="how-we-support" className="mt-9 grid gap-6 lg:grid-cols-[1fr_270px] lg:items-center">
             <div>
               <h2 className="text-[20px] font-black text-[#17111f]">How We Support Children & Families</h2>
               <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-                Support begins with understanding the child rather than focusing only on a diagnosis or symptom. Every child receives individualized guidance based on developmental needs and family goals.
+                Support at Manovaidya begins with understanding the child rather than focusing only on a diagnosis or symptom.
+              </p>
+              <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+                Our approach focuses on:
               </p>
               <ul className="mt-4 space-y-2.5">
                 {supportPoints.map((point) => (
@@ -561,29 +648,59 @@ function ChildDevelopmentSupportIndiaPage() {
                   </li>
                 ))}
               </ul>
+              <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
+                Every child receives individualized guidance based on developmental needs and family goals.
+              </p>
             </div>
-            <img src={signsImage} alt="Child learning and growth support" className="h-[230px] w-full rounded-lg object-cover shadow-[0_12px_30px_rgba(58,31,90,0.08)]" />
+            <img src={signsImage} alt="Child learning and growth illustration" className="h-[230px] w-full rounded-lg object-cover shadow-[0_12px_30px_rgba(58,31,90,0.08)]" />
           </section>
 
           <section id="parent-guidance" className="mt-9 rounded-lg bg-[#f4ecf8] p-5">
             <h2 className="text-[20px] font-black text-[#17111f]">Parent Guidance & Family Support</h2>
             <p className="mt-3 text-[13px] font-bold leading-6 text-[#3b2e45]">
-              Developmental concerns affect the entire family, not just the child. Parent guidance helps families understand development, behaviour strategies, communication opportunities, learning support and long-term planning.
+              Developmental concerns affect the entire family, not just the child.
+            </p>
+            <p className="mt-3 text-[13px] font-bold leading-6 text-[#3b2e45]">
+              Many parents experience uncertainty, confusion and anxiety while trying to understand their child's developmental needs.
+            </p>
+            <p className="mt-3 text-[13px] font-bold leading-6 text-[#3b2e45]">
+              At Manovaidya, parent guidance is considered an essential part of developmental support.
+            </p>
+            <p className="mt-3 text-[13px] font-bold leading-6 text-[#3b2e45]">Families receive guidance regarding:</p>
+            <div className="mt-4 grid gap-2 sm:grid-cols-2">
+              {parentGuidanceItems.map((item) => (
+                <span key={item} className="flex gap-2 rounded-md bg-white px-3 py-2 text-[12px] font-bold text-[#51465a] ring-1 ring-[#eadff1]">
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-[#7835A4]" />
+                  {item}
+                </span>
+              ))}
+            </div>
+            <p className="mt-4 text-[13px] font-bold leading-6 text-[#3b2e45]">
+              The goal is to help parents move forward with greater confidence and clarity.
             </p>
           </section>
 
           <section id="how-we-work" className="mt-9">
             <h2 className="text-[20px] font-black text-[#17111f]">How We Work at Manovaidya</h2>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Our process starts with a detailed assessment to understand developmental history, communication abilities, learning needs, behaviour patterns, emotional wellbeing and family concerns. Families receive personalized guidance and a structured developmental roadmap.
+              Every child is unique, which is why support at Manovaidya begins with understanding the child as a whole rather than focusing on developmental concerns alone.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Our process starts with a detailed assessment to understand developmental history, communication abilities, learning needs, behaviour patterns, emotional wellbeing and family concerns.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Based on this understanding, families receive personalized guidance and a structured developmental roadmap tailored to their child's individual needs.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Rather than following a one-size-fits-all approach, Manovaidya follows the Neuro-Ayurveda Development System to help families better understand the factors that may influence development, communication, behaviour, learning and overall wellbeing.
+            </p>
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Support focuses on assessment, parent guidance, developmental planning, progress tracking and long-term family support.
             </p>
           </section>
 
           <section id="why-manovaidya" className="mt-9">
             <h2 className="text-[20px] font-black text-[#17111f]">Why Families Choose Manovaidya</h2>
-            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Families from Delhi, Noida, Greater Noida, Ghaziabad, NCR and across India connect with Manovaidya for Child Development Support, Developmental Assessment and Family Guidance.
-            </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {whyChoose.map((item) => (
                 <div key={item} className="rounded-lg border border-[#eadff1] bg-white p-4">
@@ -594,16 +711,25 @@ function ChildDevelopmentSupportIndiaPage() {
                 </div>
               ))}
             </div>
+            <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Families from Delhi, Noida, Greater Noida, Ghaziabad, NCR and across India connect with Manovaidya for Child Development Support, Developmental Assessment and Family Guidance.
+            </p>
           </section>
 
           <section id="about-dr-ankush-garg" className="mt-9 rounded-lg border border-[#eadff1] bg-white p-5">
-            <div className="flex gap-4">
-              <img src={doctorImage} alt="Dr. Ankush Garg" className="h-20 w-20 rounded-lg object-cover" />
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <img src={doctorImage} alt="Dr. Ankush Garg" className="h-24 w-24 rounded-lg object-cover" />
               <div>
-                <p className="text-[12px] font-bold text-[#75677d]">About the Author</p>
-                <h2 className="text-[15px] font-black text-[#21142d]">Dr. Ankush Garg</h2>
-                <p className="mt-2 text-[12px] font-semibold leading-5 text-[#51465a]">
-                  Founder of Manovaidya and Creator of the Neuro-Ayurveda Development System. His work focuses on Autism, ADHD, Child Development, Speech & Communication Challenges, Behavioural Concerns, Learning Difficulties and Mental Health support.
+                <p className="text-[12px] font-bold text-[#75677d]">Autism, ADHD, Child Development & Mental Health Specialist in India</p>
+                <h2 className="text-[16px] font-black text-[#21142d]">About Dr. Ankush Garg</h2>
+                <p className="mt-2 text-[13px] font-semibold leading-6 text-[#51465a]">
+                  Dr. Ankush Garg is the Founder of Manovaidya and Creator of the Neuro-Ayurveda Development System.
+                </p>
+                <p className="mt-2 text-[13px] font-semibold leading-6 text-[#51465a]">
+                  His work focuses on Autism Spectrum Disorder (ASD), ADHD, Child Development, Speech & Communication Challenges, Behavioural Concerns, Learning Difficulties, Teen Mental Health, Adult Mental Health, Women's Emotional Wellbeing and Senior Mental Health Support.
+                </p>
+                <p className="mt-2 text-[13px] font-semibold leading-6 text-[#51465a]">
+                  Through detailed assessment, individualized guidance and family-centred support, he helps families better understand developmental concerns and move forward with greater clarity, confidence and direction.
                 </p>
               </div>
             </div>
@@ -643,13 +769,16 @@ function ChildDevelopmentSupportIndiaPage() {
               <div className="p-5">
                 <h2 className="text-[20px] font-black text-[#17111f]">Book a Consultation</h2>
                 <p className="mt-3 text-[13px] font-bold leading-6 text-[#51465a]">
-                  If you are looking for Child Development Support in India, Developmental Assessment, Communication Guidance or personalized developmental support, schedule a consultation with Dr. Ankush Garg and the Manovaidya team.
+                  If you are looking for Child Development Support in India, Developmental Assessment, Communication Guidance or personalized developmental support, you can schedule a consultation with Dr. Ankush Garg and the Manovaidya team.
+                </p>
+                <p className="mt-3 text-[13px] font-bold leading-6 text-[#51465a]">
+                  Through a structured assessment and personalized guidance process, families can gain a clearer understanding of their child's developmental needs and explore appropriate next steps for long-term growth, learning and development.
                 </p>
                 <a href="tel:+917823894080" className="mt-5 inline-flex h-10 items-center justify-center rounded-md bg-[#7835A4] px-5 text-[12px] font-black text-white transition hover:bg-[#632b86]">
                   Book Now
                 </a>
               </div>
-              <img src={ctaImage} alt="Happy family after developmental support" className="h-full min-h-[240px] w-full object-cover" />
+              <img src={ctaImage} alt="Happy family image" className="h-full min-h-[240px] w-full object-cover" />
             </div>
           </section>
         </article>
@@ -661,6 +790,25 @@ function ChildDevelopmentSupportIndiaPage() {
               <input type="search" placeholder="Search topics..." className="min-w-0 flex-1 bg-transparent text-[12px] font-bold text-[#21142d] outline-none placeholder:text-[#9b8ea5]" />
               <Search className="h-4 w-4 text-[#7835A4]" />
             </label>
+          </SidebarCard>
+
+          <SidebarCard>
+            <h2 className="text-[15px] font-black text-[#21142d]">On this page</h2>
+            <nav className="mt-5 space-y-3.5">
+              {pageLinks.map(({ label, id }) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  onClick={() => setActiveSection(id)}
+                  className={`flex items-start gap-2 rounded-md px-2 py-1.5 text-[12px] font-bold leading-5 transition ${
+                    activeSection === id ? "bg-[#f0e7f6] text-[#7835A4]" : "text-[#51465a] hover:bg-[#fbf7ff] hover:text-[#7835A4]"
+                  }`}
+                >
+                  <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${activeSection === id ? "bg-[#7835A4]" : "bg-[#c5adcf]"}`} />
+                  {label}
+                </a>
+              ))}
+            </nav>
           </SidebarCard>
 
           <SidebarCard>
@@ -694,7 +842,7 @@ function ChildDevelopmentSupportIndiaPage() {
       </section>
 
       <section className="border-y border-[#eadff1] bg-white">
-        <div className="mx-auto grid max-w-[1440px] gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[1fr_460px] lg:items-center lg:px-8">
+        <div className="mx-auto grid gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[1fr_460px] lg:items-center lg:px-10">
           <div className="flex items-center gap-4">
             <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#f0e7f6] text-[#7835A4]">
               <Mail className="h-8 w-8" />
