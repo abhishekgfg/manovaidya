@@ -16,6 +16,7 @@ const conditions = [
     description:
       "Difficulty remembering recent events, names, or important information.",
     action: "Explore Memory Care",
+    href: "/memory-loss-forgetfulness-support-seniors-india/",
     Icon: Brain,
     iconClass: "bg-[#eee5ff] text-[#6043b8]",
   },
@@ -24,6 +25,7 @@ const conditions = [
     description:
       "Feeling confused about time, place or familiar surroundings.",
     action: "Explore Support",
+    href: "/confusion-disorientation-support-seniors-india/",
     Icon: CloudRain,
     iconClass: "bg-[#dcefff] text-[#2583c7]",
   },
@@ -32,6 +34,7 @@ const conditions = [
     description:
       "Early stage cognitive changes that may affect daily functioning.",
     action: "Explore MCI Support",
+    href: "/mild-cognitive-impairment-mci-support-seniors-india/",
     Icon: ScanFace,
     iconClass: "bg-[#ffe1eb] text-[#e34e7d]",
   },
@@ -40,14 +43,16 @@ const conditions = [
     description:
       "Comprehensive care for Alzheimer's and other types of dementia.",
     action: "Explore Dementia Care",
+    href: "/dementia-alzheimers-care-support-seniors-india/",
     Icon: Puzzle,
     iconClass: "bg-[#e4f1d9] text-[#60993e]",
   },
   {
-    title: "Attention &\nConcentration",
+    title: "Depression Treatment &\nSupport",
     description:
       "Trouble focusing, completing tasks or following conversations.",
     action: "Explore Focus Support",
+    href: "/senior-depression-support-india/",
     Icon: Flower2,
     iconClass: "bg-[#fff0ca] text-[#a27918]",
   },
@@ -88,7 +93,7 @@ function SeniorConditionsSection() {
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-3 min-[500px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-7">
-          {conditions.map(({ title, description, action, Icon, iconClass }) => (
+          {conditions.map(({ title, description, action, href = "#assessment", Icon, iconClass }) => (
             <article
               key={title}
               className="flex min-h-[300px] min-w-0 flex-col items-center rounded-md border border-[#e2deea] bg-white px-3 py-5 text-center shadow-[0_8px_22px_rgba(45,32,84,0.06)]"
@@ -106,7 +111,7 @@ function SeniorConditionsSection() {
               </p>
 
               <a
-                href="#assessment"
+                href={href}
                 className="mt-auto inline-flex items-center gap-2 pt-4 text-[11px] font-black text-[#4e2b9c] transition hover:text-[#8B43BA]"
               >
                 {action}

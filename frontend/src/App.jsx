@@ -8,6 +8,11 @@ import AboutManovaidyaPage from "./pages/AboutManovaidyaPage";
 import Home from "./pages/Home";
 import MindBodyWellbeingPage from "./pages/MindBodyWellbeingPage";
 import SeniorMindCarePage from "./pages/SeniorMindCarePage";
+import MemoryLossForgetfulnessSupportPage from "./seniormindcare/MemoryLossForgetfulnessSupportPage";
+import ConfusionDisorientationSupportPage from "./seniormindcare/ConfusionDisorientationSupportPage";
+import MildCognitiveImpairmentSupportPage from "./seniormindcare/MildCognitiveImpairmentSupportPage";
+import DementiaAlzheimersCareSupportPage from "./seniormindcare/DementiaAlzheimersCareSupportPage";
+import SeniorDepressionSupportPage from "./seniormindcare/SeniorDepressionSupportPage";
 import WomenHealthCarePage from "./pages/WomenHealthCarePage";
 import AdultMentalWellnessPage from "./pages/AdultMentalWellnessPage";
 import AdultAnxietySupportIndiaPage from "./adult/AdultAnxietySupportIndiaPage";
@@ -15,6 +20,8 @@ import AdultDepressionSupportIndiaPage from "./adult/AdultDepressionSupportIndia
 import StressBurnoutSupportPage from "./adult/StressBurnoutSupportPage";
 import AdultSleepDisordersSupportIndiaPage from "./adult/AdultSleepDisordersSupportIndiaPage";
 import AdultSelfEsteemConfidenceSupportIndiaPage from "./adult/AdultSelfEsteemConfidenceSupportIndiaPage";
+import AdultRelationshipChallengesSupportIndiaPage from "./adult/AdultRelationshipChallengesSupportIndiaPage";
+import AdultAddictionUnhealthyHabitsSupportIndiaPage from "./adult/AdultAddictionUnhealthyHabitsSupportIndiaPage";
 import TeenMentalWellnessPage from "./pages/TeenMentalWellnessPage";
 import TeenStressAnxietyIndiaPage from "./teenmental/TeenStressAnxietyIndiaPage";
 import TeenDepressionLowMoodIndiaPage from "./teenmental/TeenDepressionLowMoodIndiaPage";
@@ -67,6 +74,16 @@ function App() {
           <Route path="/about/approach" element={<ApproachPage />} />
           <Route path="/mind-body-wellbeing" element={<MindBodyWellbeingPage />} />
           <Route path="/senior-mind-memory-care" element={<SeniorMindCarePage />} />
+          <Route path="/memory-loss-forgetfulness-support-seniors-india" element={<MemoryLossForgetfulnessSupportPage />} />
+          <Route path="/memory-loss-forgetfulness-support-seniors-india/" element={<MemoryLossForgetfulnessSupportPage />} />
+          <Route path="/confusion-disorientation-support-seniors-india" element={<ConfusionDisorientationSupportPage />} />
+          <Route path="/confusion-disorientation-support-seniors-india/" element={<ConfusionDisorientationSupportPage />} />
+          <Route path="/mild-cognitive-impairment-mci-support-seniors-india" element={<MildCognitiveImpairmentSupportPage />} />
+          <Route path="/mild-cognitive-impairment-mci-support-seniors-india/" element={<MildCognitiveImpairmentSupportPage />} />
+          <Route path="/dementia-alzheimers-care-support-seniors-india" element={<DementiaAlzheimersCareSupportPage />} />
+          <Route path="/dementia-alzheimers-care-support-seniors-india/" element={<DementiaAlzheimersCareSupportPage />} />
+          <Route path="/senior-depression-support-india" element={<SeniorDepressionSupportPage />} />
+          <Route path="/senior-depression-support-india/" element={<SeniorDepressionSupportPage />} />
           <Route path="/women-health-care" element={<WomenHealthCarePage />} />
           <Route path="/adult-mental-wellness" element={<AdultMentalWellnessPage />} />
           <Route path="/anxiety-support-india" element={<AdultAnxietySupportIndiaPage />} />
@@ -83,6 +100,10 @@ function App() {
           <Route path="/sleep-disorders-insomnia-support-india/" element={<AdultSleepDisordersSupportIndiaPage />} />
           <Route path="/low-self-esteem-confidence-support-india" element={<AdultSelfEsteemConfidenceSupportIndiaPage />} />
           <Route path="/low-self-esteem-confidence-support-india/" element={<AdultSelfEsteemConfidenceSupportIndiaPage />} />
+          <Route path="/relationship-challenges-support-india" element={<AdultRelationshipChallengesSupportIndiaPage />} />
+          <Route path="/relationship-challenges-support-india/" element={<AdultRelationshipChallengesSupportIndiaPage />} />
+          <Route path="/addiction-unhealthy-habits-support-india" element={<AdultAddictionUnhealthyHabitsSupportIndiaPage />} />
+          <Route path="/addiction-unhealthy-habits-support-india/" element={<AdultAddictionUnhealthyHabitsSupportIndiaPage />} />
           <Route path="/teen-mental-wellness" element={<TeenMentalWellnessPage />} />
           <Route path="/teen-mental-wellness-india" element={<TeenMentalWellnessPage />} />
           <Route path="/teen-mental-wellness-india/" element={<TeenMentalWellnessPage />} />

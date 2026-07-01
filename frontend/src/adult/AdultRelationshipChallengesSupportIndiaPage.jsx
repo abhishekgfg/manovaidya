@@ -29,21 +29,22 @@ import {
   Flower2
 } from "lucide-react";
 
-import heroImage from "../images/low-self-esteem-confidence-support-india.png";
-import symptomsImage from "../images/low-self-esteem-signs.png";
+import heroImage from "../images/relationship-challenges-support-india.png";
+import communicationImage from "../images/relationship-communication-support.png";
 import neuroDiagramImage from "../images/neuro-ayurveda-system-diagram-transparent.png";
-import supportImage from "../images/self-confidence-support.png";
+import trustImage from "../images/trust-issues-relationship.png";
+import supportImage from "../images/healthy-relationships-support.png";
 import doctorImage from "../images/doctor-ankush-portrait.png";
 import RelatedPagesCard from "./RelatedPagesCard";
 
 const pageLinks = [
   { label: "Introduction", id: "introduction" },
-  { label: "Understanding Confidence", id: "understanding-confidence" },
+  { label: "Understanding Challenges", id: "understanding-challenges" },
   { label: "Signs & Symptoms", id: "signs-and-symptoms" },
-  { label: "Causes of Low Self-Esteem", id: "causes" },
+  { label: "Causes of Problems", id: "causes" },
   { label: "Health Impact", id: "health-impact" },
   { label: "Neuro-Ayurveda System", id: "neuro-ayurveda-system" },
-  { label: "Building Confidence", id: "building-confidence" },
+  { label: "Building Relationships", id: "building-relationships" },
   { label: "How We Support", id: "how-we-support" },
   { label: "Why Choose Us", id: "why-choose-us" },
   { label: "About Dr. Ankush Garg", id: "about-dr-ankush-garg" },
@@ -61,31 +62,31 @@ const categories = [
 ];
 
 const highlights = [
-  { label: "Low Self-Esteem", Icon: Flower2 },
-  { label: "Lack of Confidence", Icon: Brain },
-  { label: "Negative Self-Talk", Icon: MessageCircle },
-  { label: "Fear of Failure", Icon: ShieldCheck },
-  { label: "Self-Doubt", Icon: Users },
-  { label: "Emotional Wellbeing", Icon: HeartHandshake },
+  { label: "Relationship Problems", Icon: Users },
+  { label: "Communication Difficulties", Icon: MessageCircle },
+  { label: "Trust Issues", Icon: ShieldCheck },
+  { label: "Emotional Distance", Icon: HeartHandshake },
+  { label: "Frequent Arguments", Icon: Activity },
+  { label: "Relationship Stress", Icon: BatteryLow },
 ];
 
 const assessmentSteps = [
   {
     step: "Step 1",
     title: "Comprehensive Assessment",
-    desc: "Understanding self-esteem, confidence, emotional wellbeing, lifestyle habits, stress levels and daily routines.",
+    desc: "Understanding relationship concerns, communication patterns, emotional wellbeing, stress levels and lifestyle habits.",
     Icon: ClipboardList
   },
   {
     step: "Step 2",
     title: "Personalized Guidance",
-    desc: "Providing individualized recommendations based on each person's emotional, behavioural and lifestyle needs.",
+    desc: "Providing individualized recommendations based on each person's emotional, behavioural and relationship needs.",
     Icon: BookOpen
   },
   {
     step: "Step 3",
     title: "Emotional Wellbeing Support",
-    desc: "Helping individuals better understand self-worth, confidence and healthy coping strategies through a structured approach.",
+    desc: "Helping individuals better understand communication, emotional regulation and healthier coping strategies.",
     Icon: HeartHandshake
   },
   {
@@ -97,7 +98,7 @@ const assessmentSteps = [
   {
     step: "Step 5",
     title: "Progress Tracking & Follow-Up",
-    desc: "Creating a structured roadmap that helps individuals monitor progress, strengthen healthy habits and support long-term confidence.",
+    desc: "Supporting individuals and families through structured follow-up, healthier communication patterns and long-term wellbeing.",
     Icon: ShieldCheck
   },
 ];
@@ -106,90 +107,90 @@ const neuroAyurvedaPillars = [
   {
     title: "Brain Nourishment System",
     Icon: Brain,
-    text: "Healthy confidence is supported by healthy brain function. The Brain Nourishment System focuses on understanding factors that may influence: Confidence, Emotional regulation, Attention, Memory, Decision-making, Mental clarity. Supporting healthy brain function helps individuals better understand emotional balance and cognitive wellbeing.",
+    text: "Healthy relationships depend upon healthy emotional regulation. The Brain Nourishment System focuses on understanding factors that may influence: Emotional balance, Patience, Decision-making, Emotional awareness, Communication, Mental clarity. Supporting healthy brain function helps individuals respond to relationship situations with greater emotional stability.",
   },
   {
     title: "Gut Response System",
     Icon: Utensils,
-    text: "Growing research highlights the relationship between gut health and emotional wellbeing. Many adults experiencing low confidence also report: Poor appetite during stress, Digestive discomfort, Lifestyle imbalance, Reduced energy. The Gut Response System focuses on understanding how physical wellbeing may influence emotional resilience and self-confidence.",
+    text: "Research increasingly highlights the relationship between physical wellbeing and emotional health. Many adults experiencing relationship stress also report: Digestive discomfort, Appetite changes, Reduced energy, Lifestyle imbalance. The Gut Response System focuses on understanding how physical wellbeing may influence emotional resilience.",
   },
   {
     title: "Neural Network System",
     Icon: Sparkles,
-    text: "Thought patterns gradually become habits. The Neural Network System focuses on understanding: Negative self-talk, Self-belief, Fear of failure, Emotional responses, Behavioural habits. Recognising these patterns helps individuals gradually replace unhelpful beliefs with healthier ways of thinking.",
+    text: "Relationship behaviours often become repeated patterns. The Neural Network System focuses on understanding: Communication habits, Emotional reactions, Conflict responses, Trust patterns, Behavioural routines. Recognising these patterns helps individuals develop healthier ways of responding during emotionally challenging situations.",
   },
   {
     title: "Sensory Integration System",
     Icon: Waves,
-    text: "Modern life constantly exposes individuals to comparison and external pressure. Sources include: Social media, Workplace competition, Family expectations, Academic pressure, Financial responsibilities. Understanding these influences helps individuals reduce unnecessary comparison and develop healthier emotional resilience.",
+    text: "Daily environments also influence emotional wellbeing. Factors such as: Work pressure, Financial stress, Parenting responsibilities, Social expectations, Digital distractions may gradually affect communication and emotional connection. Understanding these influences helps individuals build healthier relationship habits.",
   },
   {
     title: "Behaviour Guidance System",
     Icon: ShieldCheck,
-    text: "Confidence grows through behaviour. Adults with low self-esteem may develop habits such as: Avoiding challenges, Seeking approval, People-pleasing, Overthinking, Procrastination, Avoiding difficult conversations. Rather than focusing only on increasing confidence, this pillar encourages understanding the behavioural patterns that may be maintaining low self-esteem.",
+    text: "Behaviour plays a major role in relationship health. Some individuals may develop patterns such as: Avoiding conversations, Becoming defensive, Constant criticism, Seeking reassurance, Emotional withdrawal, Silent treatment. Rather than judging these behaviours, this pillar focuses on understanding the emotional factors contributing to them and encouraging healthier communication.",
   },
 ];
 
 const faqs = [
   {
-    question: "1. What is low self-esteem?",
-    answer: "Low self-esteem refers to having a consistently negative opinion about yourself or doubting your own worth and abilities. People with low self-esteem may feel they are \"not good enough,\" fear failure or constantly seek approval from others. These feelings can influence relationships, work performance and emotional wellbeing. Understanding the underlying factors behind low self-esteem is an important step towards building healthier confidence and self-worth."
+    question: "1. What are the signs of an unhealthy relationship?",
+    answer: "An unhealthy relationship may involve frequent arguments, poor communication, lack of trust, constant criticism, emotional distance, controlling behaviour or feeling emotionally unsafe. Some individuals may also feel unheard, unappreciated or anxious within the relationship. While every relationship faces occasional disagreements, persistent patterns that affect emotional wellbeing and daily life may indicate that additional support or guidance could be beneficial."
   },
   {
-    question: "2. What are the signs of low self-esteem?",
-    answer: "Common signs of low self-esteem include constant self-doubt, negative self-talk, fear of making mistakes, difficulty accepting compliments, comparing yourself with others and avoiding new opportunities. Some individuals also struggle with people-pleasing, fear of rejection or difficulty expressing their opinions. These signs may gradually affect confidence, emotional wellbeing and everyday decision-making."
+    question: "2. What causes relationship problems?",
+    answer: "Relationship problems usually develop because of multiple factors rather than a single event. Common causes include poor communication, trust issues, unresolved conflicts, work stress, financial pressure, parenting responsibilities, different expectations and mental health challenges such as anxiety or depression. Understanding the underlying causes is an important step towards improving communication and building healthier relationships."
   },
   {
-    question: "3. What causes low self-esteem?",
-    answer: "Low self-esteem usually develops because of multiple life experiences rather than one single cause. Childhood criticism, bullying, difficult relationships, repeated failures, unrealistic expectations, social comparison and ongoing stress may all contribute. Mental health conditions such as anxiety or depression can also influence self-esteem. Every person's experience is unique, making individual assessment important for understanding the contributing factors."
+    question: "3. How can I improve communication in my relationship?",
+    answer: "Healthy communication begins with listening as much as speaking. Expressing thoughts honestly, respecting each other's perspectives, avoiding blame and choosing the right time for important conversations can improve understanding. Regular communication, empathy and patience often strengthen emotional connection. If communication difficulties continue over time, professional guidance may help identify unhealthy patterns and develop healthier ways of interacting."
   },
   {
-    question: "4. What is the difference between self-esteem and confidence?",
-    answer: "Self-esteem is how you value yourself as a person, while confidence is your belief in your ability to perform a particular task or handle a specific situation. Someone may feel confident at work but still struggle with low self-esteem in personal relationships. Healthy emotional wellbeing involves developing both self-worth and confidence, as they work together to support resilience and personal growth."
+    question: "4. Can relationship problems affect mental health?",
+    answer: "Yes. Ongoing relationship challenges may affect emotional wellbeing and can contribute to increased stress, anxiety, sadness, sleep difficulties or reduced confidence in some individuals. Emotional conflict at home may also influence work performance and overall quality of life. Addressing relationship concerns early may support both healthier relationships and improved mental wellbeing."
   },
   {
-    question: "5. Can low self-esteem affect mental health?",
-    answer: "Yes. Persistent low self-esteem may affect emotional wellbeing and can occur alongside conditions such as anxiety, depression or chronic stress. Constant self-criticism, fear of failure and negative thinking patterns may make it more difficult to cope with everyday challenges. Identifying these patterns early and seeking appropriate support may help improve overall emotional wellbeing."
+    question: "5. What are trust issues in a relationship?",
+    answer: "Trust issues refer to ongoing difficulty believing that a partner will be honest, reliable or emotionally supportive. These concerns may develop after past experiences, repeated disappointments, poor communication or unresolved conflicts. Trust issues can lead to overthinking, reassurance-seeking, jealousy or emotional distance. Rebuilding trust usually requires open communication, consistency and mutual effort."
   },
   {
-    question: "6. Why do I have low confidence?",
-    answer: "Low confidence can develop for many reasons, including negative past experiences, repeated criticism, fear of failure, social comparison, bullying or ongoing emotional stress. Sometimes confidence decreases after difficult life events or prolonged mental health challenges. Understanding the reasons behind low confidence may help individuals build healthier coping strategies and gradually strengthen self-belief."
+    question: "6. Why do couples argue so often?",
+    answer: "Couples often argue because of differences in expectations, communication styles, financial concerns, parenting responsibilities, work stress or unresolved emotional issues. Frequent arguments do not always mean a relationship is unhealthy, but repeated conflicts without healthy resolution may increase emotional distance. Understanding the underlying reasons behind disagreements can help couples develop more constructive communication patterns."
   },
   {
-    question: "7. Can adults build confidence?",
-    answer: "Yes. Confidence is not a fixed personality trait and can develop throughout life. Building confidence often involves developing new skills, setting realistic goals, challenging negative self-talk, improving emotional awareness and celebrating gradual progress. While the journey is different for everyone, consistent effort and appropriate guidance may help adults strengthen their confidence over time."
+    question: "7. Can stress affect relationships?",
+    answer: "Yes. Stress from work, finances, health concerns or family responsibilities may reduce patience, increase irritability and make communication more difficult. Individuals experiencing chronic stress may become emotionally withdrawn or react more strongly during disagreements. Managing stress effectively often supports healthier communication and stronger emotional connections within relationships."
   },
   {
-    question: "8. How can I improve my self-esteem naturally?",
-    answer: "Improving self-esteem naturally often involves maintaining healthy daily routines, practising self-awareness, reducing negative self-talk, setting achievable goals, building supportive relationships and limiting unhealthy comparisons with others. Regular physical activity, good sleep and stress management may also contribute to emotional wellbeing. Sustainable improvement usually comes from consistent habits rather than quick fixes."
+    question: "8. How can I rebuild trust in a relationship?",
+    answer: "Rebuilding trust usually takes time, consistency and honest communication. Being transparent, accepting responsibility where appropriate, respecting boundaries and following through on commitments may gradually strengthen trust. Both individuals often need patience and willingness to understand each other's perspectives. When trust has been deeply affected, professional guidance may help support healthier communication and relationship rebuilding."
   },
   {
-    question: "9. Can childhood experiences affect self-esteem?",
-    answer: "Yes. Childhood experiences often play an important role in shaping self-esteem. Frequent criticism, bullying, emotional neglect, unrealistic expectations or a lack of encouragement may influence how individuals view themselves later in life. However, self-esteem can continue to develop throughout adulthood, and many people gradually build healthier self-worth through positive experiences and professional guidance."
+    question: "9. What are the signs of emotional distance in a relationship?",
+    answer: "Emotional distance may develop gradually and often includes reduced communication, lack of emotional intimacy, feeling disconnected, avoiding meaningful conversations or spending less quality time together. Some individuals may feel lonely despite being in a relationship. Recognising these signs early allows couples to address communication challenges before emotional disconnection becomes more significant."
   },
   {
-    question: "10. How does low self-esteem affect relationships?",
-    answer: "Low self-esteem may influence communication, trust and emotional connection within relationships. Some individuals seek constant reassurance, avoid expressing their needs, fear rejection or remain in unhealthy relationships because they doubt their own worth. Developing healthier self-esteem often supports stronger boundaries, better communication and more balanced relationships."
+    question: "10. Can relationship problems cause anxiety or depression?",
+    answer: "Relationship difficulties may contribute to emotional stress and can occur alongside anxiety or depression in some individuals. Ongoing conflicts, uncertainty, emotional distance or lack of support may affect mood, confidence and overall emotional wellbeing. Because emotional health and relationships influence one another, addressing both together may provide a more complete understanding of the situation."
   },
   {
-    question: "11. Can social media affect self-confidence?",
-    answer: "Yes. Constant exposure to carefully edited images, achievements and lifestyles on social media may encourage unhealthy comparison for some individuals. This can contribute to feelings of inadequacy, self-doubt or reduced confidence. Using social media mindfully and focusing on personal growth instead of comparison may help support healthier self-esteem and emotional wellbeing."
+    question: "11. How can couples manage relationship stress?",
+    answer: "Couples can often reduce relationship stress by communicating openly, listening without interrupting, spending quality time together, managing daily stress, respecting boundaries and working together to solve problems. Small, consistent efforts to understand each other's needs often strengthen emotional connection. If relationship stress continues affecting daily life, professional guidance may provide additional support."
   },
   {
-    question: "12. Can low self-esteem affect career growth?",
-    answer: "Yes. Low self-esteem may influence career decisions by making individuals hesitate to apply for promotions, avoid leadership opportunities or underestimate their abilities. Fear of failure or criticism may reduce willingness to take on new challenges. Building healthier confidence can support better communication, decision-making and professional development."
+    question: "12. Can professional guidance help relationship challenges?",
+    answer: "Yes. Professional guidance may help individuals and couples better understand communication patterns, emotional responses, conflict resolution and relationship dynamics. Depending on individual needs, support may include psychological guidance, lifestyle recommendations and strategies to improve communication and emotional wellbeing. The most appropriate approach varies according to each relationship's unique circumstances."
   },
   {
-    question: "13. Can therapy or professional guidance help improve self-esteem?",
-    answer: "Professional guidance may help individuals better understand the emotional, behavioural and thought patterns contributing to low self-esteem. Depending on individual needs, support may include psychological interventions, lifestyle guidance, stress management and strategies to build healthier self-belief. The most appropriate approach varies from person to person and should be tailored to individual circumstances."
+    question: "13. How can couples improve emotional connection?",
+    answer: "Emotional connection often grows through honest communication, empathy, mutual respect and spending meaningful time together. Expressing appreciation, listening actively, supporting each other during difficult situations and maintaining healthy boundaries may strengthen relationships over time. Consistent daily efforts are often more valuable than occasional grand gestures."
   },
   {
-    question: "14. How does Manovaidya support adults with low self-esteem?",
-    answer: "At Manovaidya, support begins with understanding the individual rather than focusing only on confidence challenges. Through structured assessment, personalised guidance and the Neuro-Ayurveda Development System, we help individuals better understand self-esteem, emotional wellbeing, lifestyle habits and behavioural patterns that may influence confidence. Our goal is to support healthier self-worth, emotional resilience and long-term personal growth through a holistic and personalised approach."
+    question: "14. How does Manovaidya support relationship wellbeing?",
+    answer: "At Manovaidya, support begins with understanding the individual and the relationship rather than focusing only on conflicts. Through structured assessment, personalised guidance and the Neuro-Ayurveda Development System, we help individuals better understand communication patterns, emotional wellbeing, lifestyle habits and behavioural factors that may influence relationships. Our goal is to support healthier communication, stronger emotional connection and long-term relationship wellbeing through a holistic and personalised approach."
   },
   {
-    question: "15. When should I seek professional guidance for low self-esteem?",
-    answer: "You should consider seeking professional guidance if low self-esteem or confidence continues for several weeks and begins affecting your work, relationships, emotional wellbeing or daily life. Persistent self-doubt, fear of failure, negative self-talk or difficulty making decisions should not be ignored. At Manovaidya, structured assessments help identify contributing factors and provide personalised guidance to support healthier confidence, emotional resilience and long-term wellbeing."
+    question: "15. When should I seek professional guidance for relationship challenges?",
+    answer: "You should consider seeking professional guidance if communication problems, trust issues, emotional distance or recurring conflicts continue for several weeks and begin affecting your emotional wellbeing, family life, work or daily functioning. Persistent relationship stress should not be ignored. At Manovaidya, structured assessments help identify contributing factors and provide personalised guidance to support healthier relationships, emotional wellbeing and long-term family harmony."
   }
 ];
 
@@ -201,7 +202,7 @@ function SidebarCard({ children, className = "", id = "" }) {
   );
 }
 
-function AdultSelfEsteemConfidenceSupportIndiaPage() {
+function AdultRelationshipChallengesSupportIndiaPage() {
   const [activeSection, setActiveSection] = React.useState(pageLinks[0].id);
   const [openFaq, setOpenFaq] = React.useState(0);
   const [showNeuroPillars, setShowNeuroPillars] = React.useState(false);
@@ -256,14 +257,14 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                 <span>/</span>
                 <a href="/adult-mental-wellness" className="transition hover:text-[#7835A4]">Adult Mental Health Care</a>
                 <span>/</span>
-                <span className="text-[#4b345d]">Low Self-Esteem & Confidence Support</span>
+                <span className="text-[#4b345d]">Relationship Challenges Support</span>
               </nav>
-              <p className="text-[13px] font-black uppercase tracking-[0.08em] text-[#7835A4]">Self-Esteem & Confidence Support</p>
+              <p className="text-[13px] font-black uppercase tracking-[0.08em] text-[#7835A4]">Relationship Challenges & Wellbeing</p>
               <h1 className="mt-2 max-w-[650px] text-[27px] font-black leading-[1.12] text-[#292064] sm:text-[34px] lg:text-[34px]">
-                Low Self-Esteem & Confidence Support in India
+                Relationship Challenges & Emotional Wellbeing Support in India
               </h1>
               <p className="mt-4 max-w-[620px] text-[14px] font-bold leading-7 text-[#51465a] sm:text-[15px]">
-                Helping Adults Build Healthy Self-Esteem, Confidence & Emotional Wellbeing
+                Helping Adults Build Healthier Relationships, Better Communication & Emotional Wellbeing
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -313,7 +314,7 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
               <div className="-translate-y-[50px] overflow-hidden rounded-[48%_52%_46%_54%/58%_42%_58%_42%] border-[6px] border-white bg-[#f3eaf9] shadow-[0_18px_35px_rgba(58,31,90,0.12)] lg:-translate-y-[58px]">
                 <img
                   src={heroImage}
-                  alt="Low Self-Esteem and Confidence Support in India at Manovaidya"
+                  alt="Relationship Challenges and Emotional Wellbeing Support in India at Manovaidya"
                   className="h-[248px] w-full object-cover object-right sm:h-[315px] lg:h-[355px]"
                 />
               </div>
@@ -322,23 +323,26 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
 
           <section id="introduction" className="mt-8">
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Confidence influences the way we think, communicate, make decisions and respond to everyday challenges. Most people experience moments of self-doubt before an interview, presentation, examination or important life decision. These temporary feelings are a normal part of life and usually improve with experience.
+              Relationships are an important part of emotional wellbeing. Whether it is a relationship with a spouse, partner, family member or someone close to you, healthy relationships often provide emotional support, understanding and a sense of security.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              However, when self-doubt becomes constant and begins affecting work, relationships, communication or personal growth, it may be associated with low self-esteem or confidence difficulties. Individuals may begin questioning their abilities, avoiding new opportunities or believing they are "not good enough" despite having the skills to succeed.
+              Every relationship experiences disagreements from time to time. Differences in opinions, misunderstandings and occasional conflicts are a natural part of human relationships. In most situations, these challenges can be resolved through healthy communication, mutual respect and understanding.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Many adults silently struggle with low self-esteem because the signs are often hidden behind perfectionism, overthinking, people-pleasing or fear of failure. Others compare themselves with friends, colleagues or social media, gradually losing confidence in their own abilities.
+              However, when misunderstandings become frequent, communication breaks down or emotional distance continues to grow, relationship challenges may begin affecting both emotional wellbeing and daily life. Individuals may start feeling unheard, disconnected, anxious or emotionally exhausted, making it difficult to maintain healthy personal and professional relationships.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              At Manovaidya, we understand that confidence is not simply about positive thinking or speaking loudly. Healthy confidence develops through emotional wellbeing, self-awareness, balanced thinking and supportive daily habits.
+              Many adults silently struggle with relationship difficulties because they are unsure whether their experiences are "normal" or whether they should seek guidance. Some continue living with unresolved conflicts for years, while others find themselves repeatedly facing similar relationship patterns in different stages of life.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Led by Dr. Ankush Garg, Autism, ADHD, Child Development & Mental Health Specialist in India, Manovaidya follows the Neuro-Ayurveda Development System to help individuals better understand self-esteem, confidence and the factors influencing long-term emotional wellbeing.
+              At Manovaidya, we understand that relationship challenges are not simply about disagreements. They often involve emotional wellbeing, communication patterns, stress, self-esteem, trust and behavioural responses that influence how individuals connect with others.
             </p>
-
+            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+              Led by Dr. Ankush Garg, Autism, ADHD, Child Development & Mental Health Specialist in India, Manovaidya follows the Neuro-Ayurveda Development System to help adults better understand relationship challenges, emotional wellbeing and the multiple factors that influence healthy relationships.
+            </p>
+            
             <div className="mt-5 rounded-lg bg-[#f4ecf8] p-5">
-              <h3 className="font-bold text-[#3b2e45] mb-2 text-[14px]">At Manovaidya, Self-Esteem & Confidence Support Focuses On:</h3>
+              <h3 className="font-bold text-[#3b2e45] mb-2 text-[14px]">At Manovaidya, Relationship Support Focuses On:</h3>
               <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {highlights.map(({ label, Icon }) => (
                   <li key={label} className="flex min-h-[122px] flex-col items-center justify-start gap-3 rounded-lg border border-[#eadff1] bg-white p-4 text-center text-[13px] font-bold leading-5 text-[#51465a] shadow-[0_8px_18px_rgba(58,31,90,0.04)]">
@@ -352,76 +356,67 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
             </div>
           </section>
 
-          <section id="understanding-confidence" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">Understanding Low Self-Esteem & Confidence</h2>
+          <section id="understanding-challenges" className="mt-9">
+            <h2 className="text-[20px] font-black text-[#17111f]">Understanding Relationship Challenges</h2>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Self-esteem refers to the way we value and perceive ourselves. It influences how we think about our abilities, strengths and overall self-worth.
+              Every relationship goes through different phases. Differences in personalities, expectations, responsibilities and life experiences naturally influence how people interact with one another.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Confidence, on the other hand, reflects how comfortable we feel performing specific tasks or facing new situations. A person may feel confident at work but lack confidence in social situations, relationships or public speaking.
+              Healthy relationships are not relationships without disagreements. Instead, they are relationships where individuals are able to communicate openly, respect each other's perspectives and work together to resolve difficulties.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Healthy self-esteem and confidence help individuals face challenges, learn from mistakes and continue growing even when situations become difficult.
+              Relationship challenges arise when these healthy patterns begin breaking down. Poor communication, unresolved conflicts, emotional distance or repeated misunderstandings may gradually create frustration, loneliness and emotional stress.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              When self-esteem becomes consistently low, everyday decisions may feel overwhelming. Individuals may avoid opportunities, doubt their abilities or constantly seek approval from others.
+              Many adults searching for Relationship Challenges Support in India, Relationship Problems, Trust Issues, Communication Problems or Relationship Stress are looking for answers because these difficulties have started affecting their emotional wellbeing, confidence or quality of life.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Many adults searching for Low Self-Esteem Support in India, Confidence Building Support, Self-Doubt Help or How to Improve Confidence are looking for practical guidance because these challenges have started affecting different areas of their lives.
-            </p>
-            <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Understanding the difference between self-esteem and confidence is an important first step towards building healthier emotional wellbeing.
+              Understanding these challenges is the first step towards building healthier and more fulfilling relationships.
             </p>
 
-            <h3 className="mt-6 font-black text-[16px] text-[#21142d]">Self-Esteem vs Confidence</h3>
+            <h3 className="mt-6 font-black text-[16px] text-[#21142d]">Healthy Relationship vs Relationship Challenges</h3>
             <p className="mt-2 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Although these terms are often used together, they describe different aspects of emotional wellbeing.
+              Not every disagreement means a relationship is unhealthy.
             </p>
-
+            
             <div className="mt-4 grid gap-5 sm:grid-cols-2">
               <div className="rounded-lg bg-[#f4ecf8] p-5">
-                <h4 className="font-bold text-[#3b2e45] mb-2 text-[14px]">Self-Esteem</h4>
-                <p className="text-[13px] font-semibold leading-6 text-[#51465a] mb-2">Self-esteem is your overall opinion about yourself. It reflects questions like:</p>
-                <ul className="space-y-1.5">
-                  {["Am I worthy?", "Do I respect myself?", "Do I believe I deserve happiness?", "How do I see myself as a person?"].map(item => (
+                <h4 className="font-bold text-[#3b2e45] mb-2 text-[14px]">Healthy relationships usually include:</h4>
+                <ul className="space-y-1.5 mt-2">
+                  {["Open communication", "Mutual respect", "Emotional support", "Healthy boundaries", "Shared responsibility", "Trust", "Constructive conflict resolution"].map(item => (
                     <li key={item} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#7835A4] mt-1.5 shrink-0" />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <p className="text-[13px] font-semibold leading-6 text-[#51465a] mt-2 italic">Healthy self-esteem remains relatively stable, even when life becomes challenging.</p>
               </div>
-
+              
               <div className="rounded-lg bg-[#f4ecf8] p-5">
-                <h4 className="font-bold text-[#3b2e45] mb-2 text-[14px]">Confidence</h4>
-                <p className="text-[13px] font-semibold leading-6 text-[#51465a] mb-2">
-                  Confidence is the belief that you can successfully perform a specific task or handle a particular situation. For example, someone may feel confident:
-                </p>
-                <ul className="space-y-1.5">
-                  {["Giving presentations", "Running a business", "Solving problems", "Driving a car"].map(item => (
+                <h4 className="font-bold text-[#3b2e45] mb-2 text-[14px]">Relationship challenges may become more noticeable when individuals experience:</h4>
+                <ul className="space-y-1.5 mt-2">
+                  {["Constant misunderstandings", "Frequent arguments", "Difficulty expressing emotions", "Emotional distance", "Lack of trust", "Avoiding communication", "Feeling unheard or unappreciated"].map(item => (
                     <li key={item} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#7835A4] mt-1.5 shrink-0" />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <p className="text-[13px] font-semibold leading-6 text-[#51465a] mt-2 italic">but still struggle with low self-esteem in personal relationships.</p>
               </div>
             </div>
-
+            
             <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Both confidence and self-esteem influence each other and contribute to overall emotional wellbeing.
+              Recognising these patterns early can help prevent small concerns from becoming long-term relationship difficulties.
             </p>
           </section>
 
           <section id="signs-and-symptoms" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">Common Signs & Symptoms of Low Self-Esteem</h2>
+            <h2 className="text-[20px] font-black text-[#17111f]">Common Signs of Relationship Challenges</h2>
             <p className="mt-2 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Low self-esteem often develops gradually and may not always be obvious to others. Recognising these signs early may help individuals better understand their experiences.
+              Relationship difficulties can appear in many different ways. Some people notice emotional changes, while others experience communication problems or behavioural changes.
             </p>
 
-            <img src={symptomsImage} alt="Common signs of low self-esteem and confidence issues in adults" className="w-full mt-4 h-[350px] rounded-lg object-cover shadow-[0_12px_30px_rgba(58,31,90,0.08)]" />
+            <img src={communicationImage} alt="Communication challenges in relationships and emotional wellbeing" className="w-full mt-4 h-[350px] rounded-lg object-cover shadow-[0_12px_30px_rgba(58,31,90,0.08)]" />
 
             <div className="mt-5 space-y-5">
               <div className="rounded-lg border border-[#eadff1] bg-white p-5 shadow-[0_8px_22px_rgba(58,31,90,0.04)]">
@@ -431,13 +426,31 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                 </div>
                 <p className="text-[13px] font-semibold text-[#5a5063] mb-3">Many adults experience:</p>
                 <ul className="space-y-2 sm:columns-2">
-                  {["Constant self-doubt", "Feeling \"not good enough\"", "Fear of failure", "Shame", "Guilt", "Feeling inferior to others", "Emotional sensitivity"].map((step) => (
+                  {["Feeling emotionally disconnected", "Loneliness despite being in a relationship", "Frustration", "Anger", "Resentment", "Feeling misunderstood", "Emotional exhaustion"].map((step) => (
                     <li key={step} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#7835A4] mt-1.5 shrink-0" />
                       {step}
                     </li>
                   ))}
                 </ul>
+                <p className="text-[13px] font-semibold text-[#5a5063] mt-3">These emotions may gradually reduce relationship satisfaction and overall emotional wellbeing.</p>
+              </div>
+
+              <div className="rounded-lg border border-[#eadff1] bg-white p-5 shadow-[0_8px_22px_rgba(58,31,90,0.04)]">
+                <div className="flex items-center gap-3 mb-3">
+                  <MessageCircle className="h-5 w-5 text-[#7835A4]" />
+                  <h3 className="text-[16px] font-black text-[#21142d]">Communication Signs</h3>
+                </div>
+                <p className="text-[13px] font-semibold text-[#5a5063] mb-3">Healthy communication is the foundation of every relationship. Relationship challenges may include:</p>
+                <ul className="space-y-2 sm:columns-2">
+                  {["Frequent misunderstandings", "Difficulty listening", "Constant criticism", "Blaming each other", "Defensive communication", "Avoiding important conversations"].map((step) => (
+                    <li key={step} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#7835A4] mt-1.5 shrink-0" />
+                      {step}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[13px] font-semibold text-[#5a5063] mt-3">When communication breaks down, even small disagreements may become larger conflicts.</p>
               </div>
 
               <div className="rounded-lg border border-[#eadff1] bg-white p-5 shadow-[0_8px_22px_rgba(58,31,90,0.04)]">
@@ -445,66 +458,52 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                   <Users className="h-5 w-5 text-[#7835A4]" />
                   <h3 className="text-[16px] font-black text-[#21142d]">Behavioural Signs</h3>
                 </div>
-                <p className="text-[13px] font-semibold text-[#5a5063] mb-3">Low confidence may influence behaviour in different ways. Some individuals:</p>
+                <p className="text-[13px] font-semibold text-[#5a5063] mb-3">Some individuals may notice:</p>
                 <ul className="space-y-2 sm:columns-2">
-                  {["Avoid new opportunities", "Delay important decisions", "Frequently apologise", "Seek constant approval", "Give up easily", "Avoid taking healthy risks"].map((step) => (
+                  {["Frequent arguments", "Silent treatment", "Emotional withdrawal", "Avoiding spending time together", "Difficulty resolving conflicts", "Repeated trust issues"].map((step) => (
                     <li key={step} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#7835A4] mt-1.5 shrink-0" />
                       {step}
                     </li>
                   ))}
                 </ul>
+                <p className="text-[13px] font-semibold text-[#5a5063] mt-3">Over time, these patterns may increase emotional distance between partners or family members.</p>
               </div>
 
               <div className="rounded-lg border border-[#eadff1] bg-white p-5 shadow-[0_8px_22px_rgba(58,31,90,0.04)]">
                 <div className="flex items-center gap-3 mb-3">
                   <Brain className="h-5 w-5 text-[#7835A4]" />
-                  <h3 className="text-[16px] font-black text-[#21142d]">Cognitive Signs</h3>
+                  <h3 className="text-[16px] font-black text-[#21142d]">Psychological Signs</h3>
                 </div>
-                <p className="text-[13px] font-semibold text-[#5a5063] mb-3">Negative thinking patterns often accompany low self-esteem. Individuals may experience:</p>
+                <p className="text-[13px] font-semibold text-[#5a5063] mb-3">Relationship challenges may also influence emotional wellbeing. Many adults experience:</p>
                 <ul className="space-y-2 sm:columns-2">
-                  {["Negative self-talk", "Overthinking", "Self-criticism", "Fear of judgement", "Difficulty accepting compliments", "Expecting failure before trying"].map((step) => (
+                  {["Overthinking", "Anxiety", "Fear of rejection", "Jealousy", "Low confidence", "Constant worry about the relationship"].map((step) => (
                     <li key={step} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#7835A4] mt-1.5 shrink-0" />
                       {step}
                     </li>
                   ))}
                 </ul>
-              </div>
-
-              <div className="rounded-lg border border-[#eadff1] bg-white p-5 shadow-[0_8px_22px_rgba(58,31,90,0.04)]">
-                <div className="flex items-center gap-3 mb-3">
-                  <MessageCircle className="h-5 w-5 text-[#7835A4]" />
-                  <h3 className="text-[16px] font-black text-[#21142d]">Social Signs</h3>
-                </div>
-                <p className="text-[13px] font-semibold text-[#5a5063] mb-3">Confidence difficulties may also affect relationships and communication. Some individuals:</p>
-                <ul className="space-y-2 sm:columns-2">
-                  {["Avoid social situations", "Hesitate to express opinions", "Feel uncomfortable meeting new people", "Compare themselves with others", "Fear rejection", "Find it difficult to say \"no\""].map((step) => (
-                    <li key={step} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#7835A4] mt-1.5 shrink-0" />
-                      {step}
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-[13px] font-semibold text-[#5a5063] mt-3">These emotional experiences may begin affecting work, sleep and daily functioning.</p>
               </div>
             </div>
           </section>
 
           <section id="causes" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">What Causes Low Self-Esteem?</h2>
+            <h2 className="text-[20px] font-black text-[#17111f]">What Causes Relationship Challenges?</h2>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Low self-esteem usually develops over time through a combination of life experiences rather than one single event. Common contributing factors include:
+              Relationship difficulties usually develop because of multiple interacting factors rather than one single event. Some of the most common contributing factors include:
             </p>
 
             <div className="mt-5 space-y-4">
               {[
-                { title: "Childhood Experiences", text: "Repeated criticism, unrealistic expectations or lack of emotional support during childhood may influence how individuals view themselves later in life." },
-                { title: "Bullying", text: "Bullying during school, college or the workplace may reduce confidence and increase feelings of self-doubt." },
-                { title: "Difficult Relationships", text: "Emotionally unhealthy relationships, repeated rejection or constant criticism may gradually affect self-worth." },
-                { title: "Fear of Failure", text: "Repeated disappointments or fear of making mistakes may reduce confidence and make individuals avoid new opportunities." },
-                { title: "Social Comparison", text: "Constant comparison with others, especially through social media, may create unrealistic expectations and reduce self-confidence." },
-                { title: "Mental Health Challenges", text: "Conditions such as anxiety, depression or chronic stress may also influence confidence and self-esteem." },
-                { title: "Perfectionism", text: "People who expect themselves to perform perfectly may become highly self-critical whenever they make mistakes, gradually reducing their confidence." }
+                { title: "Poor Communication", text: "Misunderstandings often begin when individuals struggle to express their thoughts, emotions or expectations clearly." },
+                { title: "Stress", text: "Work pressure, financial concerns, parenting responsibilities and health issues may increase emotional stress and reduce patience within relationships." },
+                { title: "Trust Issues", text: "Past experiences, repeated disappointments or unresolved conflicts may gradually affect trust between individuals." },
+                { title: "Different Expectations", text: "Partners may have different expectations regarding communication, responsibilities, finances or future goals. When these expectations remain unspoken, misunderstandings often increase." },
+                { title: "Emotional Distance", text: "Busy lifestyles, work commitments and ongoing stress may gradually reduce emotional connection between partners." },
+                { title: "Mental Health Challenges", text: "Conditions such as anxiety, depression, chronic stress or low self-esteem may influence communication, emotional regulation and relationship satisfaction." },
+                { title: "Childhood Experiences", text: "Early family experiences often influence how individuals communicate, manage conflict and build relationships during adulthood." }
               ].map((item) => (
                 <div key={item.title} className="rounded-lg border border-[#eadff1] bg-white p-4 shadow-sm">
                   <h3 className="text-[15px] font-black text-[#21142d]">{item.title}</h3>
@@ -512,55 +511,55 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                 </div>
               ))}
             </div>
-
+            
             <div className="mt-5 rounded-lg border border-[#eadff1] bg-[#fbf9fd] p-5">
               <h3 className="text-[16px] font-black text-[#21142d]">Why Early Understanding Matters</h3>
               <p className="mt-2 text-[14px] font-semibold leading-7 text-[#51465a]">
-                Many adults assume that low confidence is simply part of their personality. However, confidence and self-esteem are not fixed traits. They are influenced by experiences, thoughts, behaviours and emotional wellbeing. Recognising the signs of low self-esteem early allows individuals to better understand the underlying factors, build healthier coping strategies and seek appropriate guidance before these challenges begin affecting work, relationships and overall quality of life.
+                Many couples believe relationship problems will automatically improve with time. However, unresolved communication difficulties, trust issues and emotional distance may gradually become more difficult to manage if left unaddressed. Understanding these patterns early helps individuals improve communication, strengthen emotional connection and build healthier long-term relationships before these difficulties begin affecting emotional wellbeing, family life and overall quality of life.
               </p>
             </div>
           </section>
 
           <section id="health-impact" className="mt-9 rounded-lg bg-[#f4ecf8] p-5">
-            <h2 className="text-[20px] font-black text-[#17111f]">How Low Self-Esteem Can Affect Daily Life</h2>
+            <h2 className="text-[20px] font-black text-[#17111f]">How Relationship Challenges Can Affect Mental Health</h2>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#3b2e45]">
-              Low self-esteem is not simply about lacking confidence. Over time, it can influence the way a person thinks, feels, communicates and responds to everyday situations. It may gradually affect career growth, relationships, emotional wellbeing and overall quality of life.
+              Relationships and mental health are closely connected. When relationships are healthy, they often provide emotional support, comfort and a sense of security. However, ongoing conflicts, poor communication or emotional distance may gradually affect emotional wellbeing and overall quality of life.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#3b2e45]">
-              Many adults continue functioning normally on the outside while constantly struggling with self-doubt internally. They may avoid opportunities, underestimate their abilities or seek constant approval from others despite being capable and talented. Understanding how low self-esteem affects different areas of life is an important step towards building healthier confidence and emotional wellbeing.
+              Many adults continue managing relationship difficulties for months or even years without realising how deeply these challenges are influencing their thoughts, emotions and behaviour. Understanding this connection is an important step towards improving both relationship health and emotional wellbeing.
             </p>
-
+            
             <div className="mt-5 space-y-4">
               {[
                 {
                   title: "Emotional Wellbeing",
-                  desc: "Low self-esteem often influences emotional health. Many adults report experiencing:",
-                  list: ["Constant self-doubt", "Feeling \"not good enough\"", "Fear of rejection", "Shame", "Guilt", "Emotional sensitivity", "Difficulty accepting appreciation"]
+                  desc: "Relationship difficulties often affect emotional health before they affect anything else. Over time, these emotions may reduce overall life satisfaction and increase emotional stress. Many adults experience:",
+                  list: ["Constant worry about the relationship", "Feeling emotionally exhausted", "Irritability", "Sadness", "Feeling unappreciated", "Loneliness despite being with someone", "Difficulty feeling emotionally connected"]
                 },
                 {
-                  title: "Career & Professional Growth",
-                  desc: "Confidence plays an important role in career development. Adults with low self-esteem may experience:",
-                  list: ["Hesitation to accept new responsibilities", "Fear of speaking in meetings", "Avoiding leadership opportunities", "Difficulty negotiating salaries", "Fear of making mistakes", "Underestimating their abilities"]
+                  title: "Anxiety & Overthinking",
+                  desc: "Relationship uncertainty often leads to excessive thinking. These repetitive thoughts may increase emotional distress and make it difficult to remain present in everyday life. Some individuals repeatedly wonder:",
+                  list: ["\"Did I say something wrong?\"", "\"Does my partner still care about me?\"", "\"Why are they behaving differently?\"", "\"What if this relationship ends?\""]
                 },
                 {
-                  title: "Relationships",
-                  desc: "Healthy relationships are closely connected with healthy self-worth. Low self-esteem may lead to:",
-                  list: ["Fear of rejection", "Difficulty expressing feelings", "Constant reassurance seeking", "People-pleasing behaviour", "Difficulty setting healthy boundaries", "Staying in unhealthy relationships"]
+                  title: "Confidence & Self-Esteem",
+                  desc: "Relationship challenges can gradually influence the way individuals see themselves. Over time, these experiences may reduce confidence and emotional resilience. Some people begin to:",
+                  list: ["Doubt their worth", "Feel \"not good enough\"", "Depend heavily on others for validation", "Fear rejection", "Avoid expressing their needs"]
                 },
                 {
-                  title: "Decision-Making",
-                  desc: "Individuals with low confidence often struggle with everyday decisions. Some people repeatedly question themselves. This uncertainty may lead to procrastination, indecisiveness and increased stress.",
-                  list: ["\"What if I make the wrong decision?\"", "\"What if people judge me?\"", "\"What if I fail?\"", "\"Maybe someone else knows better.\""]
+                  title: "Sleep & Physical Wellbeing",
+                  desc: "Emotional stress within relationships may also affect physical wellbeing. Healthy sleep and emotional wellbeing often support healthier communication and emotional regulation. Some adults notice:",
+                  list: ["Difficulty falling asleep", "Restless sleep", "Fatigue", "Reduced appetite", "Emotional exhaustion", "Difficulty concentrating"]
                 },
                 {
-                  title: "Social Life",
-                  desc: "Confidence also affects social interactions. Over time, avoiding social experiences may further reduce confidence and increase feelings of isolation. Some adults may:",
-                  list: ["Avoid meeting new people", "Feel uncomfortable expressing opinions", "Fear public speaking", "Compare themselves with others", "Withdraw from social situations"]
+                  title: "Career & Productivity",
+                  desc: "Relationship stress does not remain limited to personal life. When emotional energy is constantly directed towards unresolved relationship concerns, other areas of life may also begin to suffer. Many individuals notice:",
+                  list: ["Poor concentration at work", "Reduced motivation", "Increased absenteeism", "Difficulty making decisions", "Lower productivity", "Emotional distraction throughout the day"]
                 },
                 {
-                  title: "Personal Growth",
-                  desc: "Low self-esteem may prevent individuals from reaching their potential. Recognising these patterns early may help individuals gradually build healthier confidence and emotional resilience. Many people avoid:",
-                  list: ["Learning new skills", "Applying for better jobs", "Starting a business", "Travelling alone", "Building new relationships", "Pursuing personal goals"]
+                  title: "Family Life",
+                  desc: "Relationship challenges may influence the overall family environment. Improving communication between adults often creates a healthier emotional environment for the entire family. Ongoing conflict can affect:",
+                  list: ["Parent-child communication", "Family routines", "Emotional security", "Household harmony", "Shared decision-making"]
                 }
               ].map((item, idx) => (
                 <div key={idx} className="rounded-lg border border-[#eadff1] bg-white p-5 shadow-sm">
@@ -572,6 +571,8 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                 </div>
               ))}
             </div>
+            
+            <img src={trustImage} alt="Trust issues and relationship problems in adults" className="w-full mt-5 h-[320px] rounded-lg object-cover shadow-[0_8px_22px_rgba(58,31,90,0.06)]" />
           </section>
 
           <section id="neuro-ayurveda-system" className="mt-9">
@@ -580,23 +581,23 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                 <Stethoscope className="h-5 w-5" />
               </span>
               <div>
-                <h2 className="text-[20px] font-black text-[#17111f]">The Neuro-Ayurveda Development System for Self-Esteem & Confidence</h2>
+                <h2 className="text-[20px] font-black text-[#17111f]">The Neuro-Ayurveda Approach to Relationship Wellbeing</h2>
               </div>
             </div>
-
+            
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              At Manovaidya, confidence is understood through a broader perspective. Rather than focusing only on self-doubt, we aim to understand the interconnected factors influencing emotional wellbeing, behaviour, lifestyle and overall health.
+              At Manovaidya, relationship challenges are understood through a broader perspective. Rather than focusing only on disagreements, we aim to understand the emotional, behavioural and lifestyle factors that influence the way individuals communicate, respond to stress and build relationships.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              The Neuro-Ayurveda Development System helps individuals better understand confidence and self-esteem through five interconnected pillars.
+              The Neuro-Ayurveda Development System helps individuals better understand relationship wellbeing through five interconnected pillars.
             </p>
-
+            
             <img
               src={neuroDiagramImage}
-              alt="Neuro Ayurveda approach for self-esteem and confidence support"
+              alt="Neuro Ayurveda approach for relationship wellbeing"
               className="mt-5 w-full h-auto object-contain max-h-[400px] mb-5 rounded-lg border border-[#eadff1] bg-white shadow-sm p-4"
             />
-
+            
             <button
               type="button"
               onClick={() => setShowNeuroPillars((current) => !current)}
@@ -605,7 +606,7 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
             >
               {showNeuroPillars ? "Show Less" : "Read More"}
             </button>
-
+            
             {showNeuroPillars && (
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {neuroAyurvedaPillars.map(({ title, text, Icon }) => (
@@ -626,20 +627,20 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
             )}
           </section>
 
-          <section id="building-confidence" className="mt-9">
-            <h2 className="text-[20px] font-black text-[#17111f]">How Adults Can Build Healthy Confidence</h2>
+          <section id="building-relationships" className="mt-9">
+            <h2 className="text-[20px] font-black text-[#17111f]">How Adults Can Build Healthier Relationships</h2>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Developing healthy confidence is usually a gradual process built through consistent habits and self-awareness.
+              Healthy relationships require continuous effort, understanding and mutual respect. Although every relationship is different, certain habits often contribute to stronger emotional connections.
             </p>
             <div className="mt-4 rounded-lg border border-[#eadff1] bg-white p-5">
               <ul className="grid sm:grid-cols-2 gap-4">
                 {[
-                  "Practice Self-Awareness: Understanding your strengths, challenges and emotional patterns is an important first step towards building confidence.",
-                  "Challenge Negative Self-Talk: Learning to recognise and question overly critical thoughts may gradually improve self-belief.",
-                  "Set Realistic Goals: Achieving small, meaningful goals often helps build confidence over time.",
-                  "Maintain Healthy Daily Habits: Regular sleep, balanced nutrition, physical activity and consistent routines support both physical and emotional wellbeing.",
-                  "Reduce Constant Comparison: Everyone has a different journey. Focusing on personal progress instead of comparing yourself with others may help strengthen self-esteem.",
-                  "Build Supportive Relationships: Surrounding yourself with encouraging and respectful people often contributes to healthier confidence and emotional resilience."
+                  "Communicate Openly: Express thoughts and emotions honestly while also listening carefully to your partner's perspective.",
+                  "Practice Active Listening: Healthy communication is not only about speaking but also about understanding. Giving full attention during conversations often reduces misunderstandings.",
+                  "Respect Healthy Boundaries: Healthy boundaries create mutual respect while allowing both individuals to maintain their identity and emotional wellbeing.",
+                  "Manage Stress Together: Daily stress affects relationships. Finding healthy ways to manage stress together may strengthen emotional connection and reduce unnecessary conflicts.",
+                  "Appreciate Small Efforts: Regular appreciation, kindness and gratitude often strengthen relationships more than occasional grand gestures.",
+                  "Spend Quality Time Together: Meaningful conversations and shared experiences help maintain emotional closeness even during busy phases of life."
                 ].map((item, idx) => {
                   const [boldText, normalText] = item.split(': ');
                   return (
@@ -658,10 +659,10 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
               <div className="flex items-start gap-3">
                 <div>
                   <h2 className="text-[17px] font-black leading-snug text-[#5d268d] sm:text-[18px]">
-                    How Manovaidya Supports Adults
+                    How Manovaidya Supports Adults & Couples
                   </h2>
                   <p className="mt-2 text-[13px] font-semibold leading-6 text-[#3f3448] sm:text-[14px]">
-                    At Manovaidya, support begins with understanding the individual rather than focusing only on confidence problems. A structured, step-by-step process designed for long-term growth and real change.
+                    At Manovaidya, support begins with understanding the individual and the relationship dynamics rather than focusing only on conflicts. A structured, step-by-step process designed for long-term growth and real change.
                   </p>
                 </div>
               </div>
@@ -684,25 +685,26 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                   </React.Fragment>
                 ))}
               </div>
-
+              
               <div className="mx-auto mt-6 max-w-[560px] rounded-md bg-[#f1f5ef] px-4 py-2 text-center text-[12px] font-black leading-5 text-[#5b5360]">
-                Our goal is clarity, not just temporary relief. We help you understand your true potential deeply.
+                Our goal is clarity, not just temporary relief. We help you understand your relationship dynamics deeply.
               </div>
             </div>
 
-            <h3 className="mt-6 font-black text-[16px] text-[#21142d]">When Should You Consider an Assessment?</h3>
+            <h3 className="mt-6 font-black text-[16px] text-[#21142d]">When Should You Consider Professional Guidance?</h3>
             <p className="mt-2 text-[14px] font-semibold leading-7 text-[#51465a]">You may consider seeking professional guidance if you experience:</p>
-
+            
             <div className="mt-4 rounded-lg bg-[#f4ecf8] p-5">
               <ul className="grid sm:grid-cols-2 gap-3">
                 {[
-                  "Persistent low self-esteem",
-                  "Constant self-doubt",
-                  "Fear of failure affecting daily life",
-                  "Difficulty making decisions",
-                  "Avoiding opportunities because of lack of confidence",
-                  "Negative self-talk",
-                  "Confidence issues affecting work or relationships"
+                  "Frequent relationship conflicts",
+                  "Ongoing communication difficulties",
+                  "Persistent trust issues",
+                  "Emotional distance",
+                  "Relationship stress affecting mental health",
+                  "Constant arguments",
+                  "Difficulty resolving conflicts",
+                  "Relationship concerns affecting work, sleep or family life"
                 ].map((step) => (
                   <li key={step} className="flex gap-2 text-[13px] font-bold text-[#51465a]">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#7835A4]" />
@@ -711,12 +713,12 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                 ))}
               </ul>
             </div>
-
+            
             <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
-              A structured assessment can help identify the factors influencing confidence, emotional wellbeing and self-worth while creating a personalised roadmap towards healthier emotional resilience and long-term personal growth.
+              A structured assessment can help identify the emotional, behavioural and lifestyle factors influencing relationship difficulties while creating a personalised roadmap towards healthier communication and emotional wellbeing.
             </p>
             <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-              Our goal is to help individuals move from self-doubt and fear towards greater confidence, emotional resilience, healthier relationships and a more fulfilling life.
+              Our goal is to help individuals and couples move from misunderstanding, emotional distance and repeated conflict towards healthier communication, stronger emotional connection and long-term relationship wellbeing.
             </p>
           </section>
 
@@ -724,17 +726,23 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
             <div>
               <h2 className="text-[20px] font-black text-[#17111f]">Why Adults Across India Choose Manovaidya</h2>
               <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
-                Living with low self-esteem or confidence challenges can quietly affect many areas of life. Some individuals hesitate to express their opinions, while others constantly doubt their abilities despite achieving success. Over time, these patterns may influence relationships, career growth, emotional wellbeing and personal happiness.
+                Healthy relationships are built on understanding, communication and emotional connection. However, when misunderstandings, trust issues or ongoing conflicts continue for a long time, they may begin affecting both the relationship and an individual's emotional wellbeing.
               </p>
-              <div className="mt-3 rounded-lg bg-[#f4ecf8] p-4">
+              <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+                Many adults spend months or even years trying to solve relationship problems on their own. Some avoid difficult conversations, while others repeatedly experience the same communication patterns without understanding why. Over time, these unresolved challenges may increase emotional stress, reduce confidence and affect family life.
+              </p>
+              <p className="mt-3 text-[14px] font-semibold leading-7 text-[#51465a]">
+                At Manovaidya, we believe that healthy relationships begin with understanding the individual, not simply resolving conflicts. Our approach focuses on identifying the emotional, behavioural and lifestyle factors that influence relationship wellbeing and communication.
+              </p>
+              <div className="mt-4 rounded-lg bg-[#f4ecf8] p-4">
                 <p className="text-[13px] font-bold text-[#3b2e45] mb-2">Our support focuses on:</p>
                 <ul className="grid sm:grid-cols-2 gap-1.5">
                   {[
-                    "Comprehensive Self-Esteem & Confidence Assessment",
+                    "Comprehensive Relationship Assessment",
                     "Neuro-Ayurveda Development System",
                     "Personalized Guidance",
                     "Holistic Mind-Body Perspective",
-                    "Long-Term Personal Growth",
+                    "Long-Term Relationship Wellbeing",
                     "Ongoing Support & Progress Tracking"
                   ].map(item => (
                     <li key={item} className="flex gap-2 text-[12.5px] font-semibold text-[#51465a]">
@@ -745,12 +753,12 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                 </ul>
               </div>
               <p className="mt-4 text-[14px] font-semibold leading-7 text-[#51465a]">
-                Adults from Delhi, Noida, Gurgaon, Faridabad, Ghaziabad and across India connect with Manovaidya for Low Self-Esteem & Confidence Support through online and in-clinic consultations.
+                Adults from Delhi, Noida, Gurgaon, Faridabad, Ghaziabad and across India connect with Manovaidya for Relationship Challenges Support, Communication Guidance and Emotional Wellbeing Support through online and in-clinic consultations.
               </p>
             </div>
             <img
               src={supportImage}
-              alt="Support for low confidence and emotional wellbeing"
+              alt="Support for relationship challenges and emotional wellbeing"
               className="w-full rounded-lg object-cover shadow-[0_12px_30px_rgba(58,31,90,0.08)]"
             />
           </section>
@@ -763,13 +771,13 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                 <h2 className="mt-1 text-[18px] font-black text-[#17111f]">Dr. Ankush Garg</h2>
                 <p className="mt-1 text-[13px] font-bold text-[#51465a]">Mental Health & Wellness Specialist</p>
                 <p className="mt-3 text-[13.5px] font-semibold leading-6 text-[#5a5063]">
-                  Based in Delhi NCR, Dr. Ankush Garg supports adults and families from across India through structured assessment, personalized guidance and the Neuro-Ayurveda Development System.
+                  Based in Delhi NCR, Dr. Ankush Garg supports individuals and couples from across India through structured assessment, personalized guidance and the Neuro-Ayurveda Development System.
                 </p>
                 <p className="mt-3 text-[13.5px] font-semibold leading-6 text-[#5a5063]">
                   His work focuses on Child Development, Teen Mental Wellness, Adult Mental Health, Women's Emotional Wellbeing and Senior Mental Health Support through a structured, personalized and holistic approach.
                 </p>
                 <p className="mt-3 text-[13.5px] font-semibold leading-6 text-[#5a5063]">
-                  Many adults experiencing low self-esteem, fear of failure, persistent self-doubt or confidence challenges seek guidance to better understand the factors influencing their emotional wellbeing. Through structured assessment, personalized guidance, lifestyle recommendations and continuous follow-up, Dr. Ankush Garg helps individuals better understand emotional wellbeing while supporting long-term personal growth through the Neuro-Ayurveda Development System.
+                  Many adults experiencing relationship stress, trust issues, communication difficulties or emotional distance seek guidance to better understand the factors influencing their emotional wellbeing and relationships. Through structured assessment, personalized guidance, lifestyle recommendations and continuous follow-up, Dr. Ankush Garg helps individuals and families better understand emotional wellbeing while supporting healthier relationships through the Neuro-Ayurveda Development System.
                 </p>
               </div>
             </div>
@@ -804,9 +812,9 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
 
           <section id="book-consultation" className="mt-9 overflow-hidden rounded-lg border border-[#eadff1] bg-[#7835A4] text-white">
             <div className="p-7">
-              <h2 className="text-[24px] font-black">Struggling With Low Self-Esteem or Lack of Confidence?</h2>
+              <h2 className="text-[24px] font-black">Struggling With Relationship Challenges or Emotional Distance?</h2>
               <p className="mt-3 text-[14px] font-semibold leading-7 text-[#e5d5f2]">
-                Book a structured assessment and personalized guidance session with the Manovaidya team to better understand self-esteem, confidence challenges and your emotional wellbeing.
+                Book a structured assessment and personalized guidance session with the Manovaidya team to better understand relationship challenges, communication patterns and your emotional wellbeing.
               </p>
 
               <div className="mt-6">
@@ -818,7 +826,7 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                     "Online & In-Clinic Consultations Across India",
                     "Holistic Mind-Body Approach",
                     "Guidance by Dr. Ankush Garg",
-                    "Focus on Long-Term Emotional Wellbeing & Personal Growth"
+                    "Focus on Long-Term Emotional Wellbeing & Healthy Relationships"
                   ].map((step) => (
                     <li key={step} className="flex gap-2 text-[14px] font-bold">
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#d8b4e2]" />
@@ -829,8 +837,8 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
               </div>
 
               <div className="mt-8 pt-6 border-t border-[#8e45bb]">
-                <h3 className="text-[18px] font-black mb-2">Take the First Step Towards Healthier Confidence & Emotional Wellbeing</h3>
-                <p className="text-[14px] font-bold text-[#e5d5f2]">Whether you are experiencing negative self-talk, fear of judgement, low self-worth or confidence challenges, our team is here to help you understand your concerns and explore personalized support.</p>
+                <h3 className="text-[18px] font-black mb-2">Take the First Step Towards Healthier Relationships</h3>
+                <p className="text-[14px] font-bold text-[#e5d5f2]">Whether you are experiencing communication problems, trust issues, emotional distance or recurring relationship conflicts, our team is here to help you understand your concerns and explore personalized support.</p>
 
                 <div className="flex flex-col sm:flex-row gap-4 mt-5">
                   <a
@@ -849,7 +857,7 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
               </div>
             </div>
           </section>
-
+          
           {/* Schema generation */}
           <script
             type="application/ld+json"
@@ -857,9 +865,9 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
               __html: JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "MedicalWebPage",
-                "name": "Low Self-Esteem & Confidence Support in India",
-                "description": "Looking for Low Self-Esteem & Confidence Support in India? Learn about self-worth, confidence challenges, emotional wellbeing and the Neuro-Ayurveda approach at Manovaidya.",
-                "url": "https://manovaidya.com/low-self-esteem-confidence-support-india/"
+                "name": "Relationship Challenges Support in India",
+                "description": "Looking for Relationship Challenges Support in India? Learn about relationship problems, communication difficulties, trust issues, emotional wellbeing and the Neuro-Ayurveda approach at Manovaidya.",
+                "url": "https://manovaidya.com/relationship-challenges-support-india/"
               })
             }}
           />
@@ -902,8 +910,8 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
                   {
                     "@type": "ListItem",
                     "position": 3,
-                    "name": "Low Self-Esteem & Confidence Support",
-                    "item": "https://manovaidya.com/low-self-esteem-confidence-support-india/"
+                    "name": "Relationship Challenges Support",
+                    "item": "https://manovaidya.com/relationship-challenges-support-india/"
                   }
                 ]
               })
@@ -1029,4 +1037,4 @@ function AdultSelfEsteemConfidenceSupportIndiaPage() {
   );
 }
 
-export default AdultSelfEsteemConfidenceSupportIndiaPage;
+export default AdultRelationshipChallengesSupportIndiaPage;

@@ -6,6 +6,7 @@ import {
   CloudRain,
   Flower2,
   Martini,
+  Cigarette,
   ScanFace,
   UsersRound,
 } from "lucide-react";
@@ -62,15 +63,17 @@ const conditions = [
       "Communication issues, conflicts, breakups and emotional disconnect.",
     action: "Explore Relationship Support",
     Icon: UsersRound,
-    iconClass: "bg-[#eee5ff] text-[#6547b6]",
+    iconClass: "bg-[#ffdadd] text-[#dc2626]",
+    href: "/relationship-challenges-support-india",
   },
   {
     title: "Addiction &\nHabit Concerns",
     description:
-      "Alcohol, smoking, gaming, screen, food or other habit dependencies.",
-    action: "Explore Addiction Support",
-    Icon: Martini,
-    iconClass: "bg-[#d9f3f4] text-[#238c96]",
+      "Struggling with substance use or repetitive unhealthy habits.",
+    action: "Explore Habit Support",
+    Icon: Cigarette,
+    iconClass: "bg-[#e5f0ea] text-[#16a34a]",
+    href: "/addiction-unhealthy-habits-support-india",
   },
 ];
 
