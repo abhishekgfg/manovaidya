@@ -44,6 +44,7 @@ const supportAreas = [
     action: "Explore Confidence Support",
     Icon: UserRound,
     iconClass: "bg-[#8B43BA]/10 text-[#8B43BA]",
+    href: "/teen-confidence-emotional-wellbeing",
   },
   {
     title: "Screen Addiction &\nDigital Wellbeing",
@@ -52,6 +53,7 @@ const supportAreas = [
     action: "Explore Digital Wellbeing",
     Icon: Phone,
     iconClass: "bg-[#8B43BA]/10 text-[#8B43BA]",
+    href: "/teen-screen-addiction-support",
   },
   {
     title: "Parent-Teen\nRelationship Support",
@@ -60,6 +62,7 @@ const supportAreas = [
     action: "Explore Relationship Support",
     Icon: UsersRound,
     iconClass: "bg-[#8B43BA]/10 text-[#8B43BA]",
+    href: "/parent-teen-relationship-support",
   },
 ];
 

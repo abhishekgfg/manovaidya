@@ -10,10 +10,18 @@ import MindBodyWellbeingPage from "./pages/MindBodyWellbeingPage";
 import SeniorMindCarePage from "./pages/SeniorMindCarePage";
 import WomenHealthCarePage from "./pages/WomenHealthCarePage";
 import AdultMentalWellnessPage from "./pages/AdultMentalWellnessPage";
+import AdultAnxietySupportIndiaPage from "./adult/AdultAnxietySupportIndiaPage";
+import AdultDepressionSupportIndiaPage from "./adult/AdultDepressionSupportIndiaPage";
+import StressBurnoutSupportPage from "./adult/StressBurnoutSupportPage";
+import AdultSleepDisordersSupportIndiaPage from "./adult/AdultSleepDisordersSupportIndiaPage";
+import AdultSelfEsteemConfidenceSupportIndiaPage from "./adult/AdultSelfEsteemConfidenceSupportIndiaPage";
 import TeenMentalWellnessPage from "./pages/TeenMentalWellnessPage";
 import TeenStressAnxietyIndiaPage from "./teenmental/TeenStressAnxietyIndiaPage";
 import TeenDepressionLowMoodIndiaPage from "./teenmental/TeenDepressionLowMoodIndiaPage";
 import ExamPerformancePressureIndiaPage from "./teenmental/ExamPerformancePressureIndiaPage";
+import TeenConfidenceEmotionalWellbeingPage from "./teenmental/TeenConfidenceEmotionalWellbeingPage";
+import TeenScreenAddictionSupportIndiaPage from "./teenmental/TeenScreenAddictionSupportIndiaPage";
+import ParentTeenRelationshipSupportPage from "./teenmental/ParentTeenRelationshipSupportPage";
 import ChildHealthCarePage from "./pages/ChildHealthCarePage";
 import ADHDChildArticlePage from "./childhealthcare/ADHDChildArticlePage";
 import AutismTreatmentIndiaPage from "./childhealthcare/AutismTreatmentIndiaPage";
@@ -61,13 +69,35 @@ function App() {
           <Route path="/senior-mind-memory-care" element={<SeniorMindCarePage />} />
           <Route path="/women-health-care" element={<WomenHealthCarePage />} />
           <Route path="/adult-mental-wellness" element={<AdultMentalWellnessPage />} />
+          <Route path="/anxiety-support-india" element={<AdultAnxietySupportIndiaPage />} />
+          <Route path="/anxiety-support-india/" element={<AdultAnxietySupportIndiaPage />} />
+          <Route path="/anxiety-treatment-india" element={<AdultAnxietySupportIndiaPage />} />
+          <Route path="/anxiety-treatment-india/" element={<AdultAnxietySupportIndiaPage />} />
+          <Route path="/adult-depression-support" element={<AdultDepressionSupportIndiaPage />} />
+          <Route path="/adult-depression-support/" element={<AdultDepressionSupportIndiaPage />} />
+          <Route path="/depression-treatment-india" element={<AdultDepressionSupportIndiaPage />} />
+          <Route path="/depression-treatment-india/" element={<AdultDepressionSupportIndiaPage />} />
+          <Route path="/stress-burnout-support-india" element={<StressBurnoutSupportPage />} />
+          <Route path="/stress-burnout-support-india/" element={<StressBurnoutSupportPage />} />
+          <Route path="/sleep-disorders-insomnia-support-india" element={<AdultSleepDisordersSupportIndiaPage />} />
+          <Route path="/sleep-disorders-insomnia-support-india/" element={<AdultSleepDisordersSupportIndiaPage />} />
+          <Route path="/low-self-esteem-confidence-support-india" element={<AdultSelfEsteemConfidenceSupportIndiaPage />} />
+          <Route path="/low-self-esteem-confidence-support-india/" element={<AdultSelfEsteemConfidenceSupportIndiaPage />} />
           <Route path="/teen-mental-wellness" element={<TeenMentalWellnessPage />} />
+          <Route path="/teen-mental-wellness-india" element={<TeenMentalWellnessPage />} />
+          <Route path="/teen-mental-wellness-india/" element={<TeenMentalWellnessPage />} />
           <Route path="/teen-stress-anxiety-support" element={<TeenStressAnxietyIndiaPage />} />
           <Route path="/teen-stress-anxiety-support/" element={<TeenStressAnxietyIndiaPage />} />
           <Route path="/teen-depression-support" element={<TeenDepressionLowMoodIndiaPage />} />
           <Route path="/teen-depression-support/" element={<TeenDepressionLowMoodIndiaPage />} />
           <Route path="/exam-performance-pressure" element={<ExamPerformancePressureIndiaPage />} />
           <Route path="/exam-performance-pressure/" element={<ExamPerformancePressureIndiaPage />} />
+          <Route path="/teen-confidence-emotional-wellbeing" element={<TeenConfidenceEmotionalWellbeingPage />} />
+          <Route path="/teen-confidence-emotional-wellbeing/" element={<TeenConfidenceEmotionalWellbeingPage />} />
+          <Route path="/teen-screen-addiction-support" element={<TeenScreenAddictionSupportIndiaPage />} />
+          <Route path="/teen-screen-addiction-support/" element={<TeenScreenAddictionSupportIndiaPage />} />
+          <Route path="/parent-teen-relationship-support" element={<ParentTeenRelationshipSupportPage />} />
+          <Route path="/parent-teen-relationship-support/" element={<ParentTeenRelationshipSupportPage />} />
           <Route path="/child-health-care" element={<ChildHealthCarePage />} />
           <Route path="/child-development-care-india" element={<ChildDevelopmentCareIndiaPage />} />
           <Route path="/child-development-care-india/" element={<ChildDevelopmentCareIndiaPage />} />

@@ -18,6 +18,7 @@ const conditions = [
     action: "Explore Anxiety Support",
     Icon: Brain,
     iconClass: "bg-[#eee5ff] text-[#6043b8]",
+    href: "/anxiety-support-india",
   },
   {
     title: "Depression",
@@ -26,6 +27,7 @@ const conditions = [
     action: "Explore Depression Support",
     Icon: CloudRain,
     iconClass: "bg-[#dcefff] text-[#2583c7]",
+    href: "/adult-depression-support",
   },
   {
     title: "Burnout &\nExhaustion",
@@ -34,6 +36,7 @@ const conditions = [
     action: "Explore Burnout Support",
     Icon: ScanFace,
     iconClass: "bg-[#ffe1eb] text-[#e34e7d]",
+    href: "/stress-burnout-support-india",
   },
   {
     title: "Sleep\nProblems",
@@ -42,6 +45,7 @@ const conditions = [
     action: "Explore Sleep Support",
     Icon: BedDouble,
     iconClass: "bg-[#e4f1d9] text-[#60993e]",
+    href: "/sleep-disorders-insomnia-support-india",
   },
   {
     title: "Self-Esteem &\nConfidence",
@@ -50,6 +54,7 @@ const conditions = [
     action: "Explore Confidence Support",
     Icon: Flower2,
     iconClass: "bg-[#fff0ca] text-[#a27918]",
+    href: "/low-self-esteem-confidence-support-india",
   },
   {
     title: "Relationship\nChallenges",
@@ -88,7 +93,7 @@ function AdultConditionsSection() {
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-3 min-[500px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-7">
-          {conditions.map(({ title, description, action, Icon, iconClass }) => (
+          {conditions.map(({ title, description, action, Icon, iconClass, href }) => (
             <article
               key={title}
               className="flex min-h-[300px] min-w-0 flex-col items-center rounded-md border border-[#e2deea] bg-white px-3 py-5 text-center shadow-[0_8px_22px_rgba(45,32,84,0.06)]"
@@ -106,7 +111,7 @@ function AdultConditionsSection() {
               </p>
 
               <a
-                href="#assessment"
+                href={href || "#assessment"}
                 className="mt-auto inline-flex items-center gap-2 pt-4 text-[11px] font-black text-[#4e2b9c] transition hover:text-[#8B43BA]"
               >
                 {action}
