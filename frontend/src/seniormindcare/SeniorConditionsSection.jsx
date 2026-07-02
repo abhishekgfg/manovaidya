@@ -69,6 +69,7 @@ const conditions = [
     description:
       "Poor sleep quality, restless nights and daytime tiredness.",
     action: "Explore Sleep Support",
+    href: "/sleep-disorders-seniors-support-india/",
     Icon: UserRound,
     iconClass: "bg-[#d9f3f4] text-[#238c96]",
   },

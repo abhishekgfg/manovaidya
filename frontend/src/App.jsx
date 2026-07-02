@@ -13,7 +13,15 @@ import ConfusionDisorientationSupportPage from "./seniormindcare/ConfusionDisori
 import MildCognitiveImpairmentSupportPage from "./seniormindcare/MildCognitiveImpairmentSupportPage";
 import DementiaAlzheimersCareSupportPage from "./seniormindcare/DementiaAlzheimersCareSupportPage";
 import SeniorDepressionSupportPage from "./seniormindcare/SeniorDepressionSupportPage";
+import SeniorSleepDisordersSupportPage from "./seniormindcare/SeniorSleepDisordersSupportPage";
 import WomenHealthCarePage from "./pages/WomenHealthCarePage";
+import WomenStressManagementMindBodyBalancePage from "./womenhealthcare/WomenStressManagementMindBodyBalancePage";
+import WomenDepressionLowMoodSupportPage from "./womenhealthcare/WomenDepressionLowMoodSupportPage";
+import WomenHormonalPmsPmddSupportPage from "./womenhealthcare/WomenHormonalPmsPmddSupportPage";
+import WomenSelfEsteemBodyImageSupportPage from "./womenhealthcare/WomenSelfEsteemBodyImageSupportPage";
+import WomenRelationshipEmotionalWellbeingSupportPage from "./womenhealthcare/WomenRelationshipEmotionalWellbeingSupportPage";
+import WomenPregnancyPostpartumMotherhoodMentalHealthSupportPage from "./womenhealthcare/WomenPregnancyPostpartumMotherhoodMentalHealthSupportPage";
+import WomenLifeTransitionsCareerPressureSupportPage from "./womenhealthcare/WomenLifeTransitionsCareerPressureSupportPage";
 import AdultMentalWellnessPage from "./pages/AdultMentalWellnessPage";
 import AdultAnxietySupportIndiaPage from "./adult/AdultAnxietySupportIndiaPage";
 import AdultDepressionSupportIndiaPage from "./adult/AdultDepressionSupportIndiaPage";
@@ -84,7 +92,23 @@ function App() {
           <Route path="/dementia-alzheimers-care-support-seniors-india/" element={<DementiaAlzheimersCareSupportPage />} />
           <Route path="/senior-depression-support-india" element={<SeniorDepressionSupportPage />} />
           <Route path="/senior-depression-support-india/" element={<SeniorDepressionSupportPage />} />
+          <Route path="/sleep-disorders-seniors-support-india" element={<SeniorSleepDisordersSupportPage />} />
+          <Route path="/sleep-disorders-seniors-support-india/" element={<SeniorSleepDisordersSupportPage />} />
           <Route path="/women-health-care" element={<WomenHealthCarePage />} />
+          <Route path="/women-stress-management-mind-body-balance-india" element={<WomenStressManagementMindBodyBalancePage />} />
+          <Route path="/women-stress-management-mind-body-balance-india/" element={<WomenStressManagementMindBodyBalancePage />} />
+          <Route path="/women-depression-low-mood-support-india" element={<WomenDepressionLowMoodSupportPage />} />
+          <Route path="/women-depression-low-mood-support-india/" element={<WomenDepressionLowMoodSupportPage />} />
+          <Route path="/women-hormonal-pms-pmdd-support-india" element={<WomenHormonalPmsPmddSupportPage />} />
+          <Route path="/women-hormonal-pms-pmdd-support-india/" element={<WomenHormonalPmsPmddSupportPage />} />
+          <Route path="/women-self-esteem-body-image-support-india" element={<WomenSelfEsteemBodyImageSupportPage />} />
+          <Route path="/women-self-esteem-body-image-support-india/" element={<WomenSelfEsteemBodyImageSupportPage />} />
+          <Route path="/women-relationship-emotional-wellbeing-support-india" element={<WomenRelationshipEmotionalWellbeingSupportPage />} />
+          <Route path="/women-relationship-emotional-wellbeing-support-india/" element={<WomenRelationshipEmotionalWellbeingSupportPage />} />
+          <Route path="/women-pregnancy-postpartum-motherhood-mental-health-india" element={<WomenPregnancyPostpartumMotherhoodMentalHealthSupportPage />} />
+          <Route path="/women-pregnancy-postpartum-motherhood-mental-health-india/" element={<WomenPregnancyPostpartumMotherhoodMentalHealthSupportPage />} />
+          <Route path="/women-life-transitions-career-pressure-support-india" element={<WomenLifeTransitionsCareerPressureSupportPage />} />
+          <Route path="/women-life-transitions-career-pressure-support-india/" element={<WomenLifeTransitionsCareerPressureSupportPage />} />
           <Route path="/adult-mental-wellness" element={<AdultMentalWellnessPage />} />
           <Route path="/anxiety-support-india" element={<AdultAnxietySupportIndiaPage />} />
           <Route path="/anxiety-support-india/" element={<AdultAnxietySupportIndiaPage />} />

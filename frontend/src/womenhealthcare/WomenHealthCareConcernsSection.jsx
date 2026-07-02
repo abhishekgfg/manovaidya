@@ -15,14 +15,16 @@ const concerns = [
     title: "Stress & Anxiety",
     description:
       "Overthinking, worry, panic attacks and daily stress management.",
+    href: "/women-stress-management-mind-body-balance-india/",
     Icon: Brain,
-    iconColor: "#ef4f7b",
-    iconBg: "#ffe0ec",
+    iconColor: "#8B43BA",
+    iconBg: "#f0e7f6",
   },
   {
     title: "Depression &\nLow Mood",
     description:
       "Persistent sadness, loss of interest, emptiness and hopelessness.",
+    href: "/women-depression-low-mood-support-india/",
     Icon: CloudRain,
     iconColor: "#6043c4",
     iconBg: "#eee6ff",
@@ -31,6 +33,7 @@ const concerns = [
     title: "Hormonal &\nPMS/PMDD",
     description:
       "Mood swings, irritability, fatigue and emotional changes.",
+    href: "/women-hormonal-pms-pmdd-support-india/",
     Icon: Sparkles,
     iconColor: "#d84a62",
     iconBg: "#ffe8e7",
@@ -39,6 +42,7 @@ const concerns = [
     title: "Self-Esteem &\nBody Image",
     description:
       "Low self-worth, self-doubt, negative self-image and confidence issues.",
+    href: "/women-self-esteem-body-image-support-india/",
     Icon: UserRound,
     iconColor: "#4a9a3a",
     iconBg: "#e8f6df",
@@ -47,6 +51,7 @@ const concerns = [
     title: "Relationship &\nEmotional Challenges",
     description:
       "Relationship stress, loneliness, breakups and family dynamics.",
+    href: "/women-relationship-emotional-wellbeing-support-india/",
     Icon: Heart,
     iconColor: "#b99018",
     iconBg: "#fff1c9",
@@ -55,6 +60,7 @@ const concerns = [
     title: "Pregnancy, Postpartum\n& Motherhood",
     description:
       "Perinatal anxiety, postnatal depression and motherhood adjustment.",
+    href: "/women-pregnancy-postpartum-motherhood-mental-health-india/",
     Icon: SmilePlus,
     iconColor: "#1691c8",
     iconBg: "#dff5ff",
@@ -63,6 +69,7 @@ const concerns = [
     title: "Life Transitions &\nCareer Pressure",
     description:
       "Burnout, career stress, work-life balance and major life changes.",
+    href: "/women-life-transitions-career-pressure-support-india/",
     Icon: Flower2,
     iconColor: "#7d58be",
     iconBg: "#eee4ff",
@@ -88,7 +95,7 @@ function WomenHealthCareConcernsSection() {
         </div>
 
         <div className="mt-4 grid grid-cols-1 gap-3 min-[520px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 lg:gap-3">
-          {concerns.map(({ title, description, Icon, iconColor, iconBg }) => (
+          {concerns.map(({ title, description, href = "#assessment", Icon, iconColor, iconBg }) => (
             <article
               key={title}
               className="flex min-h-[285px] flex-col items-center rounded-lg border border-[#ded9ee] bg-white px-4 py-6 text-center shadow-[0_8px_22px_rgba(45,38,103,0.08)] lg:min-h-[300px] lg:px-3 lg:py-6"
@@ -109,7 +116,7 @@ function WomenHealthCareConcernsSection() {
               </p>
 
               <a
-                href="#assessment"
+                href={href}
                 className="mt-auto inline-flex items-center gap-3 text-[11.5px] font-black text-[#3b2b94] transition hover:text-[#8B43BA]"
               >
                 Explore Support
@@ -124,3 +131,4 @@ function WomenHealthCareConcernsSection() {
 }
 
 export default WomenHealthCareConcernsSection;
+
