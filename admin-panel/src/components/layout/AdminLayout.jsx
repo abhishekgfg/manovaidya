@@ -3,10 +3,11 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import api from '../../api/axiosInstance';
+import { ADMIN_SETTINGS_EVENT, getAdminQuickOptions, saveAdminQuickOptions } from '../../utils/adminSettings';
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => getAdminQuickOptions().sidebarCollapsed);
   const [consultations, setConsultations] = useState([]);
   const [consultationsLoading, setConsultationsLoading] = useState(true);
   const [consultationsError, setConsultationsError] = useState('');
@@ -59,13 +60,31 @@ export default function AdminLayout() {
     };
   }, [fetchConsultations]);
 
+  useEffect(() => {
+    const syncQuickOptions = () => {
+      setIsCollapsed(getAdminQuickOptions().sidebarCollapsed);
+    };
+
+    window.addEventListener(ADMIN_SETTINGS_EVENT, syncQuickOptions);
+    window.addEventListener('storage', syncQuickOptions);
+    return () => {
+      window.removeEventListener(ADMIN_SETTINGS_EVENT, syncQuickOptions);
+      window.removeEventListener('storage', syncQuickOptions);
+    };
+  }, []);
+
+  const updateSidebarCollapsed = (collapsed) => {
+    setIsCollapsed(collapsed);
+    saveAdminQuickOptions({ ...getAdminQuickOptions(), sidebarCollapsed: collapsed });
+  };
+
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 font-sans">
       <Sidebar 
         sidebarOpen={sidebarOpen} 
         setSidebarOpen={setSidebarOpen} 
         isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
+        setIsCollapsed={updateSidebarCollapsed}
       />
       
       <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">

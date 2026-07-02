@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import BlogForm from '../components/blogs/BlogForm';
 import api, { getAssetUrl } from '../api/axiosInstance';
+import { ADMIN_SETTINGS_EVENT, getAdminQuickOptions } from '../utils/adminSettings';
 
 const getScoreTone = (score) => {
   if (score >= 85) return { label: 'Excellent', text: 'text-emerald-700', background: 'bg-emerald-50', border: 'border-emerald-200', color: '#10b981' };
@@ -124,7 +125,7 @@ const ScoreRing = ({ score, tone, size = 'h-12 w-12' }) => (
 
 const ModalShell = ({ children, maxWidth = 'max-w-5xl', onClose }) => (
   <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
-    <div className={`max-h-[92vh] w-full ${maxWidth} overflow-hidden rounded-2xl bg-white shadow-2xl`}>
+    <div className={`admin-modal-panel max-h-[92vh] w-full ${maxWidth} overflow-hidden rounded-2xl bg-white shadow-2xl`}>
       {children}
     </div>
     <button type="button" aria-label="Close modal" className="sr-only" onClick={onClose} />
@@ -149,6 +150,7 @@ export default function BlogManagement() {
   const [aiReview, setAiReview] = useState(null);
   const [aiReviewLoading, setAiReviewLoading] = useState(false);
   const [aiReviewError, setAiReviewError] = useState('');
+  const [quickOptions, setQuickOptions] = useState(() => getAdminQuickOptions());
 
   const fetchBlogs = async () => {
     try {
@@ -171,6 +173,16 @@ export default function BlogManagement() {
     api.get('/seo/integrations/status')
       .then(({ data }) => setIntegrationStatus(data.data))
       .catch(() => setIntegrationStatus(null));
+  }, []);
+
+  useEffect(() => {
+    const syncQuickOptions = () => setQuickOptions(getAdminQuickOptions());
+    window.addEventListener(ADMIN_SETTINGS_EVENT, syncQuickOptions);
+    window.addEventListener('storage', syncQuickOptions);
+    return () => {
+      window.removeEventListener(ADMIN_SETTINGS_EVENT, syncQuickOptions);
+      window.removeEventListener('storage', syncQuickOptions);
+    };
   }, []);
 
   const scoredBlogs = useMemo(() => blogs.map((blog) => {
@@ -306,7 +318,7 @@ export default function BlogManagement() {
 
   return (
     <div className="mx-auto w-full max-w-none p-3 md:p-5 lg:p-6">
-      <div className="mb-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-gradient-to-r from-white via-white to-blue-50/60 p-5 shadow-sm sm:flex-row sm:items-center">
+      <div className="mb-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center">
         <div className="flex items-start gap-4">
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-md shadow-blue-200">
             <Newspaper size={22} />
@@ -326,7 +338,7 @@ export default function BlogManagement() {
         </button>
       </div>
 
-      <div className="mb-6 grid gap-4 lg:grid-cols-4">
+      <div className={`mb-6 grid gap-4 ${quickOptions.seoHints ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Total blogs</span>
@@ -349,7 +361,7 @@ export default function BlogManagement() {
           </div>
           <p className="mt-3 text-3xl font-bold text-slate-900">{scoredBlogs.filter((blog) => blog.seoDisplay.score >= 85).length}<span className="text-sm font-medium text-slate-400">/{blogs.length}</span></p>
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
+        {quickOptions.seoHints ? <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
           <div className="flex items-start justify-between gap-2">
             <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Integrations</span>
             <Info size={16} className="shrink-0 text-slate-300" />
@@ -364,7 +376,7 @@ export default function BlogManagement() {
               Gemini {integrationStatus?.gemini?.configured ? integrationStatus.gemini.model : 'setup required'}
             </span>
           </div>
-        </div>
+        </div> : null}
       </div>
 
       {error && (
@@ -439,7 +451,7 @@ export default function BlogManagement() {
             <tbody className="divide-y divide-slate-100">
               {filteredBlogs.length > 0 ? (
                 filteredBlogs.map((blog) => (
-                  <tr key={blog._id} className="group transition hover:bg-slate-50/80">
+                  <tr key={blog._id} className="admin-blog-row group transition">
                     <td className="max-w-md px-6 py-4">
                       <div className="flex items-start gap-3">
                         {blog.image ? (
@@ -674,7 +686,7 @@ function GeminiModal({ blog, aiReview, loading, error, onClose, onAnalyze, onRef
 
   return (
     <ModalShell onClose={onClose} maxWidth="max-w-6xl">
-      <div className="flex items-start justify-between border-b border-slate-200 bg-gradient-to-br from-violet-50 via-white to-blue-50 p-5">
+      <div className="flex items-start justify-between border-b border-slate-200 bg-white p-5">
         <div className="flex items-start gap-4">
           <GeminiMark />
           <div>
@@ -738,24 +750,53 @@ function GeminiModal({ blog, aiReview, loading, error, onClose, onAnalyze, onRef
 function GeminiAuditWorkspace({ review, activeTab, setActiveTab }) {
   const criticalCount = (review.auditIssues || []).filter((issue) => issue.severity === 'Critical').length;
   const highCount = (review.auditIssues || []).filter((issue) => issue.severity === 'High').length;
+  const fixCount = review.priorityActions?.length || 0;
+  const issueCount = (review.auditIssues || []).length;
+  const correctionCount = (review.sentenceCorrections || []).length;
+  const faqCount = (review.seoFaqs || []).length + (review.featuredSnippetSuggestions || []).length;
+  const checklistCount = (review.finalChecklist || []).length;
   const tabs = [
-    { id: 'fixes', label: 'Fix First', count: review.priorityActions?.length || 0 },
-    { id: 'audit', label: 'Full Audit', count: (review.auditIssues || []).length },
-    { id: 'corrections', label: 'Corrections', count: (review.sentenceCorrections || []).length },
-    { id: 'seo', label: 'SEO Setup', count: review.seoRecommendations ? 1 : 0 },
-    { id: 'faqs', label: 'FAQs & Snippets', count: (review.seoFaqs || []).length + (review.featuredSnippetSuggestions || []).length },
-    { id: 'checklist', label: 'Checklist', count: (review.finalChecklist || []).length }
+    { id: 'fixes', step: '1', label: 'Fix First', helper: 'Highest impact edits', count: fixCount },
+    { id: 'audit', step: '2', label: 'Issues', helper: 'Problems by severity', count: issueCount },
+    { id: 'corrections', step: '3', label: 'Rewrite', helper: 'Sentence corrections', count: correctionCount },
+    { id: 'seo', step: '4', label: 'SEO Setup', helper: 'Metadata and intent', count: review.seoRecommendations ? 1 : 0 },
+    { id: 'faqs', step: '5', label: 'FAQs', helper: 'Snippets and schema', count: faqCount },
+    { id: 'checklist', step: '6', label: 'Checklist', helper: 'Final review', count: checklistCount }
   ];
 
   return (
     <div className="space-y-5">
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="flex items-start gap-3">
-          <BrainCircuit size={22} className="mt-0.5 shrink-0 text-violet-600" />
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-slate-900">What Gemini found</p>
-            <p className="mt-1 text-sm leading-6 text-slate-700">{review.summary}</p>
-            <p className="mt-2 text-xs font-medium leading-5 text-violet-700">{review.scoreRationale}</p>
+      <section className="grid gap-4 xl:grid-cols-[1.35fr_0.9fr]">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start gap-3">
+            <BrainCircuit size={22} className="mt-0.5 shrink-0 text-violet-600" />
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-black uppercase tracking-wide text-slate-400">Gemini summary</p>
+              <h4 className="mt-1 text-lg font-black text-slate-950">What needs attention</h4>
+              <p className="mt-2 text-sm leading-6 text-slate-700">{review.summary}</p>
+              <p className="mt-3 rounded-xl bg-violet-50 p-3 text-xs font-semibold leading-5 text-violet-700">{review.scoreRationale}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p className="text-sm font-black text-slate-900">Recommended workflow</p>
+          <div className="mt-4 space-y-3">
+            {[
+              ['1', 'Fix high-priority edits first'],
+              ['2', 'Apply metadata, FAQ and schema suggestions'],
+              ['3', 'Use checklist before publishing'],
+            ].map(([step, label]) => (
+              <button
+                key={step}
+                type="button"
+                onClick={() => setActiveTab(step === '1' ? 'fixes' : step === '2' ? 'seo' : 'checklist')}
+                className="flex w-full items-center gap-3 rounded-xl bg-slate-50 p-3 text-left transition hover:bg-violet-50"
+              >
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-black text-white">{step}</span>
+                <span className="text-sm font-bold text-slate-700">{label}</span>
+              </button>
+            ))}
           </div>
         </div>
       </section>
@@ -773,14 +814,20 @@ function GeminiAuditWorkspace({ review, activeTab, setActiveTab }) {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-xl px-3 py-2 text-left text-xs font-bold transition ${
+              className={`rounded-xl px-3 py-3 text-left transition ${
                 activeTab === tab.id
                   ? 'bg-violet-600 text-white shadow-sm'
                   : 'bg-slate-50 text-slate-600 hover:bg-violet-50 hover:text-violet-700'
               }`}
             >
-              <span className="block">{tab.label}</span>
-              <span className={`mt-1 block text-[10px] ${activeTab === tab.id ? 'text-violet-100' : 'text-slate-400'}`}>
+              <span className="flex items-center gap-2">
+                <span className={`flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-black ${activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-white text-violet-700'}`}>{tab.step}</span>
+                <span className="text-xs font-black">{tab.label}</span>
+              </span>
+              <span className={`mt-2 block text-[10px] font-semibold ${activeTab === tab.id ? 'text-violet-100' : 'text-slate-400'}`}>
+                {tab.helper}
+              </span>
+              <span className={`mt-1 block text-[10px] font-black ${activeTab === tab.id ? 'text-violet-100' : 'text-slate-400'}`}>
                 {tab.count} item{tab.count === 1 ? '' : 's'}
               </span>
             </button>
@@ -804,14 +851,17 @@ function FixFirstTab({ review }) {
   return (
     <section className="space-y-4">
       <div className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5">
-        <div className="flex items-start gap-3">
-          <FileSearch className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" />
-          <div>
-            <h4 className="text-base font-bold text-slate-900">Start here</h4>
-            <p className="mt-1 text-sm leading-6 text-slate-600">
-              These are the most important edits. Each card tells you what is wrong, what to replace or add, and where to use it.
-            </p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <FileSearch className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" />
+            <div>
+              <h4 className="text-base font-black text-slate-900">Start here</h4>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                Apply these cards from top to bottom. They are written as copy/paste friendly tasks.
+              </p>
+            </div>
           </div>
+          <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-emerald-700">{actions.length} priority fixes</span>
         </div>
       </div>
 
@@ -1256,20 +1306,22 @@ function ImpactPanel({ impact, checklist }) {
 function ExactFixCard({ action }) {
   return (
     <div className="rounded-2xl border border-violet-100 bg-white p-4 shadow-sm">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2">
         <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase ${action.priority === 'high' ? 'bg-red-100 text-red-700' : action.priority === 'medium' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>{action.priority}</span>
         <p className="text-sm font-bold text-slate-900">{action.title}</p>
+        </div>
+        <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-black text-slate-500">{action.issueLocation || 'Content'}</span>
       </div>
 
-      <div className="mt-3 grid gap-3 lg:grid-cols-2">
+      <div className="mt-4 grid gap-3 lg:grid-cols-2">
         <div className="rounded-xl border border-red-100 bg-red-50/70 p-3">
-          <p className="text-[10px] font-bold uppercase tracking-wide text-red-700">Actual issue</p>
-          <p className="mt-1 text-xs font-semibold text-slate-800">{action.issueLocation || 'Relevant SEO field or content section'}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-red-700">Problem</p>
           <p className="mt-1 text-xs leading-5 text-slate-600">{action.currentIssue || action.reason}</p>
         </div>
 
         <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 p-3">
-          <p className="text-[10px] font-bold uppercase tracking-wide text-emerald-700">Replace / add this</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-emerald-700">Copy / add this</p>
           <p className="mt-1 whitespace-pre-line rounded-lg bg-white p-2 text-xs font-medium leading-5 text-slate-800">
             {action.recommendedReplacement || action.exactRecommendation}
           </p>
@@ -1325,7 +1377,7 @@ function MetricCard({ label, value, color }) {
 function SearchConsoleModal({ blog, configured, metrics, loading, error, onClose, onRefresh }) {
   return (
     <ModalShell onClose={onClose} maxWidth="max-w-4xl">
-      <div className="flex items-start justify-between border-b border-slate-200 bg-gradient-to-br from-blue-50 via-white to-sky-50 p-5">
+      <div className="flex items-start justify-between border-b border-slate-200 bg-white p-5">
         <div className="flex items-start gap-4">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
             <BarChart3 className="h-5 w-5" />

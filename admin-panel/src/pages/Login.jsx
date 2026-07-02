@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Eye, EyeOff, Lock, ShieldCheck, User } from 'lucide-react';
 import Logo from '../assets/manovaidya-logo (2).png';
 import heroImage from '../assets/hero.png';
+import { applyAdminAppearance, getAdminCredentials } from '../utils/adminSettings';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -14,6 +15,7 @@ export default function Login() {
 
   useEffect(() => {
     localStorage.removeItem('token');
+    applyAdminAppearance();
   }, []);
 
   const handleLogin = (event) => {
@@ -22,7 +24,8 @@ export default function Login() {
     setLoading(true);
 
     window.setTimeout(() => {
-      if (username.trim() === 'manovaidya' && password === 'manovaidya123') {
+      const savedCredentials = getAdminCredentials();
+      if (username.trim() === savedCredentials.username && password === savedCredentials.password) {
         localStorage.removeItem('token');
         sessionStorage.setItem('token', 'admin-token');
         navigate('/', { replace: true });

@@ -4,7 +4,10 @@ import AdminLayout from './components/layout/AdminLayout';
 import Dashboard from './pages/Dashboard';
 import BlogManagement from './pages/BlogManagement';
 import Appointments from './pages/Appointments';
+import Analytics from './pages/Analytics';
 import Login from './pages/Login';
+import Settings from './pages/Settings';
+import { applyAdminAppearance } from './utils/adminSettings';
 
 const PrivateRoute = ({ children }) => {
   const token = sessionStorage.getItem('token');
@@ -15,6 +18,14 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
+  React.useEffect(() => {
+    applyAdminAppearance();
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const syncSystemTheme = () => applyAdminAppearance();
+    media.addEventListener('change', syncSystemTheme);
+    return () => media.removeEventListener('change', syncSystemTheme);
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -27,8 +38,8 @@ function App() {
           <Route path="patients" element={<div className="p-4">Patients Page (Coming Soon)</div>} />
           <Route path="blog" element={<BlogManagement />} />
           <Route path="blogs" element={<Navigate to="/blog" replace />} />
-          <Route path="analytics" element={<div className="p-4">Analytics (Coming Soon)</div>} />
-          <Route path="settings" element={<div className="p-4">Settings (Coming Soon)</div>} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="*" element={<div className="p-4">Page Not Found</div>} />
         </Route>
       </Routes>

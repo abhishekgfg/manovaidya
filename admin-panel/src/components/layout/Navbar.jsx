@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Bell, CalendarCheck, ChevronDown, Clock, ExternalLink, LogOut, Menu, Search, User as UserIcon, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ADMIN_SETTINGS_EVENT, getAdminQuickOptions } from '../../utils/adminSettings';
 
 const formatDate = (date) => {
   if (!date) return 'N/A';
@@ -40,6 +41,7 @@ export default function Navbar({
 }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const [quickOptions, setQuickOptions] = useState(() => getAdminQuickOptions());
   const navigate = useNavigate();
   const newConsultations = useMemo(
     () => consultations.filter((item) => item.status === 'new'),
@@ -58,6 +60,21 @@ export default function Navbar({
     // Redirect to login page
     navigate('/login');
   };
+
+  useEffect(() => {
+    const syncQuickOptions = () => {
+      const nextOptions = getAdminQuickOptions();
+      setQuickOptions(nextOptions);
+      if (!nextOptions.appointmentAlerts) setNotificationOpen(false);
+    };
+
+    window.addEventListener(ADMIN_SETTINGS_EVENT, syncQuickOptions);
+    window.addEventListener('storage', syncQuickOptions);
+    return () => {
+      window.removeEventListener(ADMIN_SETTINGS_EVENT, syncQuickOptions);
+      window.removeEventListener('storage', syncQuickOptions);
+    };
+  }, []);
 
   const goToAppointments = () => {
     setNotificationOpen(false);
@@ -98,7 +115,7 @@ export default function Navbar({
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
-            <li className="relative">
+            {quickOptions.appointmentAlerts ? <li className="relative">
               <button
                 type="button"
                 onClick={() => {
@@ -196,7 +213,7 @@ export default function Navbar({
                   </div>
                 </>
               )}
-            </li>
+            </li> : null}
           </ul>
 
           <div className="relative">
@@ -255,7 +272,7 @@ export default function Navbar({
         </div>
       </div>
 
-      {latestNotification ? (
+      {quickOptions.appointmentAlerts && latestNotification ? (
         <div className="pointer-events-none fixed right-4 top-[76px] z-[70] w-[min(92vw,380px)]">
           <div className="pointer-events-auto overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
             <div className="flex items-start gap-3 p-4">
