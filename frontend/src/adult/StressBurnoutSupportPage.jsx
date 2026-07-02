@@ -737,7 +737,7 @@ function StressBurnoutSupportPage() {
                 ))}
               </ul>
             </div>
-
+      
             <h3 className="mt-6 font-black text-[16px] text-[#21142d]">When Should You Consider an Assessment?</h3>
             <p className="mt-2 text-[14px] font-semibold leading-7 text-[#51465a]">You may consider seeking guidance if you experience:</p>
 

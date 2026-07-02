@@ -81,7 +81,7 @@ export default function AdminLayout() {
         />
         
         <main>
-          <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 transition-all duration-300">
+          <div className="mx-auto w-full max-w-none p-3 transition-all duration-300 md:p-5 2xl:p-6">
             <Outlet
               context={{
                 consultations,

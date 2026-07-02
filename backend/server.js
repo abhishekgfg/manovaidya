@@ -6,6 +6,7 @@ dotenv.config();
 
 
 import blogRoutes from './routes/blogRoutes.js';
+import consultationRoutes from './routes/consultationRoutes.js';
 
 
 
@@ -38,6 +39,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 
 app.use('/api', blogRoutes);
+app.use('/api', consultationRoutes);
 
 
 

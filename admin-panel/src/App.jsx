@@ -7,7 +7,7 @@ import Appointments from './pages/Appointments';
 import Login from './pages/Login';
 
 const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (!token) {
     return <Navigate to="/login" replace />;
   }

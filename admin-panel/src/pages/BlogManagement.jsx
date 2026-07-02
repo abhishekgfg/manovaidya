@@ -8,8 +8,12 @@ import {
   CheckCircle2,
   Edit2,
   FileSearch,
+  FileText,
   Gauge,
+  Image as ImageIcon,
   Info,
+  Layers,
+  Newspaper,
   Plus,
   RefreshCw,
   Search,
@@ -17,11 +21,12 @@ import {
   Target,
   Trash2,
   TrendingUp,
+  User,
   X,
   Zap
 } from 'lucide-react';
 import BlogForm from '../components/blogs/BlogForm';
-import api from '../api/axiosInstance';
+import api, { getAssetUrl } from '../api/axiosInstance';
 
 const getScoreTone = (score) => {
   if (score >= 85) return { label: 'Excellent', text: 'text-emerald-700', background: 'bg-emerald-50', border: 'border-emerald-200', color: '#10b981' };
@@ -133,6 +138,7 @@ export default function BlogManagement() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [localSeoDetails, setLocalSeoDetails] = useState(null);
   const [geminiDetails, setGeminiDetails] = useState(null);
   const [consoleDetails, setConsoleDetails] = useState(null);
@@ -181,11 +187,16 @@ export default function BlogManagement() {
     ? Math.round(scoredBlogs.reduce((total, blog) => total + blog.seoDisplay.score, 0) / scoredBlogs.length)
     : 0;
 
-  const filteredBlogs = scoredBlogs.filter((blog) =>
-    blog.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    blog.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    blog.authorName?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const publishedCount = scoredBlogs.filter((blog) => blog.status === 'published').length;
+
+  const filteredBlogs = scoredBlogs.filter((blog) => {
+    const matchesQuery =
+      blog.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      blog.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      blog.authorName?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || blog.status === statusFilter;
+    return matchesQuery && matchesStatus;
+  });
 
   const loadAiReviewForBlog = async (blog, { force = false } = {}) => {
     if (!blog?._id) return;
@@ -280,71 +291,140 @@ export default function BlogManagement() {
   };
 
   if (loading && blogs.length === 0) {
-    return <div className="p-8 text-center">Loading blogs...</div>;
+    return (
+      <div className="mx-auto w-full max-w-none p-3 md:p-5 lg:p-6">
+        <div className="mb-6 h-16 w-full animate-pulse rounded-2xl bg-slate-100" />
+        <div className="mb-6 grid gap-4 lg:grid-cols-4">
+          {[0, 1, 2, 3].map((key) => (
+            <div key={key} className="h-28 animate-pulse rounded-2xl bg-slate-100" />
+          ))}
+        </div>
+        <div className="h-96 animate-pulse rounded-2xl bg-slate-100" />
+      </div>
+    );
   }
 
   return (
-    <div className="mx-auto max-w-7xl p-4 md:p-6 lg:p-8">
-      <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800">Blog Management</h1>
-          <p className="mt-1 text-sm text-slate-500">Create, edit, and manage blog SEO with local checks, Gemini AI, and Search Console.</p>
+    <div className="mx-auto w-full max-w-none p-3 md:p-5 lg:p-6">
+      <div className="mb-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-gradient-to-r from-white via-white to-blue-50/60 p-5 shadow-sm sm:flex-row sm:items-center">
+        <div className="flex items-start gap-4">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-md shadow-blue-200">
+            <Newspaper size={22} />
+          </span>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">Blog Management</h1>
+            <p className="mt-1 text-sm text-slate-500">Create, edit, and manage blog SEO with local checks, Gemini AI, and Search Console.</p>
+          </div>
         </div>
 
         <button
           onClick={handleAddNew}
-          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:shadow-md hover:shadow-blue-200 active:scale-[0.98]"
         >
           <Plus size={18} />
           Add New Blog
         </button>
       </div>
 
-      <div className="mb-6 grid gap-4 lg:grid-cols-[1.35fr_0.65fr_0.65fr]">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-start gap-4">
-            <div className="rounded-xl bg-violet-100 p-2.5 text-violet-700"><Info size={20} /></div>
-            <div>
-              <h2 className="font-semibold text-slate-900">Stable SEO workflow</h2>
-              <p className="mt-1 text-xs leading-5 text-slate-600">
-                Local SEO score is deterministic. Gemini score is saved after analysis and reused until you explicitly refresh the AI audit.
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${searchConsoleConfigured ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-600'}`}>Search Console: {searchConsoleConfigured ? 'Configured' : 'Not configured'}</span>
-                <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${integrationStatus?.gemini?.configured ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>Gemini: {integrationStatus?.gemini?.configured ? integrationStatus.gemini.model : 'Setup required'}</span>
-              </div>
-            </div>
+      <div className="mb-6 grid gap-4 lg:grid-cols-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Total blogs</span>
+            <span className="rounded-lg bg-slate-100 p-1.5 text-slate-600"><Layers size={16} /></span>
           </div>
+          <p className="mt-3 text-3xl font-bold text-slate-900">{blogs.length}</p>
+          <p className="mt-1 text-xs text-slate-400">{publishedCount} published</p>
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center justify-between"><span className="text-xs font-medium text-slate-500">Average shown score</span><Activity size={18} className="text-violet-600" /></div>
-          <p className="mt-2 text-3xl font-bold text-slate-900">{averageSeoScore}<span className="text-sm font-medium text-slate-400">/100</span></p>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Average SEO score</span>
+            <span className="rounded-lg bg-violet-100 p-1.5 text-violet-700"><Activity size={16} /></span>
+          </div>
+          <p className="mt-3 text-3xl font-bold text-slate-900">{averageSeoScore}<span className="text-sm font-medium text-slate-400">/100</span></p>
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center justify-between"><span className="text-xs font-medium text-slate-500">Excellent blogs</span><TrendingUp size={18} className="text-emerald-600" /></div>
-          <p className="mt-2 text-3xl font-bold text-slate-900">{scoredBlogs.filter((blog) => blog.seoDisplay.score >= 85).length}<span className="text-sm font-medium text-slate-400">/{blogs.length}</span></p>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Excellent blogs</span>
+            <span className="rounded-lg bg-emerald-100 p-1.5 text-emerald-700"><TrendingUp size={16} /></span>
+          </div>
+          <p className="mt-3 text-3xl font-bold text-slate-900">{scoredBlogs.filter((blog) => blog.seoDisplay.score >= 85).length}<span className="text-sm font-medium text-slate-400">/{blogs.length}</span></p>
+        </div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
+          <div className="flex items-start justify-between gap-2">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Integrations</span>
+            <Info size={16} className="shrink-0 text-slate-300" />
+          </div>
+          <div className="mt-3 flex flex-col gap-1.5">
+            <span className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold ${searchConsoleConfigured ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
+              <span className={`h-1.5 w-1.5 rounded-full ${searchConsoleConfigured ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+              Search Console {searchConsoleConfigured ? 'connected' : 'not set up'}
+            </span>
+            <span className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold ${integrationStatus?.gemini?.configured ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+              <span className={`h-1.5 w-1.5 rounded-full ${integrationStatus?.gemini?.configured ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+              Gemini {integrationStatus?.gemini?.configured ? integrationStatus.gemini.model : 'setup required'}
+            </span>
+          </div>
         </div>
       </div>
 
-      {error && <div className="mb-6 rounded-lg bg-red-100 p-4 text-sm text-red-700">{error}</div>}
+      {error && (
+        <div className="mb-6 flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          <AlertCircle size={18} className="shrink-0" />
+          {error}
+        </div>
+      )}
 
-      <div className="mb-6 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="relative max-w-md">
+      <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative max-w-md flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input
             type="text"
             placeholder="Search blogs by title, category, or author..."
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            className="w-full rounded-lg border border-slate-300 py-2 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-9 text-sm text-slate-800 transition focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100"
           />
-          <Search className="absolute left-3 top-2.5 text-slate-400" size={18} />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              aria-label="Clear search"
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2">
+          {[
+            { id: 'all', label: 'All' },
+            { id: 'published', label: 'Published' },
+            { id: 'draft', label: 'Draft' }
+          ].map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => setStatusFilter(option.id)}
+              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                statusFilter === option.id
+                  ? 'bg-slate-900 text-white shadow-sm'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+          <span className="ml-1 hidden shrink-0 text-xs font-medium text-slate-400 sm:inline">
+            {filteredBlogs.length} of {blogs.length}
+          </span>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[1080px] text-left text-sm text-slate-600">
-            <thead className="bg-slate-50 text-xs uppercase text-slate-700">
+          <table className="w-full min-w-[1280px] text-left text-sm text-slate-600">
+            <thead className="border-b border-slate-200 bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
               <tr>
                 <th className="px-6 py-4">Title</th>
                 <th className="px-6 py-4">Author</th>
@@ -356,22 +436,45 @@ export default function BlogManagement() {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-slate-100">
               {filteredBlogs.length > 0 ? (
                 filteredBlogs.map((blog) => (
-                  <tr key={blog._id} className="border-b border-slate-200 hover:bg-slate-50">
-                    <td className="max-w-xs px-6 py-4 font-medium text-slate-900">
-                      <p className="line-clamp-2">{blog.title}</p>
-                      <p className="mt-1 text-xs font-normal text-slate-400">{new Date(blog.createdAt).toLocaleDateString()}</p>
+                  <tr key={blog._id} className="group transition hover:bg-slate-50/80">
+                    <td className="max-w-md px-6 py-4">
+                      <div className="flex items-start gap-3">
+                        {blog.image ? (
+                          <img
+                            src={getAssetUrl(blog.image)}
+                            alt={blog.imageAlt || blog.title || 'Blog image'}
+                            className="h-11 w-11 shrink-0 rounded-lg border border-slate-200 object-cover"
+                          />
+                        ) : (
+                          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-400">
+                            <ImageIcon size={18} />
+                          </span>
+                        )}
+                        <div className="min-w-0">
+                          <p className="line-clamp-2 font-semibold text-slate-900">{blog.title}</p>
+                          <p className="mt-1 text-xs font-normal text-slate-400">{new Date(blog.createdAt).toLocaleDateString()}</p>
+                        </div>
+                      </div>
                     </td>
-                    <td className="px-6 py-4">{blog.authorName}</td>
                     <td className="px-6 py-4">
-                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-800">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-600">
+                          {blog.authorName ? blog.authorName.charAt(0).toUpperCase() : <User size={13} />}
+                        </span>
+                        <span className="truncate text-slate-700">{blog.authorName || 'Unknown'}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
                         {blog.category || 'N/A'}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${blog.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                      <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${blog.status === 'published' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                        <span className={`h-1.5 w-1.5 rounded-full ${blog.status === 'published' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
                         {blog.status}
                       </span>
                     </td>
@@ -379,7 +482,7 @@ export default function BlogManagement() {
                       <button
                         type="button"
                         onClick={() => setLocalSeoDetails(blog)}
-                        className={`group flex min-w-40 items-center gap-3 rounded-xl border px-3 py-2 text-left transition hover:-translate-y-0.5 hover:shadow-md ${blog.seoDisplay.tone.background} ${blog.seoDisplay.tone.border}`}
+                        className={`group/score flex min-w-40 items-center gap-3 rounded-xl border px-3 py-2 text-left transition hover:-translate-y-0.5 hover:shadow-md ${blog.seoDisplay.tone.background} ${blog.seoDisplay.tone.border}`}
                         title="Open local SEO audit"
                       >
                         <ScoreRing score={blog.seoDisplay.score} tone={blog.seoDisplay.tone} size="h-10 w-10" />
@@ -409,14 +512,14 @@ export default function BlogManagement() {
                         </button>
                       </div>
                     </td>
-                    <td className="px-6 py-4">{blog.views}</td>
+                    <td className="px-6 py-4 font-medium text-slate-700">{blog.views}</td>
                     <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button onClick={() => handleEdit(blog)} className="rounded-lg p-1.5 text-blue-600 hover:bg-blue-50" title="Edit">
-                          <Edit2 size={18} />
+                      <div className="flex items-center justify-end gap-1.5 opacity-80 transition group-hover:opacity-100">
+                        <button onClick={() => handleEdit(blog)} className="rounded-lg p-2 text-blue-600 transition hover:bg-blue-50" title="Edit">
+                          <Edit2 size={17} />
                         </button>
-                        <button onClick={() => handleDelete(blog._id)} className="rounded-lg p-1.5 text-red-600 hover:bg-red-50" title="Delete">
-                          <Trash2 size={18} />
+                        <button onClick={() => handleDelete(blog._id)} className="rounded-lg p-2 text-red-600 transition hover:bg-red-50" title="Delete">
+                          <Trash2 size={17} />
                         </button>
                       </div>
                     </td>
@@ -424,7 +527,26 @@ export default function BlogManagement() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="px-6 py-8 text-center text-slate-500">No blogs found.</td>
+                  <td colSpan="8" className="px-6 py-16 text-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+                        <FileText size={24} />
+                      </span>
+                      <p className="text-sm font-semibold text-slate-700">No blogs found</p>
+                      <p className="max-w-xs text-xs text-slate-400">
+                        {searchQuery || statusFilter !== 'all' ? 'Try adjusting your search or filters.' : 'Get started by creating your first blog post.'}
+                      </p>
+                      {!searchQuery && statusFilter === 'all' && (
+                        <button
+                          onClick={handleAddNew}
+                          className="mt-1 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-blue-700"
+                        >
+                          <Plus size={14} />
+                          Add New Blog
+                        </button>
+                      )}
+                    </div>
+                  </td>
                 </tr>
               )}
             </tbody>

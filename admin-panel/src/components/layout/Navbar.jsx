@@ -53,6 +53,7 @@ export default function Navbar({
   const handleLogout = () => {
     // Clear auth token/data
     localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     
     // Redirect to login page
     navigate('/login');
