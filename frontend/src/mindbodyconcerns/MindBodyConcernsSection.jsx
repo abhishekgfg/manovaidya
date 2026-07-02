@@ -15,6 +15,7 @@ const concerns = [
   {
     title: "Stress &\nTension",
     description: "Chronic stress, burnout, mental fatigue and irritability.",
+    href: "/mind-body-health-care-india/",
     Icon: Brain,
     iconClass: "bg-[#eee5ff] text-[#5d40b6]",
   },
@@ -81,7 +82,7 @@ function MindBodyConcernsSection() {
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 md:grid-cols-4 xl:grid-cols-8">
-          {concerns.map(({ title, description, Icon, iconClass }) => (
+          {concerns.map(({ title, description, href = "#assessment", Icon, iconClass }) => (
             <article
               key={title}
               className="flex min-h-[300px] min-w-0 flex-col items-center rounded-md border border-[#e5e1eb] bg-white px-3 py-5 text-center shadow-[0_8px_22px_rgba(44,30,85,0.06)]"
@@ -99,7 +100,7 @@ function MindBodyConcernsSection() {
               </p>
 
               <a
-                href="#assessment"
+                href={href}
                 className="mt-auto inline-flex items-center gap-2 pt-4 text-[12.5px] font-black text-[#4e2b9c] transition hover:text-[#8B43BA]"
               >
                 Explore Support

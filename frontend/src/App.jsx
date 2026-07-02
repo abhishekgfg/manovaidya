@@ -7,6 +7,7 @@ import AboutDoctorPage from "./pages/AboutDoctorPage";
 import AboutManovaidyaPage from "./pages/AboutManovaidyaPage";
 import Home from "./pages/Home";
 import MindBodyWellbeingPage from "./pages/MindBodyWellbeingPage";
+import MindBodyStressTensionSupportPage from "./mindbodyconcerns/MindBodyStressTensionSupportPage";
 import SeniorMindCarePage from "./pages/SeniorMindCarePage";
 import MemoryLossForgetfulnessSupportPage from "./seniormindcare/MemoryLossForgetfulnessSupportPage";
 import ConfusionDisorientationSupportPage from "./seniormindcare/ConfusionDisorientationSupportPage";
@@ -81,6 +82,8 @@ function App() {
           <Route path="/about/manovaidya" element={<AboutManovaidyaPage />} />
           <Route path="/about/approach" element={<ApproachPage />} />
           <Route path="/mind-body-wellbeing" element={<MindBodyWellbeingPage />} />
+          <Route path="/mind-body-health-care-india" element={<MindBodyStressTensionSupportPage />} />
+          <Route path="/mind-body-health-care-india/" element={<MindBodyStressTensionSupportPage />} />
           <Route path="/senior-mind-memory-care" element={<SeniorMindCarePage />} />
           <Route path="/memory-loss-forgetfulness-support-seniors-india" element={<MemoryLossForgetfulnessSupportPage />} />
           <Route path="/memory-loss-forgetfulness-support-seniors-india/" element={<MemoryLossForgetfulnessSupportPage />} />
