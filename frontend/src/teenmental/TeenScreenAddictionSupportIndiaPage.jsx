@@ -27,6 +27,7 @@ import parentGuidanceImage from "../images/teen-family-support.png";
 import neuroAyurvedaImage from "../images/neuro-ayurveda-teen-mental-wellness.png";
 import ctaImage from "../images/teen-emotional-wellbeing-india.png";
 import doctorImage from "../images/doctor-ankush-portrait.png";
+import RelatedTeenMentalWellnessPages from "./RelatedTeenMentalWellnessPages";
 
 const pageLinks = [
   { label: "Introduction", id: "introduction" },
@@ -610,7 +611,7 @@ function TeenScreenAddictionSupportIndiaPage() {
             </div>
           </SidebarCard>
 
-          <RelatedPagesCard />
+          <RelatedTeenMentalWellnessPages />
 
           <SidebarCard className="border-[#d8c6e5] bg-[#fcf9ff]" id="book-consultation-sidebar">
             <CalendarCheck className="h-9 w-9 text-[#7835A4]" />
